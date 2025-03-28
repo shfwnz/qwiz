@@ -15,5 +15,12 @@
         "react-dom": "^19.0.0",
         "tailwindcss": "^4.0.0",
         "vite": "^6.0.11"
+    },
+    "dependencies": {
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "lucide-react": "^0.485.0",
+        "tailwind-merge": "^3.0.2",
+        "tw-animate-css": "^1.2.5"
     }
 }
