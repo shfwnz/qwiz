@@ -1,12 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router";
+import Leaderboard from "./pages/leaderboard";
+
+const root = document.getElementById("app");
 
 function App() {
-    return (
-        <div className="text-center text-2xl font-bold text-blue-600">
-            Hello, React in Laravel!
-        </div>
-    );
+    return <div className="underline">Welcome</div>;
 }
 
-ReactDOM.createRoot(document.getElementById("app")).render(<App />);
+ReactDOM.createRoot(root).render(
+    <BrowserRouter>
+        <Routes>
+            <Route index element={<App />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+        </Routes>
+    </BrowserRouter>
+);

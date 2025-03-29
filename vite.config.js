@@ -9,7 +9,13 @@ export default defineConfig({
             input: ["resources/css/app.css", "resources/js/app.js"],
             refresh: true,
         }),
+
         react(),
         tailwindcss(),
     ],
+    resolve: {
+        alias: {
+            "@": path.resolve(__dirname, "resources/js"),
+        },
+    },
 });
