@@ -21,7 +21,7 @@ const premiumButton = () => {
                 <Button
                     key={option.id}
                     variant="outline"
-                    className={`h-24 w-full max-w-96 rounded-2xl bg-[#1F2937] text-white justify-center ${
+                    className={`h-24 w-full max-w-screen rounded-2xl bg-[#1F2937] text-white justify-center ${
                         selectedOption === option.id
                             ? "border-8 rounded-2xl border-[#1F4A86]"
                             : ""

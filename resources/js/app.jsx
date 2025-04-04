@@ -4,13 +4,14 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import Leaderboard from "./pages/leaderboard";
 import Premium from "./pages/premium";
 
-const root = document.getElementById("app");
+const rootElement = document.getElementById("app");
+const root = ReactDOM.createRoot(rootElement);
 
 function App() {
     return <div className="underline">Welcome</div>;
 }
 
-ReactDOM.createRoot(root).render(
+root.render(
     <BrowserRouter>
         <Routes>
             <Route index element={<App />} />

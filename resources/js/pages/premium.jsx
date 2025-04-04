@@ -3,7 +3,7 @@ import PremiumButton from "@/components/premiumButton";
 
 const premium = () => {
     return (
-        <div className="flex items-center justify-center">
+        <div className="p-4 flex items-center justify-center">
             <PremiumButton />
         </div>
     );
