@@ -5,9 +5,9 @@ const premiumButton = () => {
     const [selectedOption, setSelectedOption] = useState(0);
 
     const options = [
-        { id: 1, label: "Unlimited Hearts/Month", price: 3 },
-        { id: 2, label: "Unlimited Hearts/Month", price: 3 },
-        { id: 3, label: "Unlimited Hearts/Month", price: 3 },
+        { id: 1, label: "+20 Hearts Every Days/Month", price: "$1" },
+        { id: 2, label: "Unlimited Hearts/Month", price: "$5" },
+        { id: 3, label: "Unlimited Hearts/Year", price: "$40" },
     ];
 
     const handleButtonClick = (id) => {
@@ -21,14 +21,14 @@ const premiumButton = () => {
                 <Button
                     key={option.id}
                     variant="outline"
-                    className={`h-24 rounded-2xl bg-[#1F2937] text-white justify-center ${
+                    className={`h-24 w-full max-w-96 rounded-2xl bg-[#1F2937] text-white justify-center ${
                         selectedOption === option.id
-                            ? "border-8 rounded-3xl border-[#1F4A86]"
+                            ? "border-8 rounded-2xl border-[#1F4A86]"
                             : ""
                     }`}
                     onClick={() => handleButtonClick(option.id)}
                 >
-                    <div className="grid grid-cols-4 gap-4 items-center">
+                    <div className="w-full grid grid-cols-4 gap-4 items-center">
                         <span className="material-symbols-outlined">
                             {selectedOption === option.id
                                 ? "task_alt"
