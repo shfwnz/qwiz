@@ -23,7 +23,7 @@ const premiumButton = () => {
                     variant="outline"
                     className={`h-auto min-h-20 w-full max-w-screen lg:max-w-2xl  rounded-2xl bg-[#1F2937] justify-center ${
                         selectedOption === option.id
-                            ? "border-8 border-[#1F4A86]"
+                            ? "border-4 border-[#1F4A86]"
                             : ""
                     }`}
                     onClick={() => handleButtonClick(option.id)}

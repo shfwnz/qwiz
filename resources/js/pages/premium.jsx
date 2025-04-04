@@ -20,7 +20,7 @@ const premium = () => {
                 <span className="text-2xl">Subscribe to get more</span>
             </div>
 
-            <div className="px-4">
+            <div className="px-4 my-4">
                 <PremiumButton />
             </div>
 
