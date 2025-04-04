@@ -3,14 +3,18 @@ import { Button } from "@/components/ui/button";
 
 const premiumButton = () => {
     const [view, setView] = useState(0);
+    const [isClicked, setIsClicked] = useState(false);
 
     return (
-        <div className="items-center justify-center">
+        <div className="flex flex-wrap gap-2 items-center justify-center">
             <Button
                 variant="outline"
-                className="h-24 rounded-2xl justify-center"
+                className={`h-24 rounded-2xl justify-center ${
+                    isClicked === 1 ? "border-8 border-[#1F4A86]" : ""
+                }`}
                 onClick={() => {
                     setView(1);
+                    setIsClicked(1);
                     console.log("Button 1 clicked");
                 }}
             >
@@ -24,9 +28,12 @@ const premiumButton = () => {
             </Button>
             <Button
                 variant="outline"
-                className="h-24 rounded-2xl justify-center"
+                className={`h-24 rounded-2xl justify-center ${
+                    isClicked === 2 ? "border-8 border-[#1F4A86]" : ""
+                }`}
                 onClick={() => {
                     setView(2);
+                    setIsClicked(2);
                     console.log("Button 2 clicked");
                 }}
             >
@@ -40,9 +47,12 @@ const premiumButton = () => {
             </Button>
             <Button
                 variant="outline"
-                className="h-24 rounded-2xl justify-center"
+                className={`h-24 rounded-2xl justify-center ${
+                    isClicked === 3 ? "border-8 border-[#1F4A86]" : ""
+                }`}
                 onClick={() => {
                     setView(3);
+                    setIsClicked(3);
                     console.log("Button 3 clicked");
                 }}
             >
