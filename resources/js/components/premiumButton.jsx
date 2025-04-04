@@ -16,12 +16,12 @@ const premiumButton = () => {
     };
 
     return (
-        <div className="flex flex-wrap gap-2 items-center justify-center">
+        <div className="flex flex-wrap gap-2 p-2.5 items-center justify-center">
             {options.map((option) => (
                 <Button
                     key={option.id}
                     variant="outline"
-                    className={`h-24 w-full max-w-screen rounded-2xl bg-[#1F2937] justify-center ${
+                    className={`h-auto min-h-20 w-full max-w-screen rounded-2xl bg-[#1F2937] justify-center ${
                         selectedOption === option.id
                             ? "border-8 rounded-2xl border-[#1F4A86]"
                             : ""
