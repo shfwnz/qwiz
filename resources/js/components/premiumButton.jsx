@@ -5,7 +5,7 @@ const premiumButton = () => {
     const [selectedOption, setSelectedOption] = useState(0);
 
     const options = [
-        { id: 1, label: "+20 Hearts Every Days/Month", price: "$1" },
+        { id: 1, label: "+20 Hearts Daily/Month", price: "$1" },
         { id: 2, label: "Unlimited Hearts/Month", price: "$5" },
         { id: 3, label: "Unlimited Hearts/Year", price: "$40" },
     ];
@@ -23,12 +23,12 @@ const premiumButton = () => {
                     variant="outline"
                     className={`h-auto min-h-20 w-full max-w-screen rounded-2xl bg-[#1F2937] justify-center ${
                         selectedOption === option.id
-                            ? "border-8 rounded-2xl border-[#1F4A86]"
+                            ? "border-8 border-[#1F4A86]"
                             : ""
                     }`}
                     onClick={() => handleButtonClick(option.id)}
                 >
-                    <div className="w-full grid grid-cols-4 gap-4 items-center">
+                    <div className="w-full grid grid-cols-4 gap-4 items-center justify-center">
                         <span className="material-symbols-outlined">
                             {selectedOption === option.id
                                 ? "task_alt"
