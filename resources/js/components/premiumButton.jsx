@@ -2,74 +2,43 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const premiumButton = () => {
-    const [view, setView] = useState(0);
-    const [isClicked, setIsClicked] = useState(false);
+    const [selectedOption, setSelectedOption] = useState(0);
+
+    const options = [
+        { id: 1, label: "Unlimited Hearts/Month", price: 3 },
+        { id: 2, label: "Unlimited Hearts/Month", price: 3 },
+        { id: 3, label: "Unlimited Hearts/Month", price: 3 },
+    ];
+
+    const handleButtonClick = (id) => {
+        setSelectedOption(id);
+        console.log(`Button ${id} clicked`);
+    };
 
     return (
         <div className="flex flex-wrap gap-2 items-center justify-center">
-            <Button
-                variant="outline"
-                className={`h-24 rounded-2xl bg-[#1F2937] text-white justify-center ${
-                    isClicked === 1
-                        ? "border-8 rounded-3xl border-[#1F4A86]"
-                        : ""
-                }`}
-                onClick={() => {
-                    setView(1);
-                    setIsClicked(1);
-                    console.log("Button 1 clicked");
-                }}
-            >
-                <div className="grid grid-cols-4 gap-4 items-center">
-                    <span className="material-symbols-outlined">
-                        {view === 1 ? "task_alt" : "circle"}
-                    </span>
-                    <span className="col-span-2">Unlimited Hearts/Month</span>
-                    <span>3</span>
-                </div>
-            </Button>
-            <Button
-                variant="outline"
-                className={`h-24 rounded-2xl bg-[#1F2937] text-white justify-center ${
-                    isClicked === 2
-                        ? "border-8 rounded-3xl border-[#1F4A86]"
-                        : ""
-                }`}
-                onClick={() => {
-                    setView(2);
-                    setIsClicked(2);
-                    console.log("Button 2 clicked");
-                }}
-            >
-                <div className="grid grid-cols-4 gap-4 items-center">
-                    <span className="material-symbols-outlined">
-                        {view === 2 ? "task_alt" : "circle"}
-                    </span>
-                    <span className="col-span-2">Unlimited Hearts/Month</span>
-                    <span>3</span>
-                </div>
-            </Button>
-            <Button
-                variant="outline"
-                className={`h-24 rounded-2xl bg-[#1F2937] text-white justify-center ${
-                    isClicked === 3
-                        ? "border-8 rounded-3xl border-[#1F4A86]"
-                        : ""
-                }`}
-                onClick={() => {
-                    setView(3);
-                    setIsClicked(3);
-                    console.log("Button 3 clicked");
-                }}
-            >
-                <div className="grid grid-cols-4 gap-4 items-center">
-                    <span className="material-symbols-outlined">
-                        {view === 3 ? "task_alt" : "circle"}
-                    </span>
-                    <span className="col-span-2">Unlimited Hearts/Month</span>
-                    <span>3</span>
-                </div>
-            </Button>
+            {options.map((option) => (
+                <Button
+                    key={option.id}
+                    variant="outline"
+                    className={`h-24 rounded-2xl bg-[#1F2937] text-white justify-center ${
+                        selectedOption === option.id
+                            ? "border-8 rounded-3xl border-[#1F4A86]"
+                            : ""
+                    }`}
+                    onClick={() => handleButtonClick(option.id)}
+                >
+                    <div className="grid grid-cols-4 gap-4 items-center">
+                        <span className="material-symbols-outlined">
+                            {selectedOption === option.id
+                                ? "task_alt"
+                                : "circle"}
+                        </span>
+                        <span className="col-span-2">{option.label}</span>
+                        <span>{option.price}</span>
+                    </div>
+                </Button>
+            ))}
         </div>
     );
 };
