@@ -9,8 +9,10 @@ const premiumButton = () => {
         <div className="flex flex-wrap gap-2 items-center justify-center">
             <Button
                 variant="outline"
-                className={`h-24 rounded-2xl justify-center ${
-                    isClicked === 1 ? "border-8 border-[#1F4A86]" : ""
+                className={`h-24 rounded-2xl bg-[#1F2937] text-white justify-center ${
+                    isClicked === 1
+                        ? "border-8 rounded-3xl border-[#1F4A86]"
+                        : ""
                 }`}
                 onClick={() => {
                     setView(1);
@@ -28,8 +30,10 @@ const premiumButton = () => {
             </Button>
             <Button
                 variant="outline"
-                className={`h-24 rounded-2xl justify-center ${
-                    isClicked === 2 ? "border-8 border-[#1F4A86]" : ""
+                className={`h-24 rounded-2xl bg-[#1F2937] text-white justify-center ${
+                    isClicked === 2
+                        ? "border-8 rounded-3xl border-[#1F4A86]"
+                        : ""
                 }`}
                 onClick={() => {
                     setView(2);
@@ -47,8 +51,10 @@ const premiumButton = () => {
             </Button>
             <Button
                 variant="outline"
-                className={`h-24 rounded-2xl justify-center ${
-                    isClicked === 3 ? "border-8 border-[#1F4A86]" : ""
+                className={`h-24 rounded-2xl bg-[#1F2937] text-white justify-center ${
+                    isClicked === 3
+                        ? "border-8 rounded-3xl border-[#1F4A86]"
+                        : ""
                 }`}
                 onClick={() => {
                     setView(3);
