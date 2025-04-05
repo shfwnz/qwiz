@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 
-const premiumButton = () => {
+const premiumButton = ({ onSelect }) => {
     const [selectedOption, setSelectedOption] = useState(0);
 
     const options = [
@@ -12,6 +12,8 @@ const premiumButton = () => {
 
     const handleButtonClick = (id) => {
         setSelectedOption(id);
+        if (onSelect) onSelect(id);
+
         console.log(`Button ${id} clicked`);
     };
 
