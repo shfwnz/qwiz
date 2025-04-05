@@ -15,11 +15,11 @@ const premium = () => {
     const getValueByOption = () => {
         switch (selectedPremiumOption) {
             case 1:
-                return { img: SuprisedCar, title: "Good Choice" };
+                return { img: SuprisedCar, title: "Good Choice!" };
             case 2:
-                return { img: SuprisedCar, title: "Great Choice" };
+                return { img: SuprisedCar, title: "Great Value!" };
             case 3:
-                return { img: SuprisedCar, title: "Best Choice" };
+                return { img: SuprisedCar, title: "Best Deal!" };
             default:
                 return { img: CryFrog, title: "Oops! No Hearts Left" };
         }
@@ -38,7 +38,11 @@ const premium = () => {
                         alt="cry"
                     />
                 </div>
-                <span className="text-2xl">Subscribe to get more</span>
+                <span className="text-2xl">
+                    {selectedPremiumOption > 0
+                        ? "More Hearts, More Fun"
+                        : "Subscribe to get more"}
+                </span>
             </div>
 
             <div className="px-4">
