@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name'); 
             $table->text('description');
-            $table->integer('price');
+            $table->decimal('price', 5, 2);
             $table->enum('duration', ['monthly', 'yearly']);
             $table->integer('hearts')->nullable();
             $table->boolean('is_unlimited')->default(0);
