@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PremiumButton from "@/components/premiumButton";
 import { Button } from "@/components/ui/button";
 import CryFrog from "../../../storage/app/public/cry-frog.png";
-import SuprisedCar from "../../../storage/app/public/suprised-car.png";
+import SuprisedCar from "../../../storage/app/public/suprised-car-removebg.png";
 
 const premium = () => {
     const [selectedPremiumOption, setSelectedPremiumOption] = useState(0);
@@ -15,13 +15,29 @@ const premium = () => {
     const getValueByOption = () => {
         switch (selectedPremiumOption) {
             case 1:
-                return { img: SuprisedCar, title: "Good Choice!" };
+                return {
+                    img: SuprisedCar,
+                    title: "Good Choice!",
+                    detailImg: "Car Suprised",
+                };
             case 2:
-                return { img: SuprisedCar, title: "Great Value!" };
+                return {
+                    img: SuprisedCar,
+                    title: "Great Value!",
+                    detailImg: "Car Suprised",
+                };
             case 3:
-                return { img: SuprisedCar, title: "Best Deal!" };
+                return {
+                    img: SuprisedCar,
+                    title: "Best Deal!",
+                    detailImg: "Car Suprised",
+                };
             default:
-                return { img: CryFrog, title: "Oops! No Hearts Left" };
+                return {
+                    img: CryFrog,
+                    title: "Oops! No Hearts Left",
+                    detailImg: "Cry Frog",
+                };
         }
     };
 
@@ -31,11 +47,17 @@ const premium = () => {
                 <span className="capitalize text-3xl">
                     {getValueByOption().title}
                 </span>
-                <div className="bg-[#d9d9d9] flex items-end rounded-2xl w-full max-w-24 h-full min-h-24">
+                <div
+                    className={`flex items-end rounded-2xl w-full max-w-24 h-full min-h-24 ${
+                        selectedPremiumOption > 0
+                            ? "bg-[#e7e4df]"
+                            : "bg-[#d9d9d9]"
+                    }`}
+                >
                     <img
                         className="rounded-2xl w-full max-w-20"
                         src={getValueByOption().img}
-                        alt="cry"
+                        alt={getValueByOption().detailImg}
                     />
                 </div>
                 <span className="text-2xl">
