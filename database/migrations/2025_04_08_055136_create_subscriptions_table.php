@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
+            $table->string('name'); 
+            $table->text('description');
+            $table->integer('price');
+            $table->enum('duration', ['monthly', 'yearly']);
+            $table->integer('hearts')->nullable();
+            $table->boolean('is_unlimited')->default(0);
             $table->timestamps();
         });
     }
