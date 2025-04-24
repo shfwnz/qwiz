@@ -9,8 +9,8 @@ function Items({ searchTerm }) {
     const [filteredQuizzies, setFilteredQuizzies] = useState([]); // 
     const [currentPage, setCurrentPage] = useState(1); // Pagination
 
-    // Untuk fetching data
-    useEffect(() => {
+    // Untuk fetching data menggunakan useEffect agar menunggu hingga berhasil fetch dulu
+    useEffect(() => { 
         fetch("http://127.0.0.1:8000/api/quizzes")
             .then(response => response.json())
             .then(data => {
@@ -20,7 +20,7 @@ function Items({ searchTerm }) {
             .catch(error => console.error("Error fetching quizzes:", error));
     }, []);
 
-    // Untuk search engine
+    // Untuk search engine 
     useEffect(() => {
         const delaySearch = setTimeout(() => {
             setFilteredQuizzies(
@@ -76,18 +76,20 @@ function Items({ searchTerm }) {
             {/* Untuk pagination*/}
             {totalPages > 1 && (
                 <div className="flex justify-center mt-4 space-x-3">
-                    <button 
-                        className="px-4 py-2 bg-gray-700 text-white rounded-lg disabled:opacity-50" 
-                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                        disabled={currentPage === 1}
+                    <button
+                        className="px-4 py-2 bg-gray-700 text-white rounded-lg disabled:opacity-50"
+                        // Jika di klik mengubah setCurrentPage menjadi (prev merupakan value dari setCurrentPage) ex : 1 - 1, 1 = 0, 1 
+                        // dan Math.max mengambil nilai terbanyak yaitu 1
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} 
+                        disabled={currentPage === 1} // Akan disable jika ada di page 1
                     >
                         Prev
                     </button>
                     <span className="text-white">Page {currentPage} of {totalPages}</span>
-                    <button 
-                        className="px-4 py-2 bg-gray-700 text-white rounded-lg disabled:opacity-50" 
+                    <button
+                        className="px-4 py-2 bg-gray-700 text-white rounded-lg disabled:opacity-50"
                         onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                        disabled={currentPage === totalPages}
+                        disabled={currentPage === totalPages} // Disable jika currentPage sudah sampai di totalPages
                     >
                         Next
                     </button>
