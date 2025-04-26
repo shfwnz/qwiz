@@ -11,6 +11,8 @@ class quiz extends Model
     /** @use HasFactory<\Database\Factories\QuizFactory> */
     use HasFactory;
 
+    // protected $table="quizzes";
+
     public function guru() {
         return $this->belongsTo(guru::class, 'guru_id', 'id');
     }

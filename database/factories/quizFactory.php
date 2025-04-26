@@ -24,6 +24,8 @@ class QuizFactory extends Factory
         return [
             'nama' => $this->faker->sentence(3),
             'guru_id' => guru::factory(),
+            'status' => $this->faker->boolean,
+            'maks' => $this->faker->numberBetween(1, 100),
         ];
     }
 }

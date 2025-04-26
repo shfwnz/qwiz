@@ -1,45 +1,43 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 
 const ITEMS_PER_PAGE = 6; // Mobile default
 
-function Items({ searchTerm }) {
-    const [quizzies, setQuizzies] = useState([]); // 
-    const [filteredQuizzies, setFilteredQuizzies] = useState([]); // 
+function Items({ searchTerm, clicked }) {
+    const [quizzies, setQuizzies] = useState([]); // default value nya kosong
     const [currentPage, setCurrentPage] = useState(1); // Pagination
 
     // Untuk fetching data menggunakan useEffect agar menunggu hingga berhasil fetch dulu
-    useEffect(() => { 
-        fetch("http://127.0.0.1:8000/api/quizzes")
-            .then(response => response.json())
-            .then(data => {
-                setQuizzies(data);
-                setFilteredQuizzies(data);
-            })
-            .catch(error => console.error("Error fetching quizzes:", error));
-    }, []);
-
-    // Untuk search engine 
     useEffect(() => {
-        const delaySearch = setTimeout(() => {
-            setFilteredQuizzies(
-                quizzies.filter(quiz =>
-                    (quiz.nama?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
-                    (quiz.guru?.toLowerCase() || "").includes(searchTerm.toLowerCase())
-                )
-            );
-        }, 500);
+        const fetchData = async () => {
+            const res = await fetch(`http://127.0.0.1:8000/api/quizzes?search=${searchTerm}`)
+            const data = await res.json();
+            setQuizzies(data);
+        };
 
-        return () => clearTimeout(delaySearch);
-    }, [searchTerm, quizzies]);
+        const delay = setTimeout(fetchData, 500);
+        return () => clearTimeout(delay);
+    }, [searchTerm]); // Hanya Runs sekali
+
+    // useEffect(() => {
+    //     console.log(clicked)
+    //     // const fetchData = async () => {
+    //     //     const res = await fetch(`http://127.0.0.1:8000/api/quizzes?filter=${clicked}`)
+    //     //     const data = await res.json();
+    //     //     setQuizzies(data);
+    //     // };
+
+    //     // const delay = setTimeout(fetchData, 500);
+    //     // return () => clearTimeout(delay);
+    // }, [clicked]);  
 
     // Responsive Items Per Page (Mobile: 6, PC: 10)
     const itemsPerPage = window.innerWidth >= 1024 ? 6 : 6;
 
-    const totalPages = Math.ceil(filteredQuizzies.length / itemsPerPage); // Math.ceil untk pembulatan ke atas, ex : 10/6 = 1,... > 2
+    const totalPages = Math.ceil(quizzies.length / itemsPerPage); // Math.ceil untk pembulatan ke atas, ex : 10/6 = 1,... > 2
     const startIndex = (currentPage - 1) * itemsPerPage; // Mulai index berapa item di tampilkan
-    const selectedItems = filteredQuizzies.slice(startIndex, startIndex + itemsPerPage);  // ex : (1 - 1) * 6 = 0 (artinya indeks muncul dari 0 - 5) or (2 - 1) * 6 = 6 (6-11)
+    const selectedItems = quizzies.slice(startIndex, startIndex + itemsPerPage);  // ex : (1 - 1) * 6 = 0 (artinya indeks muncul dari 0 - 5) or (2 - 1) * 6 = 6 (6-11)
 
     return (
         <div className="relative pb-20 md:pt-15">
@@ -52,8 +50,13 @@ function Items({ searchTerm }) {
                             transition={{ duration: 0.2 }}
                         >
                             <div className="relative rounded-lg min-h-10 min-w-10 md:min-h-100 md:max-w-108">
-                                <img className="rounded-lg" src="http://127.0.0.1:8000/storage/assets/image.png" alt="stuff" />
-                                <p className="font-bold md:text-[40px]">Ulangan Harian Pendidikan Kewarganegaraan Kelas 12</p>
+                                <div className="relative">
+                                    <img className="rounded-lg" src="http://127.0.0.1:8000/storage/assets/image.png" alt="stuff" />
+                                    { quiz.maks && (
+                                        <Badge className="absolute right-1 bottom-1 bg-yellow-500 md:bottom-48 md:text-[20px]">Maks : {quiz.maks}</Badge>
+                                    )}
+                                </div>
+                                <p className="font-bold md:text-[40px]">{quiz.nama}</p>
                                 <Badge className="bg-blue-500 md:text-[20px]">{quiz.guru || "Unknown"}</Badge> <br />
                                 <Badge className="bg-gray-500 md:text-[15px] md:mt-2">{quiz.updated_at}</Badge>
                                 { quiz.status === 0 ? (
@@ -61,10 +64,6 @@ function Items({ searchTerm }) {
                                 ) : quiz.status === 1 ? (
                                     <Badge className="absolute top-1 right-1 bg-green-500 md:text-[20px]">Opened</Badge>
                                 ) : null}
-
-                                { quiz.maks && (
-                                    <Badge className="absolute bottom-25 right-1 bg-yellow-500 md:bottom-48 md:text-[20px]">Maks : {quiz.maks}</Badge>
-                                )}
                             </div>
                         </motion.div>
                     ))
@@ -78,9 +77,9 @@ function Items({ searchTerm }) {
                 <div className="flex justify-center mt-4 space-x-3">
                     <button
                         className="px-4 py-2 bg-gray-700 text-white rounded-lg disabled:opacity-50"
-                        // Jika di klik mengubah setCurrentPage menjadi (prev merupakan value dari setCurrentPage) ex : 1 - 1, 1 = 0, 1 
+                        // Jika di klik mengubah setCurrentPage menjadi (prev merupakan value dari setCurrentPage) ex : 1 - 1, 1 = 0, 1
                         // dan Math.max mengambil nilai terbanyak yaitu 1
-                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} 
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                         disabled={currentPage === 1} // Akan disable jika ada di page 1
                     >
                         Prev
@@ -96,7 +95,7 @@ function Items({ searchTerm }) {
                 </div>
             )}
         </div>
-    );    
+    );
 }
 
 export default Items;

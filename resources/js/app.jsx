@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Leaderboard from "./pages/leaderboard";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -13,6 +13,7 @@ const root = document.getElementById("app");
 
 function App() {
     const [searchTerm, setSearchTerm] = useState("");
+    const [clicked, setClicked] = useState("");
 
     return (
         <div className="relative text-white right-0 left-0 bottom-0 p-4 min-h-screen min-w-full font-bold font-handjet">
@@ -22,11 +23,11 @@ function App() {
                 <Header />
                 <div className="relative min-w-full md:pl-10">
                     <h3 className="text-[30px]">Daftar Quizzies</h3>
-                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} clicked={clicked} setClicked={setClicked}/>
                 </div>
             </div>
 
-            <Items searchTerm={searchTerm}/>
+            <Items searchTerm={searchTerm} clicked={clicked}/>
 
             <Footer />
           </div>

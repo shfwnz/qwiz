@@ -7,14 +7,23 @@ use Carbon\Carbon;
 
 Route::get('/quizzes', function (Request $req) {
     $search = $req->query('search');
+    // $mentah= $req->query('filter');
+    // $filter = explode(',', $filter);
 
-    $quizzies = quiz::with('guru')->when($search, function ($query) use ($search) {
-        $query->where('nama', 'LIKE', "%{$search}%")
-              ->orWhereHas('guru', function ($q) use ($search) {
-                $q->where('nama', 'LIKE', "%{$search}%");
-              });
-    })->get();
-
+    $quizzies = quiz::with('guru')
+        ->when($search, function ($query) use ($search) {
+            $query->where('nama', 'LIKE', "%{$search}%")
+                ->orWhereHas('guru', function ($q) use ($search) {
+                    $q->where('nama', 'LIKE', "%{$search}%");
+                });
+        })
+        // ->when(function ($query) use ($filter) {
+        //     foreach ($filter as $filter) {
+        //         $query->orWhereBetween('maks', $filter);
+        //     }
+        // })
+    ->get();
+ 
     return $quizzies->map(function ($quiz) {
         return [
             'id' => $quiz->id,
