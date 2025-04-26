@@ -5,10 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Models\quiz;
 use Carbon\Carbon;
 
-Route::get('/quizzes', function (Request $req) {
+Route::match(['get', 'post'], '/quizzes', function (Request $req) {
     $search = $req->query('search');
-    // $mentah= $req->query('filter');
-    // $filter = explode(',', $filter);
+    $filter= $req->input('filter');
+
+    // logger($filter);
 
     $quizzies = quiz::with('guru')
         ->when($search, function ($query) use ($search) {
@@ -17,11 +18,11 @@ Route::get('/quizzes', function (Request $req) {
                     $q->where('nama', 'LIKE', "%{$search}%");
                 });
         })
-        // ->when(function ($query) use ($filter) {
-        //     foreach ($filter as $filter) {
-        //         $query->orWhereBetween('maks', $filter);
-        //     }
-        // })
+        ->when($filter, function ($query) use ($filter) {
+            foreach ($filter as $range) {
+                $query->orWhereBetween('maks', $range);
+            }
+        })
     ->get();
  
     return $quizzies->map(function ($quiz) {

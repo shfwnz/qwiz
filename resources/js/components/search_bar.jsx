@@ -44,7 +44,6 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
                     onChange={(e) => setSearchTerm(e.target.value)} // e.target tempat event terjadi
                     className="rounded-lg w-full min-h-8 md:min-h-10 text-sm placeholder-black focus:outline-none text-black pl-3 bg-[#D9D9D9]"
                     placeholder="Mau Cari Apa?"
-                    name="search"
                 />
                 <img
                     src="http://127.0.0.1:8000/storage/assets/Search.png"
@@ -69,7 +68,6 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
                                     id={key}
                                     checked={selectedFilters.includes(key)}
                                     onCheckedChange={() => checklist(key)}
-                                    name="filter"
                                 ></Checkbox>
                                 <Label className="text-white mb-6 text-md" htmlFor={key}>{key}</Label>
                             </div>

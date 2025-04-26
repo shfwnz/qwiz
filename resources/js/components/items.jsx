@@ -20,17 +20,21 @@ function Items({ searchTerm, clicked }) {
         return () => clearTimeout(delay);
     }, [searchTerm]); // Hanya Runs sekali
 
-    // useEffect(() => {
-    //     console.log(clicked)
-    //     // const fetchData = async () => {
-    //     //     const res = await fetch(`http://127.0.0.1:8000/api/quizzes?filter=${clicked}`)
-    //     //     const data = await res.json();
-    //     //     setQuizzies(data);
-    //     // };
+    useEffect(() => {
+        console.log(clicked)
+        const fetchData = async () => {
+            const res = await fetch('http://127.0.0.1:8000/api/quizzes', {
+                method: 'POST',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify({ filter : clicked })
+            })
+            const data = await res.json();
+            setQuizzies(data);
+        }
 
-    //     // const delay = setTimeout(fetchData, 500);
-    //     // return () => clearTimeout(delay);
-    // }, [clicked]);  
+        const delay = setTimeout(fetchData, 500);
+        return () => clearTimeout(delay);
+    }, [clicked]);  
 
     // Responsive Items Per Page (Mobile: 6, PC: 10)
     const itemsPerPage = window.innerWidth >= 1024 ? 6 : 6;
