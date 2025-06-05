@@ -1,4 +1,8 @@
 /.phpunit.cache
+<<<<<<< HEAD
+=======
+/bootstrap/ssr
+>>>>>>> tuanbeliau-main
 /node_modules
 /public/build
 /public/hot
