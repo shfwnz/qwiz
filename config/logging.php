@@ -98,17 +98,10 @@ return [
             'driver' => 'monolog',
             'level' => env('LOG_LEVEL', 'debug'),
             'handler' => StreamHandler::class,
-<<<<<<< HEAD
-            'handler_with' => [
-                'stream' => 'php://stderr',
-            ],
-            'formatter' => env('LOG_STDERR_FORMATTER'),
-=======
             'formatter' => env('LOG_STDERR_FORMATTER'),
             'with' => [
                 'stream' => 'php://stderr',
             ],
->>>>>>> tuanbeliau-main
             'processors' => [PsrLogMessageProcessor::class],
         ],
 
