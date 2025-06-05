@@ -9,11 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-<<<<<<< HEAD
-const leaderboard = () => {
-=======
 const Leaderboard = () => {
->>>>>>> tuanbeliau-main
     return (
         <div>
             <h1>leaderboard</h1>
@@ -40,8 +36,4 @@ const Leaderboard = () => {
     );
 };
 
-<<<<<<< HEAD
-export default leaderboard;
-=======
 export default Leaderboard;
->>>>>>> tuanbeliau-main
