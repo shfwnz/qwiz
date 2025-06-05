@@ -57,7 +57,7 @@ function Items({ searchTerm, clicked }) {
                                 <div className="relative">
                                     <img className="rounded-lg" src="http://127.0.0.1:8000/storage/assets/image.png" alt="stuff" />
                                     { quiz.maks && (
-                                        <Badge className="absolute right-1 bottom-1 bg-yellow-500 md:bottom-48 md:text-[20px]">Maks : {quiz.maks}</Badge>
+                                        <Badge className="absolute right-1 bottom-1 bg-yellow-500 md:bottom-2md:text-[20px]">Maks : {quiz.maks}</Badge>
                                     )}
                                 </div>
                                 <p className="font-bold md:text-[40px]">{quiz.nama}</p>
