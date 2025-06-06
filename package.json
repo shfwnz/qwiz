@@ -3,14 +3,20 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "start-dev": "composer install && npm install && composer run dev",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "format:php": "prettier --write 'app/**/*.php' 'routes/**/*.php' 'database/**/*.php'"
     },
     "devDependencies": {
+        "@prettier/plugin-php": "^0.22.4",
         "@tailwindcss/vite": "^4.0.0",
         "@vitejs/plugin-react": "^4.3.4",
         "axios": "^1.8.2",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^1.2.0",
+        "prettier": "^3.5.3",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "tailwindcss": "^4.0.0",

@@ -1,18 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Leaderboard from "./pages/leaderboard";
-import Premium from "./pages/premium";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Leaderboard from './pages/leaderboard';
+import Premium from './pages/premium';
 
-const rootElement = document.getElementById("app");
+const rootElement = document.getElementById('app');
 
 function App() {
     return <div className="underline">Welcome</div>;
 }
 
-if (!rootElement.hasAttribute("data-react-root")) {
+if (!rootElement.hasAttribute('data-react-root')) {
     const root = ReactDOM.createRoot(rootElement);
-    rootElement.setAttribute("data-react-root", "true");
+    rootElement.setAttribute('data-react-root', 'true');
     root.render(
         <React.StrictMode>
             <BrowserRouter>
