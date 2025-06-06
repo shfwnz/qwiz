@@ -5,6 +5,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
+// Segera saya rapikan tolong abaikan ehe
 Route::match(['get', 'post'], '/quizzes', function (Request $req) {
     $search = $req->query('search');
     $filter = $req->input('filter');
