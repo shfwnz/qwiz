@@ -13,7 +13,8 @@ class guru extends Model
 
     protected $table = 'gurus';
 
-    public function quizzes() {
+    public function quizzes()
+    {
         return $this->hasMany(quiz::class, 'guru_id', 'id');
     }
 }

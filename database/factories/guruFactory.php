@@ -15,7 +15,6 @@ class GuruFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
     protected $model = guru::class;
 
     public function definition(): array

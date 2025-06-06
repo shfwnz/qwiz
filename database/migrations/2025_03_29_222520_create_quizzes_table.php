@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
-            $table->string("nama");
-            $table->integer("maks")->nullable();
+            $table->string('nama');
+            $table->integer('maks')->nullable();
             $table->unsignedBigInteger('guru_id');
             $table->boolean('status');
             $table->foreign('guru_id')->references('id')->on('gurus')->onDelete('cascade');

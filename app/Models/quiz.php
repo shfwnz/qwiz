@@ -13,7 +13,8 @@ class quiz extends Model
 
     // protected $table="quizzes";
 
-    public function guru() {
+    public function guru()
+    {
         return $this->belongsTo(guru::class, 'guru_id', 'id');
     }
 }

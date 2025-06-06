@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\quiz;
 use App\Models\guru;
+use App\Models\quiz;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,7 +16,6 @@ class QuizFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
     protected $model = quiz::class;
 
     public function definition(): array
