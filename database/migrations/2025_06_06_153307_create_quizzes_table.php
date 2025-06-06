@@ -10,14 +10,17 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->decimal('price', 5, 2);
-            $table->enum('duration', ['monthly', 'yearly']);
-            $table->integer('hearts')->nullable();
-            $table->boolean('is_unlimited')->default(0);
+            $table->integer('max')->nullable();
+            $table->unsignedBigInteger('teacher_id');
+            $table->boolean('status');
+            $table
+                ->foreign('teacher_id')
+                ->references('id')
+                ->on('teachers')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('quizzes');
     }
 };

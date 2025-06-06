@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import PremiumButton from "@/components/premiumButton";
-import { Button } from "@/components/ui/button";
-import CryFrog from "../../../storage/app/public/cry-frog.png";
-import SuprisedCar from "../../../storage/app/public/suprised-car-removebg.png";
+import React, { useState } from 'react';
+import PremiumButton from '@/components/premiumButton';
+import { Button } from '@/components/ui/button';
+import CryFrog from '../../../storage/app/public/cry-frog.png';
+import SuprisedCar from '../../../storage/app/public/suprised-car-removebg.png';
 
 const premium = () => {
     const [selectedPremiumOption, setSelectedPremiumOption] = useState(0);
 
-    const handleOptionSelect = (id) => {
+    const handleOptionSelect = id => {
         setSelectedPremiumOption(id);
         console.log(`Option ${id} selected`);
     };
@@ -17,26 +17,26 @@ const premium = () => {
             case 1:
                 return {
                     img: SuprisedCar,
-                    title: "Good Choice!",
-                    detailImg: "Car Suprised",
+                    title: 'Good Choice!',
+                    detailImg: 'Car Suprised',
                 };
             case 2:
                 return {
                     img: SuprisedCar,
-                    title: "Great Value!",
-                    detailImg: "Car Suprised",
+                    title: 'Great Value!',
+                    detailImg: 'Car Suprised',
                 };
             case 3:
                 return {
                     img: SuprisedCar,
-                    title: "Best Deal!",
-                    detailImg: "Car Suprised",
+                    title: 'Best Deal!',
+                    detailImg: 'Car Suprised',
                 };
             default:
                 return {
                     img: CryFrog,
-                    title: "Oops! No Hearts Left",
-                    detailImg: "Cry Frog",
+                    title: 'Oops! No Hearts Left',
+                    detailImg: 'Cry Frog',
                 };
         }
     };
@@ -50,8 +50,8 @@ const premium = () => {
                 <div
                     className={`flex items-end rounded-2xl w-full max-w-24 h-full min-h-24 ${
                         selectedPremiumOption > 0
-                            ? "bg-[#e7e4df]"
-                            : "bg-[#d9d9d9]"
+                            ? 'bg-[#e7e4df]'
+                            : 'bg-[#d9d9d9]'
                     }`}
                 >
                     <img
@@ -62,8 +62,8 @@ const premium = () => {
                 </div>
                 <span className="text-2xl">
                     {selectedPremiumOption > 0
-                        ? "More Hearts, More Fun"
-                        : "Subscribe to get more"}
+                        ? 'More Hearts, More Fun'
+                        : 'Subscribe to get more'}
                 </span>
             </div>
 
@@ -77,8 +77,8 @@ const premium = () => {
                     className="text-black text-2xl p-5 w-full max-w-screen bg-[#d9d9d9] uppercase lg:max-w-3xl"
                 >
                     {selectedPremiumOption > 0
-                        ? "subscribe now"
-                        : "start free trial"}
+                        ? 'subscribe now'
+                        : 'start free trial'}
                 </Button>
                 <Button className="text-2xl p-5 w-full max-w-screen lg:max-w-3xl capitalize">
                     No Thanks
