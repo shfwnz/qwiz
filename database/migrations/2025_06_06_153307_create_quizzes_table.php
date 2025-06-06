@@ -12,7 +12,8 @@ return new class extends Migration {
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('title');
+            $table->string('description');
             $table->integer('max')->nullable();
             $table->unsignedBigInteger('teacher_id');
             $table->boolean('status');
@@ -20,7 +21,7 @@ return new class extends Migration {
                 ->foreign('teacher_id')
                 ->references('id')
                 ->on('teachers')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             $table->timestamps();
         });
     }
