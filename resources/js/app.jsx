@@ -11,7 +11,7 @@ const root = document.getElementById("app");
 function App() {
 
     return (
-        <div className="relative text-white right-0 left-0 bottom-0 p-4 min-h-screen min-w-full font-bold font-handjet">
+        <div>
             <ParticlesBackground/>
           </div>
     )

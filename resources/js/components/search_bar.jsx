@@ -74,12 +74,12 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
                         ))}
                     </div>
                     <DialogFooter className="mt-3">
-                        <div className="flex w-full space-x-5">
+                        <div className="flex w-full space-x-3 pr-1">
                             <DialogClose asChild>
-                                <Button variant="outline" className="w-full text-black">Cancel</Button>
+                                <Button variant="outline" className="w-1/2 text-black">Cancel</Button>
                             </DialogClose>
                             <DialogClose asChild>
-                                <Button onClick={apply} className="w-full">Apply</Button>
+                                <Button onClick={apply} className="w-1/2">Apply</Button>
                             </DialogClose>
                         </div>
                     </DialogFooter>

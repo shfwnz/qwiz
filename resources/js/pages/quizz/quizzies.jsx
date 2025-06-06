@@ -9,7 +9,7 @@ export default function Quizzes() {
     const [clicked, setClicked] = useState();
 
     return (
-        <div>
+        <div className="relative text-white right-0 left-0 bottom-0 p-4 min-h-screen min-w-full font-bold font-handjet">
             <div className="relative top-5 space-y-8 h-[200px] md:min-h-[180px] min-w-full z-50">
             <Header />
                 <div className="relative min-w-full md:pl-10">
