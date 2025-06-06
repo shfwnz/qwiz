@@ -1,0 +1,26 @@
+import React, {useEffect, useState} from "react";
+import Header from "@/components/header";
+import SearchBar from "@/components/search_bar";
+import Items from "@/components/items";
+import Footer from "@/components/footer";
+
+export default function Quizzes() {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [clicked, setClicked] = useState();
+
+    return (
+        <div>
+            <div className="relative top-5 space-y-8 h-[200px] md:min-h-[180px] min-w-full z-50">
+            <Header />
+                <div className="relative min-w-full md:pl-10">
+                    <h3 className="text-[30px]">Daftar Quizzies</h3>
+                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} clicked={clicked} setClicked={setClicked}/>
+                </div>
+            </div>
+
+            <Items searchTerm={searchTerm} clicked={clicked}/>
+
+            <Footer />
+        </div>
+    )
+}
