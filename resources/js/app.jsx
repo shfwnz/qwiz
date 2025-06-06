@@ -1,5 +1,6 @@
 import Quizzes from "./pages/quizz/quizzies";
 import Leaderboard from "./pages/leaderboard";
+import Premium from "./pages/premium";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ParticlesBackground from "@/components/ParticleBackground";
