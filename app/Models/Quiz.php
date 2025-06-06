@@ -10,8 +10,18 @@ class Quiz extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'description',
+        'max',
+        'status',
+        'teacher_id',
+    ];
+
     /**
      * Get the teacher that owns the quiz.
+     *
+     * @return BelongsTo
      */
     public function teacher(): BelongsTo
     {

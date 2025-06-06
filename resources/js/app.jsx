@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Quiz from './pages/quiz';
 import Leaderboard from './pages/leaderboard';
 import Premium from './pages/premium';
 
@@ -18,6 +19,7 @@ if (!rootElement.hasAttribute('data-react-root')) {
             <BrowserRouter>
                 <Routes>
                     <Route index element={<App />} />
+                    <Route path="/quiz" element={<Quiz />} />
                     <Route path="/leaderboard" element={<Leaderboard />} />
                     <Route path="/premium" element={<Premium />} />
                 </Routes>

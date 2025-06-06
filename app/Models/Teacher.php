@@ -10,6 +10,8 @@ class Teacher extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'email', 'phone'];
+
     /**
      * Get the quizzes associated with the teacher.
      *
