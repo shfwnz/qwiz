@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 
-const premiumButton = ({ onSelect }) => {
+const PremiumButton = ({ onSelect }) => {
     const [selectedOption, setSelectedOption] = useState(0);
 
     const options = [
@@ -47,4 +47,4 @@ const premiumButton = ({ onSelect }) => {
     );
 };
 
-export default premiumButton;
+export default PremiumButton;
