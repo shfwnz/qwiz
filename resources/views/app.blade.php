@@ -19,7 +19,7 @@
     @viteReactRefresh
     @vite(["resources/css/app.css", 'resources/js/app.jsx'])
 </head>
-<body class="bg-[#111827] text-white">
+<body class="dark">
     <div id="app"></div>
 </body>
 </html>

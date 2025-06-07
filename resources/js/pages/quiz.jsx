@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Header from '@/components/layouts/header';
-import SearchBar from '@/components/searchBar';
+import SearchBar from '@/components/search-bar';
 import Items from '@/components/items';
 import Footer from '@/components/layouts/footer';
 
