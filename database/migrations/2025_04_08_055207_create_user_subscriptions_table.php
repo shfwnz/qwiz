@@ -14,18 +14,20 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table
-                ->foreignId('subscription_id')
+                ->foreignId('subscription_plan_id')
                 ->constrained()
                 ->onDelete('cascade');
+            $table
+                ->enum('status', [
+                    'pending',
+                    'active',
+                    'cancelled',
+                    'expired',
+                    'failed',
+                ])
+                ->default('pending');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->string('snap_token')->nullable();
-            $table
-                ->enum('status', ['active', 'pending', 'cancelled', 'expired'])
-                ->default('pending');
-            $table
-                ->enum('payment_status', ['paid', 'unpaid', 'failed'])
-                ->default('unpaid');
             $table->timestamps();
         });
     }
