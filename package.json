@@ -4,7 +4,7 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "start-dev": "composer install && npm install && composer run dev",
+        "start-dev": "composer install && npm install && prettier --write . && composer run dev",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "format:php": "prettier --write 'app/**/*.php' 'routes/**/*.php' 'database/**/*.php'"
