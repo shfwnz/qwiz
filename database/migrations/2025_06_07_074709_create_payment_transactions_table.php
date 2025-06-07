@@ -17,6 +17,22 @@ return new class extends Migration {
                 ->foreignId('subscription_plan_id')
                 ->constrained()
                 ->onDelete('cascade');
+
+            $table->integer('price');
+            $table
+                ->enum('payment_status', [
+                    'pending',
+                    'settlement',
+                    'cancel',
+                    'expire',
+                    'failure',
+                ])
+                ->default('pending');
+            $table->string('order_id')->unique();
+            $table->string('snap_token')->nullable();
+            $table->string('payment_type')->nullable();
+
+            $table->json('midtrans_response')->nullable();
             $table->timestamps();
         });
     }
