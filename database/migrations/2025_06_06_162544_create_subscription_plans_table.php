@@ -13,11 +13,18 @@ return new class extends Migration {
         Schema::create('subscription_plans', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->text('description');
             $table->decimal('price', 5, 2);
             $table->enum('duration', ['monthly', 'yearly']);
-            $table->integer('hearts')->nullable();
-            $table->boolean('is_unlimited')->default(0);
+
+            $table->integer('max_quizzes')->nullable();
+            $table->integer('max_hearts')->nullable();
+            $table->boolean('unlimited_hearts')->default(false);
+            $table->boolean('can_export_results')->default(false);
+            $table->boolean('can_import_quizzes')->default(false);
+
+            $table->boolean('is_active')->default(0);
             $table->timestamps();
         });
     }
