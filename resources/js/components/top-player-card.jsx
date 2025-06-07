@@ -6,15 +6,17 @@ import CryFrog from '../../../storage/app/public/cry-frog.png';
 
 const TopPlayerCard = ({ player }) => {
     return (
-        <Card>
-            <CardContent className="flex gap-4 px-4 py-2 items-center">
+        <Card className="w-full">
+            <CardContent className="flex gap-4 px-4 py-2 items-center justify-center space-x-12">
                 <div className="flex flex-col items-center gap-2 w-20">
                     <img
                         className="border rounded-lg bg-gray-300"
                         src={CryFrog}
                         alt={`Profile of ${player.name}`}
                     />
-                    <Badge variant="secondary">#{player.rank}</Badge>
+                    <Badge variant="secondary" className="w-full">
+                        #{player.rank}
+                    </Badge>
                 </div>
 
                 <div className="flex flex-col gap-3">
