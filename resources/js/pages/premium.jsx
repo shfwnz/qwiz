@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PremiumButton from '@/components/premium-button';
 import { Button } from '@/components/ui/button';
-import CryFrog from '../../../storage/app/public/cry-frog.png';
-import SuprisedCar from '../../../storage/app/public/suprised-car-removebg.png';
+import CryFrog from '../../../public/images/cry-frog.png';
+import SuprisedCar from '../../../public/images/suprised-car-removebg.png';
 
 const premium = () => {
     const [selectedPremiumOption, setSelectedPremiumOption] = useState(0);
