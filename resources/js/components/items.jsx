@@ -2,13 +2,10 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 
-const ITEMS_PER_PAGE = 6; // Mobile default
-
 function Items({ searchTerm, clicked }) {
-    const [quizzies, setQuizzies] = useState([]); // default value nya kosong
-    const [currentPage, setCurrentPage] = useState(1); // Pagination
+    const [quizzies, setQuizzies] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
 
-    // Untuk fetching data menggunakan useEffect agar menunggu hingga berhasil fetch dulu
     useEffect(() => {
         const fetchData = async () => {
             const res = await fetch(
@@ -20,7 +17,7 @@ function Items({ searchTerm, clicked }) {
 
         const delay = setTimeout(fetchData, 500);
         return () => clearTimeout(delay);
-    }, [searchTerm]); // Hanya Runs sekali
+    }, [searchTerm]);
 
     useEffect(() => {
         console.log(clicked);
@@ -100,12 +97,10 @@ function Items({ searchTerm, clicked }) {
                 <div className="flex justify-center mt-4 space-x-3">
                     <button
                         className="px-4 py-2 bg-gray-700 text-white rounded-lg disabled:opacity-50"
-                        // Jika di klik mengubah setCurrentPage menjadi (prev merupakan value dari setCurrentPage) ex : 1 - 1, 1 = 0, 1
-                        // dan Math.max mengambil nilai terbanyak yaitu 1
                         onClick={() =>
                             setCurrentPage(prev => Math.max(prev - 1, 1))
                         }
-                        disabled={currentPage === 1} // Akan disable jika ada di page 1
+                        disabled={currentPage === 1}
                     >
                         Prev
                     </button>
@@ -119,7 +114,7 @@ function Items({ searchTerm, clicked }) {
                                 Math.min(prev + 1, totalPages)
                             )
                         }
-                        disabled={currentPage === totalPages} // Disable jika currentPage sudah sampai di totalPages
+                        disabled={currentPage === totalPages}
                     >
                         Next
                     </button>
