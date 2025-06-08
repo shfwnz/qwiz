@@ -1,5 +1,5 @@
 import point from '../../../../public/images/point.png';
-import heart from '../../../../public/images/heart.png'
+import heart from '../../../../public/images/heart.png';
 
 export default function Header() {
     return (

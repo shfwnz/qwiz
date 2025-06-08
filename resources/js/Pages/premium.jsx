@@ -76,7 +76,7 @@ const premium = () => {
                 <div className="w-full items-center flex flex-col justify-center gap-2 mt-4">
                     <Button
                         variant="outline"
-                        className="text-black text-2xl p-5 w-full max-w-screen bg-[#d9d9d9] uppercase lg:max-w-3xl"
+                        className="text-xl p-5 w-full max-w-screen uppercase lg:max-w-3xl"
                     >
                         {selectedPremiumOption > 0
                             ? 'subscribe now'
