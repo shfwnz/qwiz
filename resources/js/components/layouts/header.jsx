@@ -1,3 +1,6 @@
+import point from '../../../../public/images/point.png';
+import heart from '../../../../public/images/heart.png'
+
 export default function Header() {
     return (
         <div className="grid grid-cols-2 text-2xl gap-10 min-w-full md:pt-3 md:pl-10">
@@ -6,7 +9,7 @@ export default function Header() {
             </div>
             <div className="flex w-full justify-end gap-2 md:pt-3 md:pr-10">
                 <img
-                    src="http://127.0.0.1:8000/storage/img/point.png"
+                    src={point}
                     alt="Bolt"
                     className="w-[45px] h-[45px] object-cover"
                 />
@@ -14,7 +17,7 @@ export default function Header() {
                     3000
                 </p>
                 <img
-                    src="http://127.0.0.1:8000/storage/img/heart.png"
+                    src={heart}
                     alt="Heart"
                     className="w-[45px] h-[45px] object-cover"
                 />

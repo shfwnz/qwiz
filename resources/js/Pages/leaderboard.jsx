@@ -9,6 +9,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
+import Footer from '@/components/layouts/footer.jsx';
 
 const topPlayers = [
     { rank: 1, name: 'John Doe', score: 100, winrate: '90%' },
@@ -65,6 +66,7 @@ const leaderboard = () => {
                         </Table>
                     </CardContent>
                 </Card>
+                <Footer />
             </div>
         </div>
     );
