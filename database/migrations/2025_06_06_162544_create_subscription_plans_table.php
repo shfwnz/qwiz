@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description');
-            $table->decimal('price', 5, 2);
+            $table->integer('price');
             $table->enum('duration', ['monthly', 'yearly']);
 
             $table->integer('max_quizzes')->nullable();

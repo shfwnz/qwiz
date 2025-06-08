@@ -6,8 +6,10 @@ use App\Models\PaymentTransaction;
 use App\Models\SubscriptionPlan;
 use App\Models\UserSubscription;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
 {
@@ -21,19 +23,30 @@ class PaymentController extends Controller
     }
 
     /**
-     * METHOD 1: Create Payment (WAJIB)
-     * User pilih subscription plan → generate snap token
+     *
+     * @return JsonResponse
      */
     public function createPayment(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'subscription_plan_id' => 'required|exists:subscription_plans,id',
         ]);
 
-        $user = Auth::user();
-        $plan = SubscriptionPlan::findOrFail($request->subscription_plan_id);
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'error' => $validator->errors(),
+                ],
+                422,
+            );
+        }
 
-        // Generate unique order ID
+        $user = Auth::user();
+        $plan = SubscriptionPlan::where(
+            'id',
+            $request->subscription_plan_id,
+        )->firstOrFail();
+
         $orderId = 'SUB-' . $user->id . '-' . time();
 
         try {
