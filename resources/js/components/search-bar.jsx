@@ -37,27 +37,27 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
     };
 
     return (
-        <div className="flex relative w-full md:h-full md:pr-10 space-x-2 md:space-x-10">
-            <div className="relative w-full md:h-full md:pr-10">
+        <div className="flex relative w-full md:h-full md:pr-10 space-x-2 md:space-x-5">
+            <div className="relative w-full md:pr-1">
                 <input
                     type="text"
                     value={searchTerm}
                     onChange={e => setSearchTerm(e.target.value)} // e.target tempat event terjadi
-                    className="rounded-lg w-full min-h-8 md:min-h-10 text-sm placeholder-black focus:outline-none text-black pl-3 bg-[#D9D9D9]"
+                    className="rounded-lg w-full min-h-8 md:min-h-10 text-sm placeholder-black focus:outline-none text-black pl-3 pr-13 bg-[#D9D9D9]"
                     placeholder="Mau Cari Apa?"
                 />
                 <img
-                    src="http://127.0.0.1:8000/storage/assets/Search.png"
+                    src="http://127.0.0.1:8000/storage/img/search.png"
                     alt="Search"
-                    className="absolute right-3 md:right-15 top-4 transform -translate-y-1/2 w-[25px] h-[25px]"
+                    className="absolute right-3 md:right-15 top-5 transform -translate-y-1/2 w-[25px] h-[25px]"
                 />
             </div>
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button className="rounded-md hover:bg-gray-800 bg-black/">
+                    <Button className="rounded-md h-[45px] hover:bg-gray-800 bg-black/">
                         <img
-                            src="http://127.0.0.1:8000/storage/assets/Filter.png"
-                            className="w-[45px] h-[35px]"
+                            src="http://127.0.0.1:8000/storage/img/filter.png"
+                            className="w-[50px] h-[45px]"
                         />
                     </Button>
                 </DialogTrigger>
