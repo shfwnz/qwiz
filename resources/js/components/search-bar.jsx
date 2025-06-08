@@ -87,7 +87,7 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
                             <DialogClose asChild>
                                 <Button
                                     variant="outline"
-                                    className="w-1/2 text-black"
+                                    className="w-1/2"
                                 >
                                     Cancel
                                 </Button>
