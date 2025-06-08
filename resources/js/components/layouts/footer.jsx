@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 
 export default function Footer() {
-    const location = useLocation(); // Dapatkan path halaman saat ini
+    const location = useLocation();
 
     const menuItems = [
         {
@@ -29,7 +29,7 @@ export default function Footer() {
     return (
         <div className="fixed bottom-0 left-0 w-screen min-h-[60px] bg-[#0D1520] rounded-lg grid grid-cols-4 text-center text-white py-2">
             {menuItems.map((item, index) => {
-                const isActive = location.pathname === item.path; // Cek apakah path aktif
+                const isActive = location.pathname === item.path;
 
                 return (
                     <div
