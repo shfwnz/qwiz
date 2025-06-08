@@ -5,22 +5,22 @@ export default function Footer() {
 
     const menuItems = [
         {
-            src: 'http://127.0.0.1:8000/storage/assets/Home.png',
+            src: 'http://127.0.0.1:8000/storage/img/home.png',
             label: 'Home',
             path: '/',
         },
         {
-            src: 'http://127.0.0.1:8000/storage/assets/Quiz.png',
+            src: 'http://127.0.0.1:8000/storage/img/quiz.png',
             label: 'Quiz',
             path: '/quiz',
         },
         {
-            src: 'http://127.0.0.1:8000/storage/assets/Leaderboard.png',
+            src: 'http://127.0.0.1:8000/storage/img/leaderboard.png',
             label: 'Leaderboard',
             path: '/leaderboard',
         },
         {
-            src: 'http://127.0.0.1:8000/storage/assets/User.png',
+            src: 'http://127.0.0.1:8000/storage/img/user.png',
             label: 'You',
             path: '/profile',
         },

@@ -6,7 +6,7 @@ export default function Header() {
             </div>
             <div className="flex w-full justify-end gap-2 md:pt-3 md:pr-10">
                 <img
-                    src="http://127.0.0.1:8000/storage/assets/Bolt.png"
+                    src="http://127.0.0.1:8000/storage/img/point.png"
                     alt="Bolt"
                     className="w-[45px] h-[45px] object-cover"
                 />
@@ -14,7 +14,7 @@ export default function Header() {
                     3000
                 </p>
                 <img
-                    src="http://127.0.0.1:8000/storage/assets/Heart.png"
+                    src="http://127.0.0.1:8000/storage/img/heart.png"
                     alt="Heart"
                     className="w-[45px] h-[45px] object-cover"
                 />
