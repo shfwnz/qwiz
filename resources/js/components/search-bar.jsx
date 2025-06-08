@@ -46,19 +46,14 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
                     className="rounded-lg w-full min-h-8 md:min-h-10 text-sm placeholder-black focus:outline-none text-black pl-3 pr-13 bg-[#D9D9D9]"
                     placeholder="Mau Cari Apa?"
                 />
-                <img
-                    src="http://127.0.0.1:8000/storage/img/search.png"
-                    alt="Search"
-                    className="absolute right-3 md:right-15 top-5 transform -translate-y-1/2 w-[25px] h-[25px]"
-                />
+                <div className="absolute right-3 md:right-15 top-5 transform -translate-y-1/2 w-[25px] h-[25px] text-black">
+                    <svg width={24} height={24} fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M6 2h8v2H6V2zM4 6V4h2v2H4zm0 8H2V6h2v8zm2 2H4v-2h2v2zm8 0v2H6v-2h8zm2-2h-2v2h2v2h2v2h2v2h2v-2h-2v-2h-2v-2h-2v-2zm0-8h2v8h-2V6zm0 0V4h-2v2h2z" fill="currentColor"/> </svg>
+                </div>
             </div>
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button className="rounded-md h-[45px] hover:bg-gray-800 bg-black/">
-                        <img
-                            src="http://127.0.0.1:8000/storage/img/filter.png"
-                            className="w-[50px] h-[45px]"
-                        />
+                    <Button className="rounded-md h-[45px] w-[45px] hover:bg-gray-800 bg-black/30 text-white">
+                        <svg width={24} height={24} fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M17 4h2v10h-2V4zm0 12h-2v2h2v2h2v-2h2v-2h-4zm-4-6h-2v10h2V10zm-8 2H3v2h2v6h2v-6h2v-2H5zm8-8h-2v2H9v2h6V6h-2V4zM5 4h2v6H5V4z" fill="currentColor"/> </svg>
                     </Button>
                 </DialogTrigger>
                 <DialogContent className="bg-black text-white">
