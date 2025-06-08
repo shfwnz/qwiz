@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-import CryFrog from '../../../storage/app/public/cry-frog.png';
+import CryFrog from '../../../public/images/cry-frog.png';
 
 const TopPlayerCard = ({ player }) => {
     return (
