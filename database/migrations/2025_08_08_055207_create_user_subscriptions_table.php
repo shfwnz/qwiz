@@ -18,6 +18,10 @@ return new class extends Migration {
                 ->constrained()
                 ->onDelete('cascade');
             $table
+                ->foreignId('payment_method_id')
+                ->constrained()
+                ->onDelete('cascade');
+            $table
                 ->enum('status', [
                     'pending',
                     'active',
