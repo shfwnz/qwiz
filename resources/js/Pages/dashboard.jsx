@@ -9,9 +9,7 @@ import {
 } from '@/components/ui/table';
 
 const dashboard = () => {
-    return <div>
-
-    </div>;
-}
+    return <div></div>;
+};
 
 export default dashboard;

@@ -4,7 +4,9 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "start-dev": "composer install && npm install && prettier --write . && composer run dev",
+        "dev:frontend": "npm run dev",
+        "dev:backend": "php artisan serve --host 0.0.0.0 --port=8000",
+        "start-dev": "composer install && npm install && prettier --write . && concurrently \"npm:dev:frontend\" \"npm:dev:backend\"",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "format:php": "prettier --write 'app/**/*.php' 'routes/**/*.php' 'database/**/*.php'"
@@ -14,7 +16,7 @@
         "@tailwindcss/vite": "^4.0.0",
         "@vitejs/plugin-react": "^4.3.4",
         "axios": "^1.8.2",
-        "concurrently": "^9.0.1",
+        "concurrently": "^9.1.2",
         "laravel-vite-plugin": "^1.2.0",
         "prettier": "^3.5.3",
         "react": "^19.0.0",

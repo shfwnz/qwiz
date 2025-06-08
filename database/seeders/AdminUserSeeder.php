@@ -16,12 +16,12 @@ class AdminUserSeeder extends Seeder
     public function run(): void
     {
         $user = User::updateOrCreate(
-            [ 'email' => 'admin@example.com' ],
+            ['email' => 'admin@example.com'],
             [
                 'name' => 'Administrator',
                 'password' => Hash::make('12345678'),
                 'email_verified_at' => now(),
-            ]
+            ],
         );
 
         $user->assignRole('super_admin');

@@ -18,12 +18,12 @@ class StudentUserSeeder extends Seeder
         Role::firstOrCreate(['name' => 'student']);
 
         $user = User::updateOrCreate(
-            [ 'email' => 'student@example.com' ],
+            ['email' => 'student@example.com'],
             [
                 'name' => 'Student',
                 'password' => Hash::make('12345678'),
                 'email_verified_at' => now(),
-            ]
+            ],
         );
 
         $user->assignRole('student');

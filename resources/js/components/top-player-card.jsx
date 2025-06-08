@@ -6,9 +6,9 @@ import CryFrog from '../../../public/images/cry-frog.png';
 
 const TopPlayerCard = ({ player }) => {
     return (
-        <Card className="w-full">
+        <Card className="w-full overflow-auto">
             <CardContent className="flex gap-4 px-4 py-2 items-center justify-center space-x-12">
-                <div className="flex flex-col items-center gap-2 w-20">
+                <div className="flex flex-col items-center gap-2 max-w-20 justify-between">
                     <img
                         className="border rounded-lg bg-gray-300"
                         src={CryFrog}
