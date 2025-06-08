@@ -3,6 +3,7 @@ import PremiumButton from '@/components/premium-button';
 import { Button } from '@/components/ui/button';
 import CryFrog from '../../../public/images/cry-frog.png';
 import SuprisedCar from '../../../public/images/suprised-car-removebg.png';
+import Footer from '@/components/layouts/footer.jsx';
 
 const premium = () => {
     const [selectedPremiumOption, setSelectedPremiumOption] = useState(0);
@@ -85,6 +86,7 @@ const premium = () => {
                         No Thanks
                     </Button>
                 </div>
+                <Footer />
             </div>
         </div>
     );
