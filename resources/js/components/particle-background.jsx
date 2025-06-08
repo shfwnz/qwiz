@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
@@ -47,4 +47,4 @@ const ParticlesBackground = () => {
   return <></>;
 };
 
-export default ParticlesBackground;
+export default React.memo(ParticlesBackground);
