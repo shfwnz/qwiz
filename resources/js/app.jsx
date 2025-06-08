@@ -1,29 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Quiz from './pages/quiz';
-import Leaderboard from './pages/leaderboard';
-import Premium from './pages/premium';
+import { createRoot } from 'react-dom/client';
+import { createInertiaApp } from '@inertiajs/react'
+import { InertiaProgress } from '@inertiajs/progress';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
-const rootElement = document.getElementById('app');
+const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
-function App() {
-    return <div className="underline">Welcome</div>;
-}
 
-if (!rootElement.hasAttribute('data-react-root')) {
-    const root = ReactDOM.createRoot(rootElement);
-    rootElement.setAttribute('data-react-root', 'true');
-    root.render(
-        <React.StrictMode>
-            <BrowserRouter>
-                <Routes>
-                    <Route index element={<App />} />
-                    <Route path="/quiz" element={<Quiz />} />
-                    <Route path="/leaderboard" element={<Leaderboard />} />
-                    <Route path="/premium" element={<Premium />} />
-                </Routes>
-            </BrowserRouter>
-        </React.StrictMode>
-    );
-}
+
+createInertiaApp({
+    resolve: (name) => resolvePageComponent(`./Pages/${name}.jsx`,import.meta.glob('./Pages/**/*.jsx')),
+    setup({ el, App, props }) {
+        createRoot(el).render(<App {...props} />)
+    },
+});
+
+InertiaProgress.init();

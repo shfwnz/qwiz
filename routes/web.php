@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-Route::get('/{any}', function () {
-    return view('app');
-})->where('any', '.*');
+Route::get('/', fn () => Inertia::render('home'));
+Route::get('/quiz', fn () => Inertia::render('quiz'));
+Route::get('/leaderboard', fn () => Inertia::render('leaderboard'));
+Route::get('/premium', fn () => Inertia::render('premium'));
