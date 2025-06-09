@@ -15,12 +15,11 @@ return new class extends Migration {
             $table->string('title');
             $table->string('description');
             $table->integer('max')->nullable();
-            $table->unsignedBigInteger('teacher_id');
             $table->boolean('status');
             $table
-                ->foreign('teacher_id')
+                ->foreignId('teacher_id')
                 ->references('id')
-                ->on('teachers')
+                ->on('users')
                 ->onDelete('restrict');
             $table->timestamps();
         });
