@@ -4,10 +4,13 @@ import SearchBar from '@/components/search-bar';
 import Items from '@/components/items';
 import Footer from '@/components/layouts/footer';
 import ParticlesBackground from '@/components/particle-background';
+import { usePage } from '@inertiajs/react';
 
 export default function Quizzes() {
     const [searchTerm, setSearchTerm] = useState('');
     const [clicked, setClicked] = useState();
+
+    const { data } = usePage().props;
 
     return (
         <div className="container mx-auto w-full">
@@ -26,7 +29,7 @@ export default function Quizzes() {
                     </div>
                 </div>
 
-                <Items searchTerm={searchTerm} clicked={clicked} />
+                <Items data={data} searchTerm={searchTerm} clicked={clicked} />
 
                 <Footer />
             </div>
