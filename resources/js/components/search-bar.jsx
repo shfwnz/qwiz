@@ -15,10 +15,10 @@ import {
 export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
     const [selectedFilters, setSelectedFilters] = useState([]);
     const maxs = {
-        '<10': [0, 10],
-        '10-30': [10, 30],
-        '30-50': [30, 50],
-        '>50': [50, 100],
+        '<10': 1,
+        '10-30': 2,
+        '30-50': 3,
+        '>50': 4,
     }; // Sumber filter
 
     const checklist = max => {
@@ -28,7 +28,7 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
             setSelectedFilters(selectedFilters.filter(item => item !== max));
         } else {
             setSelectedFilters([...selectedFilters, max]);
-        }
+        } 
     };
 
     const apply = () => {
