@@ -15,7 +15,7 @@ class QuizSeeder extends Seeder
     {
         Quiz::insert([
             [
-                'title' => 'Tugas Harian Stuff',
+                'title' => 'Tugas Harian Stuff', 
                 'description' => 'Stuff Here',
                 'max' => 20,
                 'status' => 1,

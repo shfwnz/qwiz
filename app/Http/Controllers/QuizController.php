@@ -11,7 +11,7 @@ class QuizController extends Controller
     public function index() {
         $data = Quiz::with('teacher')->get()->map(function ($quiz) {
             return [
-                'id' => $quiz->id,
+                'id' => $quiz->id, 
                 'title' => $quiz->title,
                 'max' => $quiz->max,
                 'status' => $quiz->status,

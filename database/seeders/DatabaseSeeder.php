@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             StudentUserSeeder::class,
             TeacherUserSeeder::class,
+            QuizSeeder::class,
         ]);
     }
 }

@@ -25,7 +25,7 @@ function Items({ searchTerm, clicked, data }) {
             matchFilter = item.max >= 30 && item.max <= 50
         } else if (clicked == 4) {
             matchFilter = item.max >= 50
-        }
+        } 
 
         return matchSearch && matchFilter
     });

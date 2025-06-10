@@ -28,7 +28,7 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
             setSelectedFilters(selectedFilters.filter(item => item !== max));
         } else {
             setSelectedFilters([...selectedFilters, max]);
-        }
+        } 
     };
 
     const apply = () => {
