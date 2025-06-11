@@ -33,7 +33,7 @@ function Items({ searchTerm, clicked, data }) {
         return matchSearch && matchFilter;
     });
 
-    const detailItem = id => {
+    const detailItem = (id) => {
         router.visit(`quiz/${id}`);
     }
 
