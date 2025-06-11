@@ -25,4 +25,26 @@ class QuizController extends Controller
             'data' => $data
         ]);
     }
+
+    public function show(Request $req, string $id) {
+        $quiz = Quiz::with('teacher')->where('id', $id)->first();
+        $data = [
+                    'id' => $quiz->id, 
+                    'title' => $quiz->title,
+                    'description' => $quiz->description,
+                    'max' => $quiz->max,
+                    'status' => $quiz->status,
+                    'updated_at' => $quiz->updated_at->format('d/m/Y'),
+                    'teacher_id' => $quiz->teacher->id,
+                    'teacher' => $quiz->teacher->name
+                ];
+
+        return Inertia::render('showQuiz', [
+            'data' => $data
+        ]);
+    }
+
+    public function start(Request $req, string $id) {
+        return Inertia::render('quizAttempt');
+    }
 }
