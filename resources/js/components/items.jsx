@@ -32,17 +32,9 @@ function Items({ searchTerm, clicked, data }) {
         return matchSearch && matchFilter;
     });
 
-    const filter = quiz.filter(item => {
-        if (clicked == 1) {
-            return item.max >= 0 && item.max <= 10;
-        } else if (clicked == 2) {
-            return item.max >= 10 && item.max <= 30;
-        } else if (clicked == 3) {
-            return item.max >= 30 && item.max <= 50;
-        } else if (clicked == 4) {
-            return item.max >= 50;
-        }
-    });
+    const detailItem = id => {
+        router.visit(`quiz/${id}`);
+    };
 
     // Responsive Items Per Page (Mobile: 6, PC: 10)
     const itemsPerPage = window.innerWidth >= 1024 ? 6 : 6;
@@ -53,10 +45,6 @@ function Items({ searchTerm, clicked, data }) {
         startIndex,
         startIndex + itemsPerPage
     ); // ex : (1 - 1) * 6 = 0 (artinya indeks muncul dari 0 - 5) or (2 - 1) * 6 = 6 (6-11)
-
-    console.log(clicked);
-    console.log(filter);
-    console.log(quiz.max);
 
     return (
         <div className="relative pb-20 md:pt-15">
