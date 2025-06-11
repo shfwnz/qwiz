@@ -33,15 +33,18 @@ function Items({ searchTerm, clicked, data }) {
         return matchSearch && matchFilter;
     });
 
-    const detailItem = (id) => {
+    const detailItem = id => {
         router.visit(`quiz/${id}`);
-    }
+    };
 
     const itemsPerPage = 6;
 
     const totalPages = Math.ceil(quiz.length / itemsPerPage); // Math.ceil untk pembulatan ke atas, ex : 10/6 = 1,... > 2
     const startIndex = (currentPage - 1) * itemsPerPage; // Mulai index berapa item di tampilkan
-    const selectedItems = filteredData.slice(startIndex, startIndex + itemsPerPage); // ex : (1 - 1) * 6 = 0 (artinya indeks muncul dari 0 - 5) or (2 - 1) * 6 = 6 (6-11)
+    const selectedItems = filteredData.slice(
+        startIndex,
+        startIndex + itemsPerPage
+    ); // ex : (1 - 1) * 6 = 0 (artinya indeks muncul dari 0 - 5) or (2 - 1) * 6 = 6 (6-11)
 
     return (
         <div className="relative pb-20 md:pt-15">
@@ -53,7 +56,10 @@ function Items({ searchTerm, clicked, data }) {
                             whileHover={{ scale: 0.95 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <button onClick={() => detailItem(quiz.id)} className="relative rounded-lg min-h-10 min-w-10 md:h-full w-full">
+                            <button
+                                onClick={() => detailItem(quiz.id)}
+                                className="relative rounded-lg min-h-10 min-w-10 md:h-full w-full"
+                            >
                                 <div className="relative w-full">
                                     <img
                                         className="rounded-lg w-full md:h-80 bg-white"
@@ -66,7 +72,7 @@ function Items({ searchTerm, clicked, data }) {
                                         </Badge>
                                     )}
                                 </div>
-                                <div className='flex grid grid-cols-1 justify-start items-start'>
+                                <div className="grid grid-cols-1 justify-start items-start">
                                     <p className="font-bold md:text-[40px] text-start">
                                         {quiz.title}
                                     </p>
