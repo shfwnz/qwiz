@@ -12,15 +12,24 @@ return new class extends Migration {
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('description');
-            $table->integer('max')->nullable();
-            $table->boolean('status');
             $table
                 ->foreignId('teacher_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('restrict');
+                ->constrained('users')
+                ->onDelete('cascade');
+            $table->string('slug')->unique();
+            $table->string('title');
+            $table->string('description');
+            $table->integer('time_limit_minutes')->nullable();
+            $table->integer('max_attempts')->default(1);
+            $table->integer('max_participants')->default(40);
+            $table
+                ->enum('visibility', ['public', 'private'])
+                ->default('private');
+
+            $table->string('access_code', 6)->nullable();
+            $table->boolean('require_code')->default(false);
+            $table->datetime('start_time')->nullable();
+            $table->datetime('end_time')->nullable();
             $table->timestamps();
         });
     }

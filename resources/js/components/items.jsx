@@ -12,33 +12,35 @@ function Items({ searchTerm, clicked, data }) {
 
         const delay = setTimeout(fetchData, 500);
         return () => clearTimeout(delay);
-    }, [data]) 
+    }, [data]);
 
-    const filteredData = quiz.filter((item) => {
-        const matchSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
-        let matchFilter = true
+    const filteredData = quiz.filter(item => {
+        const matchSearch = item.title
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+        let matchFilter = true;
         if (clicked == 1) {
-            matchFilter = item.max >= 0 && item.max <= 10
+            matchFilter = item.max >= 0 && item.max <= 10;
         } else if (clicked == 2) {
-            matchFilter = item.max >= 10 && item.max <= 30
+            matchFilter = item.max >= 10 && item.max <= 30;
         } else if (clicked == 3) {
-            matchFilter = item.max >= 30 && item.max <= 50
+            matchFilter = item.max >= 30 && item.max <= 50;
         } else if (clicked == 4) {
-            matchFilter = item.max >= 50
-        } 
+            matchFilter = item.max >= 50;
+        }
 
-        return matchSearch && matchFilter
+        return matchSearch && matchFilter;
     });
 
-    const filter = quiz.filter((item) => {
+    const filter = quiz.filter(item => {
         if (clicked == 1) {
-            return item.max >= 0 && item.max <= 10
+            return item.max >= 0 && item.max <= 10;
         } else if (clicked == 2) {
-            return item.max >= 10 && item.max <= 30
+            return item.max >= 10 && item.max <= 30;
         } else if (clicked == 3) {
-            return item.max >= 30 && item.max <= 50
+            return item.max >= 30 && item.max <= 50;
         } else if (clicked == 4) {
-            return item.max >= 50
+            return item.max >= 50;
         }
     });
 
@@ -47,11 +49,14 @@ function Items({ searchTerm, clicked, data }) {
 
     const totalPages = Math.ceil(quiz.length / itemsPerPage); // Math.ceil untk pembulatan ke atas, ex : 10/6 = 1,... > 2
     const startIndex = (currentPage - 1) * itemsPerPage; // Mulai index berapa item di tampilkan
-    const selectedItems = filteredData.slice(startIndex, startIndex + itemsPerPage); // ex : (1 - 1) * 6 = 0 (artinya indeks muncul dari 0 - 5) or (2 - 1) * 6 = 6 (6-11)
+    const selectedItems = filteredData.slice(
+        startIndex,
+        startIndex + itemsPerPage
+    ); // ex : (1 - 1) * 6 = 0 (artinya indeks muncul dari 0 - 5) or (2 - 1) * 6 = 6 (6-11)
 
-    console.log(clicked)
-    console.log(filter)
-    console.log(quiz.max)
+    console.log(clicked);
+    console.log(filter);
+    console.log(quiz.max);
 
     return (
         <div className="relative pb-20 md:pt-15">
