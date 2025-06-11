@@ -43,4 +43,8 @@ class QuizController extends Controller
             'data' => $data
         ]);
     }
+
+    public function start(Request $req, string $id) {
+        return Inertia::render('quizAttempt');
+    }
 }

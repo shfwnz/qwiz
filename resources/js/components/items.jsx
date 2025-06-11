@@ -64,15 +64,17 @@ function Items({ searchTerm, clicked, data }) {
                                         </Badge>
                                     )}
                                 </div>
-                                <p className="font-bold md:text-[40px]">
-                                    {quiz.title}
-                                </p>
-                                <Badge className="bg-blue-500 md:text-[20px]">
-                                    {quiz.teacher || 'Unknown'}
-                                </Badge>
-                                <Badge className="bg-gray-500 md:text-[15px] md:mt-2">
-                                    {quiz.updated_at}
-                                </Badge>
+                                <div className='flex grid grid-cols-1 justify-start items-start'>
+                                    <p className="font-bold md:text-[40px] text-start">
+                                        {quiz.title}
+                                    </p>
+                                    <Badge className="bg-blue-500 md:text-[20px]">
+                                        {quiz.teacher || 'Unknown'}
+                                    </Badge>
+                                    <Badge className="bg-gray-500 md:text-[15px] md:mt-2">
+                                        {quiz.updated_at}
+                                    </Badge>
+                                </div>
                                 {quiz.status === 0 ? (
                                     <Badge className="absolute top-1 right-1 bg-red-500 md:text-[20px]">
                                         Closed

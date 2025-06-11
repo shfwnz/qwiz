@@ -10,6 +10,7 @@ Route::get('/', fn() => Inertia::render('home'));
 
 Route::get('/quiz', [Controllers\QuizController::class, 'index']);
 Route::get('/quiz/{id}', [Controllers\QuizController::class, 'show']);
+Route::get('/quiz/start/{id}', [Controllers\QuizController::class, 'start']);
 
 Route::get('/leaderboard', fn() => Inertia::render('leaderboard'));
 Route::get('/premium', fn() => Inertia::render('premium'));
