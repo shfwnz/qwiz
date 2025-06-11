@@ -53,10 +53,7 @@ function Items({ searchTerm, clicked, data }) {
                             whileHover={{ scale: 0.95 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <button
-                                onClick={() => detailItem(quiz.id)}
-                                className="relative rounded-lg min-h-10 min-w-10 md:h-full w-full"
-                            >
+                            <button onClick={() => detailItem(quiz.id)} className="relative rounded-lg min-h-10 min-w-10 md:h-full w-full">
                                 <div className="relative w-full">
                                     <img
                                         className="rounded-lg w-full md:h-80 bg-white"
@@ -69,7 +66,7 @@ function Items({ searchTerm, clicked, data }) {
                                         </Badge>
                                     )}
                                 </div>
-                                <div className="grid grid-cols-1 justify-start items-start">
+                                <div className="flex grid grid-cols-1 justify-start items-start">
                                     <p className="font-bold md:text-[40px] text-start">
                                         {quiz.title}
                                     </p>
