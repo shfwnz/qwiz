@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router-dom';
 import { Link, usePage } from '@inertiajs/react';
 
 export default function Footer() {
