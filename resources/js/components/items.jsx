@@ -32,17 +32,9 @@ function Items({ searchTerm, clicked, data }) {
         return matchSearch && matchFilter;
     });
 
-    const filter = quiz.filter(item => {
-        if (clicked == 1) {
-            return item.max >= 0 && item.max <= 10;
-        } else if (clicked == 2) {
-            return item.max >= 10 && item.max <= 30;
-        } else if (clicked == 3) {
-            return item.max >= 30 && item.max <= 50;
-        } else if (clicked == 4) {
-            return item.max >= 50;
-        }
-    });
+    const detailItem = id => {
+        router.visit(`quiz/${id}`);
+    };
 
     // Responsive Items Per Page (Mobile: 6, PC: 10)
     const itemsPerPage = window.innerWidth >= 1024 ? 6 : 6;
@@ -54,10 +46,6 @@ function Items({ searchTerm, clicked, data }) {
         startIndex + itemsPerPage
     ); // ex : (1 - 1) * 6 = 0 (artinya indeks muncul dari 0 - 5) or (2 - 1) * 6 = 6 (6-11)
 
-    console.log(clicked);
-    console.log(filter);
-    console.log(quiz.max);
-
     return (
         <div className="relative pb-20 md:pt-15">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:pl-10 md:pr-10 w-full">
@@ -68,39 +56,44 @@ function Items({ searchTerm, clicked, data }) {
                             whileHover={{ scale: 0.95 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <div className="relative rounded-lg min-h-10 min-w-10 md:h-full w-full">
-                                <div className="relative justify-items-center w-full">
-                                    <img
-                                        className="rounded-lg w-full md:h-80 bg-white"
-                                        src={point}
-                                        alt="stuff"
-                                    />
-                                    {quiz.max && (
-                                        <Badge className="absolute right-1 bottom-1 bg-yellow-500 md:bottom-2md:text-[20px]">
-                                            Maks : {quiz.max}
+                            <button
+                                onClick={() => detailItem(quiz.id)}
+                                className="relative rounded-lg min-h-10 min-w-10 md:h-full w-full"
+                            >
+                                <div className="relative rounded-lg min-h-10 min-w-10 md:h-full w-full">
+                                    <div className="relative w-full">
+                                        <img
+                                            className="rounded-lg w-full md:h-80 bg-white"
+                                            src={point}
+                                            alt="stuff"
+                                        />
+                                        {quiz.max && (
+                                            <Badge className="absolute right-1 bottom-1 bg-yellow-500 md:bottom-2md:text-[20px]">
+                                                Maks : {quiz.max}
+                                            </Badge>
+                                        )}
+                                    </div>
+                                    <p className="font-bold md:text-[40px]">
+                                        {quiz.title}
+                                    </p>
+                                    <Badge className="bg-blue-500 md:text-[20px]">
+                                        {quiz.teacher || 'Unknown'}
+                                    </Badge>{' '}
+                                    <br />
+                                    <Badge className="bg-gray-500 md:text-[15px] md:mt-2">
+                                        {quiz.updated_at}
+                                    </Badge>
+                                    {quiz.status === 0 ? (
+                                        <Badge className="absolute top-1 right-1 bg-red-500 md:text-[20px]">
+                                            Closed
                                         </Badge>
-                                    )}
+                                    ) : quiz.status === 1 ? (
+                                        <Badge className="absolute top-1 right-1 bg-green-500 md:text-[20px]">
+                                            Opened
+                                        </Badge>
+                                    ) : null}
                                 </div>
-                                <p className="font-bold md:text-[40px]">
-                                    {quiz.title}
-                                </p>
-                                <Badge className="bg-blue-500 md:text-[20px]">
-                                    {quiz.teacher || 'Unknown'}
-                                </Badge>{' '}
-                                <br />
-                                <Badge className="bg-gray-500 md:text-[15px] md:mt-2">
-                                    {quiz.updated_at}
-                                </Badge>
-                                {quiz.status === 0 ? (
-                                    <Badge className="absolute top-1 right-1 bg-red-500 md:text-[20px]">
-                                        Closed
-                                    </Badge>
-                                ) : quiz.status === 1 ? (
-                                    <Badge className="absolute top-1 right-1 bg-green-500 md:text-[20px]">
-                                        Opened
-                                    </Badge>
-                                ) : null}
-                            </div>
+                            </button>
                         </motion.div>
                     ))
                 ) : (
