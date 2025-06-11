@@ -69,7 +69,7 @@ function Items({ searchTerm, clicked, data }) {
                                         </Badge>
                                     )}
                                 </div>
-                                <div className="flex grid grid-cols-1 justify-start items-start">
+                                <div className="grid grid-cols-1 justify-start items-start">
                                     <p className="font-bold md:text-[40px] text-start">
                                         {quiz.title}
                                     </p>
