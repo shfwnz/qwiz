@@ -13,22 +13,24 @@ function Items({ searchTerm, clicked, data }) {
 
         const delay = setTimeout(fetchData, 500);
         return () => clearTimeout(delay);
-    }, [data]) 
+    }, [data]);
 
-    const filteredData = quiz.filter((item) => {
-        const matchSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
-        let matchFilter = true
+    const filteredData = quiz.filter(item => {
+        const matchSearch = item.title
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+        let matchFilter = true;
         if (clicked == 1) {
-            matchFilter = item.max >= 0 && item.max <= 10
+            matchFilter = item.max >= 0 && item.max <= 10;
         } else if (clicked == 2) {
-            matchFilter = item.max >= 10 && item.max <= 30
+            matchFilter = item.max >= 10 && item.max <= 30;
         } else if (clicked == 3) {
-            matchFilter = item.max >= 30 && item.max <= 50
+            matchFilter = item.max >= 30 && item.max <= 50;
         } else if (clicked == 4) {
-            matchFilter = item.max >= 50
-        } 
+            matchFilter = item.max >= 50;
+        }
 
-        return matchSearch && matchFilter
+        return matchSearch && matchFilter;
     });
 
     const detailItem = (id) => {

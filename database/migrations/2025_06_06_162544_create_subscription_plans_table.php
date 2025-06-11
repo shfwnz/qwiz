@@ -14,17 +14,18 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->text('description');
+            $table->string('description');
             $table->integer('price');
             $table->enum('duration', ['monthly', 'yearly']);
 
+            // features
             $table->integer('max_quizzes')->nullable();
             $table->integer('max_hearts')->nullable();
+            $table->integer('max_participants')->nullable();
             $table->boolean('unlimited_hearts')->default(false);
             $table->boolean('can_export_results')->default(false);
             $table->boolean('can_import_quizzes')->default(false);
-
-            $table->boolean('is_active')->default(0);
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }

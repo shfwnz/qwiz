@@ -13,10 +13,12 @@ class RolesSeeder extends Seeder
      */
     public function run(): void
     {
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[
+            \Spatie\Permission\PermissionRegistrar::class
+        ]->forgetCachedPermissions();
 
-        if(Role::where('name', 'super_admin')->exists()) {
-            return ; 
+        if (Role::where('name', 'super_admin')->exists()) {
+            return;
         }
 
         Role::create(['name' => 'super_admin']);
