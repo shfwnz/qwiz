@@ -1,15 +1,15 @@
-import Footer from "@/components/layouts/footer";
-import ParticleBackground from "@/components/particle-background";
-import { router, usePage } from "@inertiajs/react";
+import Footer from '@/components/layouts/footer';
+import ParticleBackground from '@/components/particle-background';
+import { router, usePage } from '@inertiajs/react';
 import point from '../../../public/images/point.png';
 import { Badge } from '@/components/ui/badge';
 
 export default function showQuiz() {
     const { data } = usePage().props;
-    
-    const startQuiz = (id) => {
+
+    const startQuiz = id => {
         router.visit(`/quiz/start/${id}`);
-    }
+    };
 
     return (
         <div className="container mx-auto max-w-4/5 h-170">
@@ -47,14 +47,19 @@ export default function showQuiz() {
                             {data.updated_at}
                         </Badge>
                     </div>
-                    <button onClick={() => startQuiz(data.id)} className="text-[50px] justify-items-center w-full mt-7 bg-[#FEFEFE] rounded-lg text-black hover:bg-white/50" >
+                    <button
+                        onClick={() => startQuiz(data.id)}
+                        className="text-[50px] justify-items-center w-full mt-7 bg-[#FEFEFE] rounded-lg text-black hover:bg-white/50"
+                    >
                         START
                     </button>
                 </div>
-                <div className="bg-white/10 pl-5 pt-5 rounded-lg mb-15">{data.description}</div>
+                <div className="bg-white/10 pl-5 pt-5 rounded-lg mb-15">
+                    {data.description}
+                </div>
             </div>
 
             <Footer />
         </div>
-    )
+    );
 }
