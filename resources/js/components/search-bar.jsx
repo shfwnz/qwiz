@@ -100,7 +100,7 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
                 <DialogContent className="bg-black text-white">
                     <DialogHeader>
                         <DialogTitle className="text-white">
-                            Jumlah Maksimal Peserta
+                            Max Participants for Quizzes
                         </DialogTitle>
                     </DialogHeader>
                     <div className="">
@@ -160,7 +160,7 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="text-white">
-                            Token Akses Private Quiz
+                            Token For Private Quiz
                         </DialogTitle>
                     </DialogHeader>
                     <div className='justify-items-center'>
@@ -188,7 +188,7 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
                             </DialogClose>
                             <DialogClose asChild>
                                 <Button onClick={submit} className="w-1/2">
-                                    Search
+                                    {processing ? 'Wait For a Moment' : 'Search' }
                                 </Button>
                             </DialogClose>
                         </div>

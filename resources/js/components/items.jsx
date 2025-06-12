@@ -72,7 +72,7 @@ function Items({ searchTerm, clicked, data }) {
                                         />
                                         {quiz.max_participants && (
                                             <Badge className="absolute right-1 bottom-1 bg-yellow-500 md:bottom-2 md:text-[15px]">
-                                                Maks : {quiz.max_participants}
+                                                Max Join : {quiz.max_participants}
                                             </Badge>
                                         )}
                                     </div>
@@ -93,7 +93,7 @@ function Items({ searchTerm, clicked, data }) {
                                     </div>
                                     {quiz.visibility === 'public' ? (
                                         <Badge className="absolute right-5 top-9 bg-green-500 md:text-[20px]">
-                                            Publik
+                                            Public
                                         </Badge>
                                     ) : quiz.visibility === 'private' ? (
                                         <Badge className="absolute right-5 top-9 bg-blue-500 md:text-[20px]">
