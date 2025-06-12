@@ -73,7 +73,7 @@ export default function quizAttempt() {
                             <button
                                 key={index}
                                 onClick={() => handleQuestion(option)}
-                                className="bg-blue-500 text-white p-2 py-10 rounded-md rounded hover:bg-blue-600"
+                                className="bg-blue-500 text-white p-2 py-10 rounded-md hover:bg-blue-600"
                             >
                                 {option}
                             </button>

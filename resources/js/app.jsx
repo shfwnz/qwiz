@@ -10,8 +10,8 @@ const appName =
 createInertiaApp({
     resolve: name =>
         resolvePageComponent(
-            `./Pages/${name}.jsx`,
-            import.meta.glob('./Pages/**/*.jsx')
+            `./pages/${name}.jsx`,
+            import.meta.glob('./pages/**/*.jsx')
         ),
     setup({ el, App, props }) {
         createRoot(el).render(<App {...props} />);
