@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '@/components/layouts/header';
 import SearchBar from '@/components/search-bar';
 import Items from '@/components/items';
 import Footer from '@/components/layouts/footer';
 import ParticlesBackground from '@/components/particle-background';
 import { usePage } from '@inertiajs/react';
+import { toast } from 'sonner';
 
 export default function Quizzes() {
     const [searchTerm, setSearchTerm] = useState('');
     const [clicked, setClicked] = useState();
 
-    const { data } = usePage().props;
+    const { data, flash } = usePage().props;
+
+    useEffect(() => {
+        if (flash?.error) {
+            toast.error(flash.error)
+        }
+    }, [flash])
+
+    console.log(flash)
 
     return (
         <div className="container mx-auto max-w-7xl">

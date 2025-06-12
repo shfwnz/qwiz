@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { router } from '@inertiajs/react';
 import { Badge } from '@/components/ui/badge';
-import point from '../../../public/images/point.png';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import point from '../../../public/images/suprised-car.png';
 
 function Items({ searchTerm, clicked, data }) {
     const [quiz, setQuiz] = useState([]);
@@ -21,20 +23,20 @@ function Items({ searchTerm, clicked, data }) {
             .includes(searchTerm.toLowerCase());
         let matchFilter = true;
         if (clicked == 1) {
-            matchFilter = item.max >= 0 && item.max <= 10;
+            matchFilter = item.max_participants >= 0 && item.max_participants <= 10;
         } else if (clicked == 2) {
-            matchFilter = item.max >= 10 && item.max <= 30;
+            matchFilter = item.max_participants >= 10 && item.max_participants <= 30;
         } else if (clicked == 3) {
-            matchFilter = item.max >= 30 && item.max <= 50;
+            matchFilter = item.max_participants >= 30 && item.max_participants <= 50;
         } else if (clicked == 4) {
-            matchFilter = item.max >= 50;
+            matchFilter = item.max_participants >= 50;
         }
 
         return matchSearch && matchFilter;
     });
 
-    const detailItem = id => {
-        router.visit(`quiz/${id}`);
+    const detailItem = slug => {
+        router.visit(`quiz/${slug}`);
     };
 
     const itemsPerPage = 6;
@@ -56,48 +58,50 @@ function Items({ searchTerm, clicked, data }) {
                             whileHover={{ scale: 0.95 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <button
-                                onClick={() => detailItem(quiz.id)}
-                                className="relative rounded-lg min-h-10 min-w-10 md:h-full w-full gap-3 flex flex-col"
+                            <Button
+                                onClick={() => detailItem(quiz.slug)}
+                                className="relative rounded-lg md:h-full w-full bg-white/"
+                                variant={'ghost'}
                             >
-                                <div className="relative w-full">
-                                    <img
-                                        className="rounded-lg w-full md:h-80 bg-white"
-                                        src={point}
-                                        alt="stuff"
-                                    />
-                                    {quiz.max && (
-                                        <Badge className="absolute right-1 bottom-1 bg-yellow-500 md:bottom-2 md:text-[15px]">
-                                            Maks : {quiz.max}
-                                        </Badge>
-                                    )}
-                                </div>
-                                <div className="flex flex-col justify-between flex-1 gap-2">
-                                    <div className="flex-1">
-                                        <p className="font-medium md:text-3xl text-start line-clamp-2">
-                                            {quiz.title}
-                                        </p>
+                                <Card className="bg-white/ border-none flex flex-col h-full relative">
+                                    <div className="relative w-full h-60 md:h-80 h-1/2">
+                                        <img
+                                            className="rounded-lg w-[1000px] md:h-80 object-cover bg-white"
+                                            src={point}
+                                            alt="stuff"
+                                        />
+                                        {quiz.max_participants && (
+                                            <Badge className="absolute right-1 bottom-1 bg-yellow-500 md:bottom-2 md:text-[15px]">
+                                                Maks : {quiz.max_participants}
+                                            </Badge>
+                                        )}
                                     </div>
-
-                                    <div className="flex flex-col gap-1">
-                                        <Badge className="bg-blue-500 md:text-[20px] self-start">
-                                            {quiz.teacher || 'Unknown'}
-                                        </Badge>
-                                        <Badge className="bg-gray-500 md:text-[15px] self-start">
-                                            {quiz.updated_at}
-                                        </Badge>
+                                    <div className="grid grid-cols-1 justify-start items-start h-1/2">
+                                        <div className='h-1/2'>
+                                            <p className="font-bold md:text-[40px] text-start h-[150px] break-words whitespace-normal">
+                                                {quiz.title}
+                                            </p>
+                                        </div>
+                                        <div className='grid grid-cols-1 '>
+                                            <Badge className="bg-blue-500 md:text-[20px]">
+                                                {quiz.teacher || 'Unknown'}
+                                            </Badge>
+                                            <Badge className="bg-gray-500 md:text-[15px] md:mt-2">
+                                                {quiz.updated_at}
+                                            </Badge>
+                                        </div>
                                     </div>
-                                </div>
-                                {quiz.status === 0 ? (
-                                    <Badge className="absolute top-1 right-1 bg-red-500 md:text-[20px]">
-                                        Closed
-                                    </Badge>
-                                ) : quiz.status === 1 ? (
-                                    <Badge className="absolute top-1 right-1 bg-green-500 md:text-[20px]">
-                                        Opened
-                                    </Badge>
-                                ) : null}
-                            </button>
+                                    {quiz.visibility === 'public' ? (
+                                        <Badge className="absolute right-5 top-9 bg-green-500 md:text-[20px]">
+                                            Publik
+                                        </Badge>
+                                    ) : quiz.visibility === 'private' ? (
+                                        <Badge className="absolute right-5 top-9 bg-blue-500 md:text-[20px]">
+                                            Private
+                                        </Badge>
+                                    ) : null}
+                                </Card>
+                            </Button>
                         </motion.div>
                     ))
                 ) : (

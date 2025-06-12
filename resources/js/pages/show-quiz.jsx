@@ -23,18 +23,18 @@ export default function showQuiz() {
                             src={point}
                             alt="stuff"
                         />
-                        {data.max && (
-                            <Badge className="absolute right-1 bottom-1 bg-yellow-500 md:bottom-2 md:text-[15px]">
-                                Maks : {data.max}
+                        {data.max_participants && (
+                            <Badge className="absolute right-1 bottom-0 bg-yellow-500 md:bottom-2 md:text-[15px]">
+                                Maks : {data.max_participants}
                             </Badge>
                         )}
-                        {data.status === 0 ? (
-                            <Badge className="absolute right-1 top-1 bg-red-500 md:text-[20px]">
-                                Closed
-                            </Badge>
-                        ) : data.status === 1 ? (
+                        {data.visibility === 'public' ? (
                             <Badge className="absolute right-1 top-1 bg-green-500 md:text-[20px]">
-                                Opened
+                                Publik
+                            </Badge>
+                        ) : data.visibility === 'private' ? (
+                            <Badge className="absolute right-1 top-1 bg-blue-500 md:text-[20px]">
+                                Private
                             </Badge>
                         ) : null}
                     </div>
