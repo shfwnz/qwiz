@@ -20,8 +20,6 @@ return new class extends Migration {
                 ->foreignId('subscription_plan_id')
                 ->constrained('subscription_plans')
                 ->onDelete('cascade');
-
-            $table->integer('amount')->default(1);
             $table
                 ->enum('payment_status', [
                     'pending',
@@ -30,7 +28,7 @@ return new class extends Migration {
                     'failure',
                 ])
                 ->default('pending');
-
+            $table->integer('amount')->default(1);
             $table->string('order_id')->unique();
             $table->string('snap_token')->nullable();
             $table->string('payment_type')->nullable();

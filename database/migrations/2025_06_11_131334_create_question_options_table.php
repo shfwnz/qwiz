@@ -18,6 +18,7 @@ return new class extends Migration {
                 ->onDelete('cascade');
             $table->string('option_text');
             $table->boolean('is_correct')->default(false);
+
             $table->timestamps();
         });
     }
