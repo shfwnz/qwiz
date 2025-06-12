@@ -32,7 +32,7 @@ const allPlayers = [
 
 const leaderboard = () => {
     return (
-        <div className="container mx-auto max-w-4/5 py-8 space-y-16">
+        <div className="container mx-auto max-w-7xl py-8 space-y-16">
             <ParticlesBackground />
 
             <div className="w-full flex items-center justify-center">

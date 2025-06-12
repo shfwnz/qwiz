@@ -43,7 +43,7 @@ const premium = () => {
     };
 
     return (
-        <div className="container mx-auto max-w-4/5">
+        <div className="container mx-auto max-w-7xl">
             <div className="h-screen flex flex-col w-full items-center justify-center">
                 <div className="flex flex-col items-center justify-center gap-3">
                     <span className="capitalize text-3xl">
