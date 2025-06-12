@@ -1,5 +1,6 @@
 import React from 'react';
 import TopPlayerCard from '@/components/top-player-card';
+import Login from './auth/login';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -34,9 +35,12 @@ const leaderboard = () => {
     return (
         <div className="container mx-auto max-w-7xl py-8 space-y-16">
             <ParticlesBackground />
+            <Login />
 
             <div className="w-full flex items-center justify-center">
-                <h1 className="font-bold text-4xl uppercase">Leaderboard</h1>
+                <h1 className="font-bold text-4xl uppercase">
+                    Global Leaderboard
+                </h1>
             </div>
             <div className="flex flex-col items-center justify-center border rounded-3xl p-8 gap-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full ">
