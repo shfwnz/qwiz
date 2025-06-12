@@ -18,7 +18,6 @@ return new class extends Migration {
                 ->onDelete('cascade');
             $table->timestamp('started_at');
             $table->timestamp('ended_at');
-            $table->timestamp('submitted_at');
             $table->enum('status', [
                 'in_progress',
                 'completed',

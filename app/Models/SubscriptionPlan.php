@@ -15,6 +15,7 @@ class SubscriptionPlan extends Model
         'duration',
         'max_quizzes',
         'max_hearts',
+        'max_participants',
         'unlimited_hearts',
         'can_export_results',
         'can_import_quizzes',

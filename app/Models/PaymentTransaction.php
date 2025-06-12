@@ -11,9 +11,12 @@ class PaymentTransaction extends Model
         'user_id',
         'subscription_plan_id',
         'payment_status',
+        'amount',
         'order_id',
         'snap_token',
         'payment_type',
+        'paid_at',
+        'expired_at',
         'midtrans_response',
     ];
 
