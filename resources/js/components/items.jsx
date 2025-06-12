@@ -48,7 +48,7 @@ function Items({ searchTerm, clicked, data }) {
 
     return (
         <div className="relative pb-20 md:pt-15">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:pl-10 md:pr-10 w-full">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:pl-10 md:pr-10 w-full">
                 {selectedItems.length > 0 ? (
                     selectedItems.map(quiz => (
                         <motion.div
@@ -58,7 +58,7 @@ function Items({ searchTerm, clicked, data }) {
                         >
                             <button
                                 onClick={() => detailItem(quiz.id)}
-                                className="relative rounded-lg min-h-10 min-w-10 md:h-full w-full"
+                                className="relative rounded-lg min-h-10 min-w-10 md:h-full w-full gap-3 flex flex-col"
                             >
                                 <div className="relative w-full">
                                     <img
@@ -72,16 +72,21 @@ function Items({ searchTerm, clicked, data }) {
                                         </Badge>
                                     )}
                                 </div>
-                                <div className="grid grid-cols-1 justify-start items-start">
-                                    <p className="font-bold md:text-[40px] text-start">
-                                        {quiz.title}
-                                    </p>
-                                    <Badge className="bg-blue-500 md:text-[20px]">
-                                        {quiz.teacher || 'Unknown'}
-                                    </Badge>
-                                    <Badge className="bg-gray-500 md:text-[15px] md:mt-2">
-                                        {quiz.updated_at}
-                                    </Badge>
+                                <div className="flex flex-col justify-between flex-1 gap-2">
+                                    <div className="flex-1">
+                                        <p className="font-medium md:text-3xl text-start line-clamp-2">
+                                            {quiz.title}
+                                        </p>
+                                    </div>
+
+                                    <div className="flex flex-col gap-1">
+                                        <Badge className="bg-blue-500 md:text-[20px] self-start">
+                                            {quiz.teacher || 'Unknown'}
+                                        </Badge>
+                                        <Badge className="bg-gray-500 md:text-[15px] self-start">
+                                            {quiz.updated_at}
+                                        </Badge>
+                                    </div>
                                 </div>
                                 {quiz.status === 0 ? (
                                     <Badge className="absolute top-1 right-1 bg-red-500 md:text-[20px]">
