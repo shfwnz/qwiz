@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/table';
 import ParticlesBackground from '@/components/particle-background';
 import Footer from '@/components/layouts/footer.jsx';
+import { router } from '@inertiajs/react';
 
 const topPlayers = [
     { rank: 1, name: 'John Doe', score: 100, winrate: '90%' },
@@ -33,6 +34,14 @@ const allPlayers = [
 ];
 
 const LoginOverlay = () => {
+    const handleBack = () => {
+        router.visit('/');
+    };
+
+    const handleLogin = () => {
+        router.visit('/login');
+    };
+
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center z-50">
             <h1 className="text-xl font-medium lowercase">
@@ -41,9 +50,22 @@ const LoginOverlay = () => {
             <div className="max-w-2xs w-full">
                 <img src={Reminder} alt="Reminder" />
             </div>
-            <Button variant="ghost" className="min-w-16 p-8 font-bold text-lg">
-                Login
-            </Button>
+            <div className="flex gap-3">
+                <Button
+                    variant="ghost"
+                    className="min-w-16 p-8 hover:font-bold text-lg"
+                    onClick={handleBack}
+                >
+                    Back
+                </Button>
+                <Button
+                    variant="ghost"
+                    className="min-w-16 p-8 hover:font-bold text-lg"
+                    onClick={handleLogin}
+                >
+                    Login
+                </Button>
+            </div>
         </div>
     );
 };
