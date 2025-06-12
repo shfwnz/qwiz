@@ -38,7 +38,6 @@ const leaderboard = () => {
             <div className="w-full flex items-center justify-center">
                 <h1 className="font-bold text-4xl uppercase">Leaderboard</h1>
             </div>
-
             <div className="flex flex-col items-center justify-center border rounded-3xl p-8 gap-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full ">
                     {topPlayers.map(player => (

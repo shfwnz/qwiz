@@ -25,6 +25,7 @@ return new class extends Migration {
             $table->boolean('unlimited_hearts')->default(false);
             $table->boolean('can_export_results')->default(false);
             $table->boolean('can_import_quizzes')->default(false);
+
             $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
