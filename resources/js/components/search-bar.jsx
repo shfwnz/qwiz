@@ -37,14 +37,14 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
     };
 
     return (
-        <div className="flex relative w-full md:h-full md:pr-10 space-x-2 md:space-x-5">
+        <div className="flex justify-center items-center relative w-full md:h-full md:pr-10 space-x-2 md:space-x-5">
             <div className="relative w-full md:pr-1">
                 <input
                     type="text"
                     value={searchTerm}
                     onChange={e => setSearchTerm(e.target.value)} // e.target tempat event terjadi
                     className="rounded-lg w-full min-h-8 md:min-h-10 text-sm placeholder-black focus:outline-none text-black pl-3 pr-13 bg-[#D9D9D9]"
-                    placeholder="Mau Cari Apa?"
+                    placeholder="What quiz are you looking for?"
                 />
                 <div className="absolute right-3 md:right-15 top-5 transform -translate-y-1/2 w-[25px] h-[25px] text-black">
                     <svg
