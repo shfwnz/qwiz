@@ -25,12 +25,12 @@ export default function showQuiz() {
                         />
                         {data.max_participants && (
                             <Badge className="absolute right-1 bottom-0 bg-yellow-500 md:bottom-2 md:text-[15px]">
-                                Maks : {data.max_participants}
+                                Max Join : {data.max_participants}
                             </Badge>
                         )}
                         {data.visibility === 'public' ? (
                             <Badge className="absolute right-1 top-1 bg-green-500 md:text-[20px]">
-                                Publik
+                                Public
                             </Badge>
                         ) : data.visibility === 'private' ? (
                             <Badge className="absolute right-1 top-1 bg-blue-500 md:text-[20px]">

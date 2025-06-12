@@ -48,7 +48,7 @@ class QuizController extends Controller
 
             return redirect()->route('quiz.show', ['slug' => $quiz_code->slug]);
         } elseif (!$quiz_code && !$quiz) {
-            return redirect()->route('quiz.list')->with('error', 'Token Salah');
+            return redirect()->route('quiz.list')->with('error', 'Token Not Found');
         }
 
         $data = [

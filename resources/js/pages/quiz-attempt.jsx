@@ -63,7 +63,7 @@ export default function quizAttempt() {
             {!showResult ? (
                 <div className="bg-white/20 rounded-lg w-full h-2/3 px-10 mx-10">
                     <Badge className="text-xl font-bold mb-4 mt-10">
-                        Soal {currentIndex + 1} dari {questions.length}
+                        Question {currentIndex + 1} from {questions.length}
                     </Badge>
                     <p className="text-[30px] pt-20">
                         {currentQuestion.question}
@@ -82,13 +82,13 @@ export default function quizAttempt() {
                 </div>
             ) : (
                 <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-4">Hasil Quiz</h2>
-                    <p className="text-lg mb-2">Jawaban Benar: {score}</p>
+                    <h2 className="text-2xl font-bold mb-4">Quiz Result</h2>
+                    <p className="text-lg mb-2">Correct Answer: {score}</p>
                     <p className="text-lg mb-4">
-                        Jawaban Salah: {questions.length - score}
+                        Wrong Answer: {questions.length - score}
                     </p>
 
-                    <h3 className="font-semibold mt-6 mb-2">Detail Jawaban:</h3>
+                    <h3 className="font-semibold mt-6 mb-2">Detail Answer:</h3>
                     <ul className="text-left list-disc pl-6">
                         {userAnswers.map((ans, i) => {
                             const q = questions.find(
@@ -98,7 +98,7 @@ export default function quizAttempt() {
                                 <li key={i} className="mb-2">
                                     <strong>{q.question}</strong>
                                     <br />
-                                    Jawaban kamu:{' '}
+                                    Your Answer:{' '}
                                     <span
                                         className={
                                             ans.correct
@@ -109,7 +109,7 @@ export default function quizAttempt() {
                                         {ans.selected}
                                     </span>
                                     <br />
-                                    Jawaban benar: {q.answer}
+                                    Correct Answer: {q.answer}
                                 </li>
                             );
                         })}
@@ -119,7 +119,7 @@ export default function quizAttempt() {
                         href="/"
                         className="absolue p-2 bg-white rounded-lg text-black bottom-3"
                     >
-                        Kembali ke Dashboard
+                        Return to Dashboard
                     </Link>
                 </div>
             )}
