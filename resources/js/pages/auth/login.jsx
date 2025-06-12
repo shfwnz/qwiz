@@ -13,7 +13,7 @@ import {
 
 const Login = () => {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-2 w-full">
+        <div className="flex flex-col items-center justify-center min-h-screen py-2 w-full bg-transparent">
             <Card className="justify-center flex flex-col items-center w-full max-w-md space-y-2 px-8 py-12">
                 <CardHeader className="flex w-full justify-center">
                     <CardTitle className="text-2xl">Login</CardTitle>

@@ -1,6 +1,7 @@
 import React from 'react';
 import TopPlayerCard from '@/components/top-player-card';
-import Login from './auth/login';
+import Reminder from '../../../public/images/reminder.png';
+import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -31,11 +32,28 @@ const allPlayers = [
     { rank: 11, name: 'Hannah', score: 30, winrate: '2%' },
 ];
 
+const LoginOverlay = () => {
+    return (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center z-50">
+            <h1 className="text-xl font-medium lowercase">
+                "Oops, you need to login to view the leaderboard!"
+            </h1>
+            <div className="max-w-2xs w-full">
+                <img src={Reminder} alt="Reminder" />
+            </div>
+            <Button variant="ghost" className="min-w-16 p-8 font-bold text-lg">
+                Login
+            </Button>
+        </div>
+    );
+};
+
 const leaderboard = () => {
+    const token = localStorage.getItem('token');
+
     return (
         <div className="container mx-auto max-w-7xl py-8 space-y-16">
             <ParticlesBackground />
-            <Login />
 
             <div className="w-full flex items-center justify-center">
                 <h1 className="font-bold text-4xl uppercase">
@@ -86,6 +104,7 @@ const leaderboard = () => {
                 </Card>
                 <Footer />
             </div>
+            {!token && <LoginOverlay />}
         </div>
     );
 };
