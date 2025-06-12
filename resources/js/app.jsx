@@ -8,11 +8,25 @@ const appName =
     window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
-    resolve: name =>
-        resolvePageComponent(
+    resolve: name => {
+        // Try multiple possible paths
+        const pages = import.meta.glob('./pages/**/*.jsx');
+
+        const possiblePaths = [
             `./pages/${name}.jsx`,
-            import.meta.glob('./pages/**/*.jsx')
-        ),
+            `./pages/${name}/Index.jsx`,
+            `./pages/auth/${name}.jsx`,
+        ];
+
+        for (const path of possiblePaths) {
+            if (pages[path]) {
+                return pages[path]();
+            }
+        }
+
+        // Fallback to original resolver
+        return resolvePageComponent(`./pages/${name}.jsx`, pages);
+    },
     setup({ el, App, props }) {
         createRoot(el).render(<App {...props} />);
     },

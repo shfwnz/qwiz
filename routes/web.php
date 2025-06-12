@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use Inertia\Inertia;
 
+Route::get('/login', fn() => Inertia::render('login'));
+Route::get('/register', fn() => Inertia::render('register'));
+
 Route::get('/', fn() => Inertia::render('home'));
 
 // Pages Quiz
