@@ -12,7 +12,7 @@ export default function showQuiz() {
     };
 
     return (
-        <div className="container mx-auto max-w-7xl h-170">
+        <div className="container mx-auto max-w-7xl">
             <ParticleBackground />
 
             <div className="grid grid-cols-2 w-full h-full space-x-5 pt-10 mx-5">
