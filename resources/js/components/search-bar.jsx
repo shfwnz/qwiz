@@ -17,7 +17,7 @@ import {
     InputOTPGroup,
     InputOTPSlot,
 } from '@/components/ui/input-otp';
-import { useForm, usePage } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 import { Toaster } from '@/components/ui/sonner';
 
 export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
