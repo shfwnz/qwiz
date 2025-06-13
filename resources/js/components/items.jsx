@@ -67,7 +67,7 @@ function Items({ searchTerm, clicked, data }) {
                                 variant={'ghost'}
                             >
                                 <Card className="bg-white/ border-none flex flex-col h-full relative">
-                                    <div className="relative w-full h-60 md:h-80 h-1/2">
+                                    <div className="relative w-full h-60 md:h-80">
                                         <img
                                             className="rounded-lg w-[1000px] md:h-80 object-cover bg-white"
                                             src={point}
@@ -82,7 +82,7 @@ function Items({ searchTerm, clicked, data }) {
                                     </div>
                                     <div className="grid grid-cols-1 justify-start items-start h-1/2">
                                         <div className="h-1/2">
-                                            <p className="font-bold md:text-[40px] text-start h-[150px] break-words whitespace-normal">
+                                            <p className="font-bold md:text-4xl text-start h-[150px] break-words whitespace-normal">
                                                 {quiz.title}
                                             </p>
                                         </div>

@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Footer from '@/components/layouts/footer';
 import ParticleBackground from '@/components/particle-background';
 import { router, usePage } from '@inertiajs/react';
@@ -6,9 +7,43 @@ import { Badge } from '@/components/ui/badge';
 
 export default function showQuiz() {
     const { data } = usePage().props;
+    const [isJoining, setIsJoining] = useState(false);
+
+    const joinWaitingRoom = id => {
+        setIsJoining(true);
+        router.visit(`/quiz/waiting-room/${id}`);
+    };
 
     const startQuiz = id => {
-        router.visit(`/quiz/start/${id}`);
+        if (data.visibility === 'public') {
+            // Public quiz
+            router.visit(`/quiz/start/${id}`);
+        } else {
+            // Private quiz
+            joinWaitingRoom(id);
+        }
+    };
+
+    const getButtonText = () => {
+        if (isJoining) return 'JOINING...';
+
+        if (data.visibility === 'public') {
+            return 'START QUIZ';
+        } else {
+            const isOwner = auth?.user?.id === data.user_id;
+            return isOwner ? 'MANAGE QUIZ' : 'JOIN WAITING ROOM';
+        }
+    };
+
+    const getButtonClass = () => {
+        const baseClass =
+            'text-[50px] justify-items-center w-full mt-7 rounded-lg font-bold transition-all duration-200';
+
+        if (data.visibility === 'public') {
+            return `${baseClass} bg-green-500 text-white hover:bg-green-600`;
+        } else {
+            return `${baseClass} bg-blue-500 text-white hover:bg-blue-600`;
+        }
     };
 
     return (
@@ -16,7 +51,7 @@ export default function showQuiz() {
             <ParticleBackground />
 
             <div className="grid grid-cols-2 w-full h-full space-x-5 pt-10 mx-5">
-                <div className="">
+                <div className="space-y-4">
                     <div className="relative w-full">
                         <img
                             className="rounded-lg w-full md:h-95 bg-white"
@@ -38,7 +73,7 @@ export default function showQuiz() {
                             </Badge>
                         ) : null}
                     </div>
-                    <h1 className="text-[45px] font-bold">{data.title}</h1>
+                    <h1 className="text-5xl font-bold">{data.title}</h1>
                     <div className="flex gap-2 items-center">
                         <Badge className="bg-blue-500 md:text-[20px]">
                             {data.teacher || 'Unknown'}
@@ -47,15 +82,66 @@ export default function showQuiz() {
                             {data.updated_at}
                         </Badge>
                     </div>
+
+                    {data.visibility === 'private' && (
+                        <div className="bg-blue-500/20 border border-blue-500 rounded-lg p-4 mb-4">
+                            <h3 className="font-semibold mb-2">
+                                🔒 Private Quiz
+                            </h3>
+                            <p className="text-sm">
+                                This quiz requires a waiting room. All
+                                participants will start simultaneously when
+                                organizer starts the session.
+                            </p>
+                        </div>
+                    )}
+
+                    {data.visibility === 'public' && (
+                        <div className="bg-green-500/20 border border-green-500 rounded-lg p-4 mb-4">
+                            <h3 className="font-semibold mb-2">
+                                📖 Public Quiz
+                            </h3>
+                            <p className="text-sm">
+                                This quiz can be started at any time. You can
+                                work at your own pace.
+                            </p>
+                        </div>
+                    )}
+
                     <button
                         onClick={() => startQuiz(data.id)}
-                        className="text-[50px] justify-items-center w-full mt-7 bg-[#FEFEFE] rounded-lg text-black hover:bg-white/50"
+                        disabled={isJoining}
+                        className={getButtonClass()}
                     >
-                        START
+                        {getButtonText()}
                     </button>
                 </div>
-                <div className="bg-white/10 pl-5 pt-5 rounded-lg mb-15">
-                    {data.description}
+                <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg h-full">
+                    <h2 className="text-white text-xl font-semibold mb-4">
+                        Quiz Description
+                    </h2>
+                    <div className="text-white/90 leading-relaxed">
+                        {data.description ||
+                            'No description is available for this quiz.'}
+                    </div>
+
+                    {/* Quiz statistics */}
+                    <div className="mt-6 grid grid-cols-2 gap-4">
+                        <div className="bg-white/5 rounded-lg p-3 text-center">
+                            <div className="text-2xl font-bold text-white">
+                                {data.questions_count || 0}
+                            </div>
+                            <div className="text-sm text-white/70">
+                                Questions
+                            </div>
+                        </div>
+                        <div className="bg-white/5 rounded-lg p-3 text-center">
+                            <div className="text-2xl font-bold text-white">
+                                {data.time_limit || '∞'}
+                            </div>
+                            <div className="text-sm text-white/70">minutes</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
