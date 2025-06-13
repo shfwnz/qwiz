@@ -23,11 +23,14 @@ function Items({ searchTerm, clicked, data }) {
             .includes(searchTerm.toLowerCase());
         let matchFilter = true;
         if (clicked == 1) {
-            matchFilter = item.max_participants >= 0 && item.max_participants <= 10;
+            matchFilter =
+                item.max_participants >= 0 && item.max_participants <= 10;
         } else if (clicked == 2) {
-            matchFilter = item.max_participants >= 10 && item.max_participants <= 30;
+            matchFilter =
+                item.max_participants >= 10 && item.max_participants <= 30;
         } else if (clicked == 3) {
-            matchFilter = item.max_participants >= 30 && item.max_participants <= 50;
+            matchFilter =
+                item.max_participants >= 30 && item.max_participants <= 50;
         } else if (clicked == 4) {
             matchFilter = item.max_participants >= 50;
         }
@@ -72,17 +75,18 @@ function Items({ searchTerm, clicked, data }) {
                                         />
                                         {quiz.max_participants && (
                                             <Badge className="absolute right-1 bottom-1 bg-yellow-500 md:bottom-2 md:text-[15px]">
-                                                Max Join : {quiz.max_participants}
+                                                Max Join :{' '}
+                                                {quiz.max_participants}
                                             </Badge>
                                         )}
                                     </div>
                                     <div className="grid grid-cols-1 justify-start items-start h-1/2">
-                                        <div className='h-1/2'>
+                                        <div className="h-1/2">
                                             <p className="font-bold md:text-[40px] text-start h-[150px] break-words whitespace-normal">
                                                 {quiz.title}
                                             </p>
                                         </div>
-                                        <div className='grid grid-cols-1 '>
+                                        <div className="grid grid-cols-1 ">
                                             <Badge className="bg-blue-500 md:text-[20px]">
                                                 {quiz.teacher || 'Unknown'}
                                             </Badge>

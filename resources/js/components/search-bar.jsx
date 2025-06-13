@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
 import {
     Dialog,
     DialogTrigger,
@@ -13,17 +13,17 @@ import {
     DialogClose,
 } from '@/components/ui/dialog';
 import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/components/ui/input-otp"
+    InputOTP,
+    InputOTPGroup,
+    InputOTPSlot,
+} from '@/components/ui/input-otp';
 import { useForm, usePage } from '@inertiajs/react';
 import { Toaster } from '@/components/ui/sonner';
 
 export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
     const [selectedFilters, setSelectedFilters] = useState([]);
     const { data, setData, post, processing, errors } = useForm({
-        token: ''
+        token: '',
     });
     const maxs = {
         '<10': 1,
@@ -47,14 +47,14 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
         setClicked(query);
     };
 
-    const submit = (e) => {
+    const submit = e => {
         e.preventDefault();
         post(`/quiz/${data.token}`);
-    }
+    };
 
     return (
         <div className="flex justify-center items-center relative w-full md:h-full md:pr-10 space-x-2 md:space-x-5">
-            <Toaster position="top-center" richColors/>
+            <Toaster position="top-center" richColors />
             <div className="relative w-full md:pr-1">
                 <input
                     type="text"
@@ -142,16 +142,16 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
             <Dialog>
                 <DialogTrigger asChild>
                     <Button className="rounded-md h-[45px] w-[45px] hover:bg-gray-800 bg-black/30 text-white">
-                        <svg 
+                        <svg
                             width={24}
                             height={24}
-                            fill="none" 
-                            xmlns="http://www.w3.org/2000/svg" 
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
-                        > 
+                        >
                             {' '}
-                            <path 
-                                d="M22 2H2v12h2V4h16v10h2V2zM6 14H4v2h2v-2zm0 2h2v2h2v2H8v-2H6v-2zm4 4v2h4v-2h2v-2h-2v2h-4zm10-6h-2v2h-2v2h2v-2h2v-2z" 
+                            <path
+                                d="M22 2H2v12h2V4h16v10h2V2zM6 14H4v2h2v-2zm0 2h2v2h2v2H8v-2H6v-2zm4 4v2h4v-2h2v-2h-2v2h-4zm10-6h-2v2h-2v2h2v-2h2v-2z"
                                 fill="currentColor"
                             />{' '}
                         </svg>
@@ -163,11 +163,12 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
                             Token For Private Quiz
                         </DialogTitle>
                     </DialogHeader>
-                    <div className='justify-items-center'>
-                        <InputOTP 
-                            onChange={(value) => setData('token', value)}
+                    <div className="justify-items-center">
+                        <InputOTP
+                            onChange={value => setData('token', value)}
                             value={data.token}
-                            maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+                            maxLength={6}
+                            pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
                         >
                             <InputOTPGroup>
                                 <InputOTPSlot index={0} />
@@ -188,7 +189,9 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
                             </DialogClose>
                             <DialogClose asChild>
                                 <Button onClick={submit} className="w-1/2">
-                                    {processing ? 'Wait For a Moment' : 'Search' }
+                                    {processing
+                                        ? 'Wait For a Moment'
+                                        : 'Search'}
                                 </Button>
                             </DialogClose>
                         </div>

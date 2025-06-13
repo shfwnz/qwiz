@@ -35,36 +35,36 @@ class QuizController extends Controller
 
     public function show(Request $req, string $credentials)
     {
-        $quiz = Quiz::with('teacher')
-                    ->where('slug', $credentials)
-                    ->first();
+        $quiz = Quiz::with('teacher')->where('slug', $credentials)->first();
 
         $quiz_code = Quiz::with('teacher')
-                    ->where('access_code', $credentials)
-                    ->first();
+            ->where('access_code', $credentials)
+            ->first();
 
         if ($quiz_code) {
             $req->validate(['token' => 'required']);
 
             return redirect()->route('quiz.show', ['slug' => $quiz_code->slug]);
         } elseif (!$quiz_code && !$quiz) {
-            return redirect()->route('quiz.list')->with('error', 'Token Not Found');
+            return redirect()
+                ->route('quiz.list')
+                ->with('error', 'Token Not Found');
         }
 
         $data = [
-                'id' => $quiz->id,
-                'title' => $quiz->title,
-                'visibility' => $quiz->visibility,
-                'max_participants' => $quiz->max_participants,
-                'max_attempts' => $quiz->max_attempts,
-                'time_limit_minutes' => $quiz->time_limit_minutes,
-                'updated_at' => $quiz->updated_at->format('d/m/Y'),
-                'teacher_id' => $quiz->teacher->id,
-                'teacher' => $quiz->teacher->name,
+            'id' => $quiz->id,
+            'title' => $quiz->title,
+            'visibility' => $quiz->visibility,
+            'max_participants' => $quiz->max_participants,
+            'max_attempts' => $quiz->max_attempts,
+            'time_limit_minutes' => $quiz->time_limit_minutes,
+            'updated_at' => $quiz->updated_at->format('d/m/Y'),
+            'teacher_id' => $quiz->teacher->id,
+            'teacher' => $quiz->teacher->name,
         ];
 
         return Inertia::render('show-quiz', [
-           'data' => $data
+            'data' => $data,
         ]);
     }
 

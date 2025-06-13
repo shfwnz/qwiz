@@ -18,15 +18,25 @@ export default function quizAttempt() {
         },
         {
             id: 2,
-            question: "Jika balap kuda bukan instrument maka ...?",
-            options: ["Hey sudahlah", "Ranjau juga bukan instrumen", "Jangan nakal ya", "Bukan, ini patrik"],
-            answer: "Ranjau juga bukan instrumen"
+            question: 'Jika balap kuda bukan instrument maka ...?',
+            options: [
+                'Hey sudahlah',
+                'Ranjau juga bukan instrumen',
+                'Jangan nakal ya',
+                'Bukan, ini patrik',
+            ],
+            answer: 'Ranjau juga bukan instrumen',
         },
         {
             id: 3,
-            question: "The hash ...?",
-            options: ["Sybau", "slinging slasher", "Sank in sheer", "Singing Laser"],
-            answer: "slinging slasher"
+            question: 'The hash ...?',
+            options: [
+                'Sybau',
+                'slinging slasher',
+                'Sank in sheer',
+                'Singing Laser',
+            ],
+            answer: 'slinging slasher',
         },
     ];
 
