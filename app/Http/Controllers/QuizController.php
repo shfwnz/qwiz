@@ -18,6 +18,7 @@ class QuizController extends Controller
                     'id' => $quiz->id,
                     'slug' => $quiz->slug,
                     'title' => $quiz->title,
+                    'description' => $quiz->description,
                     'visibility' => $quiz->visibility,
                     'max_participants' => $quiz->max_participants,
                     'max_attempts' => $quiz->max_attempts,
@@ -54,6 +55,7 @@ class QuizController extends Controller
         $data = [
             'id' => $quiz->id,
             'title' => $quiz->title,
+            'description' => $quiz->description,
             'visibility' => $quiz->visibility,
             'max_participants' => $quiz->max_participants,
             'max_attempts' => $quiz->max_attempts,

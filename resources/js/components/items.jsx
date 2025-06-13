@@ -74,7 +74,7 @@ function Items({ searchTerm, clicked, data }) {
                                             alt="stuff"
                                         />
                                         {quiz.max_participants && (
-                                            <Badge className="absolute right-1 bottom-1 bg-yellow-500 md:bottom-2 md:text-[15px]">
+                                            <Badge className="absolute right-1 bottom-1 bg-yellow-500/80 md:bottom-2 md:text-[15px]">
                                                 Max Join :{' '}
                                                 {quiz.max_participants}
                                             </Badge>
@@ -87,20 +87,26 @@ function Items({ searchTerm, clicked, data }) {
                                             </p>
                                         </div>
                                         <div className="grid grid-cols-1 ">
-                                            <Badge className="bg-blue-500 md:text-[20px]">
+                                            <Badge
+                                                className="md:text-3xl"
+                                                variant="secondary"
+                                            >
                                                 {quiz.teacher || 'Unknown'}
                                             </Badge>
-                                            <Badge className="bg-gray-500 md:text-[15px] md:mt-2">
+                                            <Badge
+                                                className="md:text-2xl md:mt-2"
+                                                variant="secondary"
+                                            >
                                                 {quiz.updated_at}
                                             </Badge>
                                         </div>
                                     </div>
                                     {quiz.visibility === 'public' ? (
-                                        <Badge className="absolute right-5 top-9 bg-green-500 md:text-[20px]">
+                                        <Badge className="absolute right-1 top-7 bg-gray-500/80  md:text-2xl">
                                             Public
                                         </Badge>
                                     ) : quiz.visibility === 'private' ? (
-                                        <Badge className="absolute right-5 top-9 bg-blue-500 md:text-[20px]">
+                                        <Badge className="absolute right-1 top-7 bg-gray-500/80 md:text-2xl">
                                             Private
                                         </Badge>
                                     ) : null}
