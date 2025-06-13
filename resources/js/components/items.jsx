@@ -87,10 +87,16 @@ function Items({ searchTerm, clicked, data }) {
                                             </p>
                                         </div>
                                         <div className="grid grid-cols-1 ">
-                                            <Badge className="bg-blue-500 md:text-[20px]">
+                                            <Badge
+                                                className="md:text-[20px]"
+                                                variant="outline"
+                                            >
                                                 {quiz.teacher || 'Unknown'}
                                             </Badge>
-                                            <Badge className="bg-gray-500 md:text-[15px] md:mt-2">
+                                            <Badge
+                                                className="md:text-[15px] md:mt-2"
+                                                variant="outline"
+                                            >
                                                 {quiz.updated_at}
                                             </Badge>
                                         </div>
