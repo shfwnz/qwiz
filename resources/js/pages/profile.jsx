@@ -77,7 +77,7 @@ const profile = () => {
                                 Edit Profile
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="bg-[#1e1b4b] border-4 border-indigo-500 shadow-[6px_6px_0_rgba(0,0,0,1)] rounded-md text-white font-pixel max-w-md">
+                        <DialogContent className="bg-gradient-to-b from-[#1a1a2e] to-[#16213e] border-4 border-indigo-500 shadow-[6px_6px_0_rgba(0,0,0,1)] rounded-md text-white font-pixel max-w-md">
                             <DialogHeader>
                                 <DialogTitle className="flex justify-center">
                                     ⚙️ Edit Profile
