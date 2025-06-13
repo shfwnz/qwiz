@@ -47,7 +47,7 @@ const profile = () => {
         <div className="container mx-auto max-w-7xl py-10 space-y-5">
             <ParticlesBackground />
 
-                <Card className="flex justify-center items-center bg-transparent">
+                <Card className="flex flex-col items-center space-y-3 bg-gradient-to-b from-[#1a1a2e] to-[#16213e] border-4 border-gray-500 p-6 shadow-[4px_4px_0_0_rgba(0,0,0,1)] rounded-xl">
                     <img src={character} alt="" 
                         className='w-50 h-50'
                     />
