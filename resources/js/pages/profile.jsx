@@ -80,8 +80,9 @@ const profile = () => {
                         <DialogContent className="bg-[#1e1b4b] border-4 border-indigo-500 shadow-[6px_6px_0_rgba(0,0,0,1)] rounded-md text-white font-pixel max-w-md">
                             <DialogHeader>
                                 <DialogTitle className="flex justify-center">
-                                    Your Current Profile
+                                    ⚙️ Edit Profile
                                 </DialogTitle>
+                                <hr className="border-gray-500 my-4" />
                             </DialogHeader>
                             <div className="">
                                 <div className="mb-4">
