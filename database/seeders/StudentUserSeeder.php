@@ -17,15 +17,29 @@ class StudentUserSeeder extends Seeder
     {
         Role::firstOrCreate(['name' => 'student']);
 
-        $user = User::updateOrCreate(
-            ['email' => 'student@example.com'],
-            [
-                'name' => 'Student',
-                'password' => Hash::make('12345678'),
-                'email_verified_at' => now(),
-            ],
-        );
+        // Student Users
+        $students = [
+            ['name' => 'John Doe', 'email' => 'john.student@quiz.com'],
+            ['name' => 'Jane Smith', 'email' => 'jane.student@quiz.com'],
+            ['name' => 'Bob Wilson', 'email' => 'bob.student@quiz.com'],
+            ['name' => 'Alice Brown', 'email' => 'alice.student@quiz.com'],
+            ['name' => 'Charlie Davis', 'email' => 'charlie.student@quiz.com'],
+            ['name' => 'Diana Miller', 'email' => 'diana.student@quiz.com'],
+            ['name' => 'Frank Garcia', 'email' => 'frank.student@quiz.com'],
+            ['name' => 'Grace Martinez', 'email' => 'grace.student@quiz.com'],
+            ['name' => 'Henry Taylor', 'email' => 'henry.student@quiz.com'],
+            ['name' => 'Ivy Anderson', 'email' => 'ivy.student@quiz.com'],
+        ];
 
-        $user->assignRole('student');
+        foreach ($students as $student) {
+            User::create([
+                'name' => $student['name'],
+                'email' => $student['email'],
+                'password' => Hash::make('password'),
+                'role' => 'student',
+                'phone' => '0812345678' . rand(10, 99),
+                'email_verified_at' => now(),
+            ])->assignRole('student');
+        }
     }
 }
