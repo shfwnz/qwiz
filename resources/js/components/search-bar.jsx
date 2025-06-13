@@ -159,11 +159,11 @@ export default function SearchBar({ searchTerm, setSearchTerm, setClicked }) {
                 </DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle className="text-white">
+                        <DialogTitle className="flex justify-center">
                             Token For Private Quiz
                         </DialogTitle>
                     </DialogHeader>
-                    <div className="justify-items-center">
+                    <div className="justify-center flex">
                         <InputOTP
                             onChange={value => setData('token', value)}
                             value={data.token}
