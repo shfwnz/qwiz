@@ -5,7 +5,7 @@ use App\Http\Controllers;
 use Inertia\Inertia;
 
 Route::get('/login', fn() => Inertia::render('login'));
-Route::get('/register', fn() => Inertia::render('register'));
+Route::get('/register', [Controllers\AuthController::class, 'create']);
 
 Route::get('/', fn() => Inertia::render('home'));
 
