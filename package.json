@@ -6,7 +6,7 @@
         "dev": "vite",
         "dev:frontend": "npm run dev",
         "dev:backend": "php artisan serve --host 0.0.0.0 --port=8000",
-        "start-dev": "composer install && npm install && prettier --write . && concurrently \"npm:dev:frontend\" \"npm:dev:backend\"",
+        "start-dev": "composer update && composer install && npm install && prettier --write . && concurrently \"npm:dev:frontend\" \"npm:dev:backend\"",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "format:php": "prettier --write 'app/**/*.php' 'routes/**/*.php' 'database/**/*.php'"

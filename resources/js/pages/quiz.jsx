@@ -15,11 +15,11 @@ export default function Quizzes() {
 
     useEffect(() => {
         if (flash?.error) {
-            toast.error(flash.error)
+            toast.error(flash.error);
         }
-    }, [flash])
+    }, [flash]);
 
-    console.log(flash)
+    console.log(flash);
 
     return (
         <div className="container mx-auto max-w-7xl">
