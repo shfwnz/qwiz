@@ -89,13 +89,13 @@ function Items({ searchTerm, clicked, data }) {
                                         <div className="grid grid-cols-1 ">
                                             <Badge
                                                 className="md:text-3xl"
-                                                variant="outline"
+                                                variant="secondary"
                                             >
                                                 {quiz.teacher || 'Unknown'}
                                             </Badge>
                                             <Badge
                                                 className="md:text-2xl md:mt-2"
-                                                variant="outline"
+                                                variant="secondary"
                                             >
                                                 {quiz.updated_at}
                                             </Badge>
