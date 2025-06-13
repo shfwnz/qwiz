@@ -84,10 +84,8 @@ export default function showQuiz() {
                     </div>
 
                     {data.visibility === 'private' && (
-                        <div className="bg-blue-500/20 border border-blue-500 rounded-lg p-4 mb-4">
-                            <h3 className="font-semibold mb-2">
-                                🔒 Private Quiz
-                            </h3>
+                        <div className="border border-slate-500 rounded-lg p-4 mb-4">
+                            <h3 className="font-semibold mb-2">Private Quiz</h3>
                             <p className="text-sm">
                                 This quiz requires a waiting room. All
                                 participants will start simultaneously when
@@ -97,10 +95,8 @@ export default function showQuiz() {
                     )}
 
                     {data.visibility === 'public' && (
-                        <div className="bg-green-500/20 border border-green-500 rounded-lg p-4 mb-4">
-                            <h3 className="font-semibold mb-2">
-                                📖 Public Quiz
-                            </h3>
+                        <div className="border border-slate-500 rounded-lg p-4 mb-4">
+                            <h3 className="font-semibold mb-2">Public Quiz</h3>
                             <p className="text-sm">
                                 This quiz can be started at any time. You can
                                 work at your own pace.
