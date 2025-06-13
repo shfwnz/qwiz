@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Footer from '@/components/layouts/footer';
 import ParticleBackground from '@/components/particle-background';
 import { router, usePage } from '@inertiajs/react';
-import point from '../../../public/images/point.png';
+import point from '../../../public/images/suprised-car.png';
 import { Badge } from '@/components/ui/badge';
 
 export default function showQuiz() {
@@ -40,9 +40,9 @@ export default function showQuiz() {
             'text-[50px] justify-items-center w-full mt-7 rounded-lg font-bold transition-all duration-200';
 
         if (data.visibility === 'public') {
-            return `${baseClass} bg-green-500 text-white hover:bg-green-600`;
+            return `${baseClass} bg-green-500 hover:bg-green-600`;
         } else {
-            return `${baseClass} bg-blue-500 text-white hover:bg-blue-600`;
+            return `${baseClass} bg-blue-500 hover:bg-blue-600`;
         }
     };
 
@@ -59,26 +59,26 @@ export default function showQuiz() {
                             alt="stuff"
                         />
                         {data.max_participants && (
-                            <Badge className="absolute right-1 bottom-0 bg-yellow-500 md:bottom-2 md:text-[15px]">
+                            <Badge className="absolute right-1 bottom-0 bg-yellow-500/50 md:bottom-1 md:text-2xl">
                                 Max Join : {data.max_participants}
                             </Badge>
                         )}
                         {data.visibility === 'public' ? (
-                            <Badge className="absolute right-1 top-1 bg-green-500 md:text-[20px]">
+                            <Badge className="absolute right-1 top-1 bg-gray-500/50 md:text-2xl">
                                 Public
                             </Badge>
                         ) : data.visibility === 'private' ? (
-                            <Badge className="absolute right-1 top-1 bg-blue-500 md:text-[20px]">
+                            <Badge className="absolute right-1 top-1 bg-gray-500/50 md:text-2xl">
                                 Private
                             </Badge>
                         ) : null}
                     </div>
                     <h1 className="text-5xl font-bold">{data.title}</h1>
                     <div className="flex gap-2 items-center">
-                        <Badge className="bg-blue-500 md:text-[20px]">
+                        <Badge className="md:text-2xl" variant="secondary">
                             {data.teacher || 'Unknown'}
                         </Badge>
-                        <Badge className="bg-gray-500 md:text-[20px]">
+                        <Badge className="md:text-2xl" variant="secondary">
                             {data.updated_at}
                         </Badge>
                     </div>
