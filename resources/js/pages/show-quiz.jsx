@@ -133,7 +133,7 @@ export default function showQuiz() {
                         </div>
                         <div className="bg-white/5 rounded-lg p-3 text-center">
                             <div className="text-2xl font-bold text-white">
-                                {data.time_limit || '∞'}
+                                {data.time_limit_minutes || '∞'}
                             </div>
                             <div className="text-sm text-white/70">minutes</div>
                         </div>
