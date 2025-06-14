@@ -29,7 +29,10 @@ Route::match(['get', 'post'], '/quiz/{slug}', [
 ])->name('quiz.show');
 Route::get('/quiz/start/{id}', [Controllers\QuizController::class, 'start']);
 
-Route::get('/leaderboard', fn() => Inertia::render('leaderboard'));
+Route::get('/leaderboard', [
+    Controllers\LeaderboardController::class,
+    'index',
+])->name('leaderboard');
 Route::get('/premium', fn() => Inertia::render('premium'));
 Route::get('/dashboard', fn() => Inertia::render('dashboard'))->name(
     'dashboard',
