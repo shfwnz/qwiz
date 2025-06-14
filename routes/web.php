@@ -45,4 +45,6 @@ Route::get('/premium', fn() => Inertia::render('premium'));
 Route::get('/dashboard', fn() => Inertia::render('dashboard'))->name(
     'dashboard',
 );
-Route::get('/profile', fn() => Inertia::render('profile'))->name('profile');
+Route::get('/profile', [Controllers\ProfileController::class, 'index'])->name(
+    'profile',
+);

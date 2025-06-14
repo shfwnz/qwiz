@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Footer from '@/components/layouts/footer.jsx';
 import ParticlesBackground from '@/components/particle-background';
+import HistoryCard from '@/components/history-card';
+import Reminder from '../../../public/images/reminder.png';
 import character from '../../../public/images/profile.png';
 import { Button } from '@/components/ui/button';
 import {
     Card,
     CardAction,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
@@ -24,13 +25,55 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useMotionValue, useTransform, animate, motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { usePage, Head, router } from '@inertiajs/react';
+
+const LoginOverlay = () => {
+    const handleBack = () => {
+        router.visit('/');
+    };
+
+    const handleLogin = () => {
+        router.visit('/login');
+    };
+
+    return (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center z-50">
+            <h1 className="text-xl font-medium lowercase">
+                "Oops, you need to login to view profile!"
+            </h1>
+            <div className="max-w-2xs w-full">
+                <img src={Reminder} alt="Reminder" />
+            </div>
+            <div className="flex gap-3">
+                <Button
+                    variant="ghost"
+                    className="min-w-16 p-8 hover:font-bold text-lg"
+                    onClick={handleBack}
+                >
+                    Back
+                </Button>
+                <Button
+                    variant="ghost"
+                    className="min-w-16 p-8 hover:font-bold text-lg"
+                    onClick={handleLogin}
+                >
+                    Login
+                </Button>
+            </div>
+        </div>
+    );
+};
 
 const profile = () => {
     const pointCounting = useMotionValue(0);
     const quizCounting = useMotionValue(0);
     const pointResult = useTransform(pointCounting, Math.round);
     const quizResult = useTransform(quizCounting, Math.round);
+
+    const { props } = usePage();
+    const { auth } = props;
+
+    const isAuthenticated = auth && auth.user;
 
     useEffect(() => {
         const pointAnimation = animate(pointCounting, 12000, {
@@ -43,85 +86,143 @@ const profile = () => {
     }, []);
 
     return (
-        <div className="container mx-auto max-w-7xl py-10 space-y-5">
-            <ParticlesBackground />
+        <>
+            <Head title="Profile" />
+            <div className="container mx-auto max-w-7xl py-10">
+                <ParticlesBackground />
+                <Card className="px-4 py-8 lg:px-6 lg:py-10">
+                    <CardHeader>
+                        <CardTitle>
+                            <div className="flex items-center gap-6">
+                                <div className="border rounded-2xl p-4 flex-shrink-0">
+                                    <img
+                                        src={character}
+                                        alt=""
+                                        className="w-64 h-64 object-cover"
+                                    />
+                                </div>
 
-            {/* Pilih bruh */}
-            {/* <Card className="flex flex-col items-center space-y-3 bg-black border-4 border-lime-500 p-6 text-lime-400 font-mono shadow-[4px_4px_0_rgba(0,255,0,0.6)]"> */}
-            <Card className="flex flex-col items-center space-y-3 bg-gradient-to-b from-[#1a1a2e] to-[#16213e] border-4 border-gray-500 p-6 shadow-[4px_4px_0_0_rgba(0,0,0,1)] rounded-xl">
-                <img src={character} alt="" className="w-50 h-50" />
-                <h1 className="text-[30px]">Thomas Alva Edison</h1>
-                <div className="gap-4 font-pixel flex text-[18px]">
-                    <div className="justify-items-center">
-                        <p>Total Score</p>
-                        <motion.p className="">{pointResult}</motion.p>
-                    </div>
+                                <div className="text-center lg:text-left space-y-6 flex-1 min-w-0">
+                                    <h1 className="text-4xl font-bold text-white">
+                                        Thomas Alva Edison
+                                    </h1>
 
-                    <div className="h-15 w-px bg-gray-600 mx-4"></div>
+                                    <div className="flex flex-col gap-2">
+                                        <div className="flex gap-3">
+                                            <div className="px-4 py-2 bg-gray-800/50 rounded-lg border border-gray-700 flex-1">
+                                                <p className="text-sm text-gray-400">
+                                                    Email
+                                                </p>
+                                                <p className="text-white font-medium">
+                                                    email@gmail.com
+                                                </p>
+                                            </div>
 
-                    <div className="justify-items-center">
-                        <p>Quiz Taken</p>
-                        <motion.p className="">{quizResult}</motion.p>
-                    </div>
-                </div>
-                <div className="justify-items-center text-[15px]">
-                    <p>Email: email@gmail.com</p>
-                    <p>Phone: +62 123-8392-2198</p>
-                </div>
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button className="">Edit Profile</Button>
-                    </DialogTrigger>
-                    <DialogContent className="bg-gradient-to-b from-[#1a1a2e] to-[#16213e] border-4 border-indigo-500 shadow-[6px_6px_0_rgba(0,0,0,1)] rounded-md text-white font-pixel max-w-md">
-                        <DialogHeader>
-                            <DialogTitle className="flex justify-center">
-                                ⚙️ Edit Profile
-                            </DialogTitle>
-                            <hr className="border-gray-500 my-4" />
-                        </DialogHeader>
-                        <div className="">
-                            <div className="mb-4">
-                                <Label className="block text-xs tracking-wider mb-1">
-                                    NEW USERNAME
-                                </Label>
-                                <Input
-                                    type="text"
-                                    className="w-full bg-black border border-gray-400 text-green-400 px-2 py-1 text-sm font-mono focus:outline-none focus:ring-0 rounded-none shadow-[2px_2px_0_rgba(0,0,0,1)]"
-                                />
+                                            <div className="px-4 py-2 bg-gray-800/50 rounded-lg border border-gray-700 flex-1">
+                                                <p className="text-sm text-gray-400">
+                                                    Phone
+                                                </p>
+                                                <p className="text-white font-medium">
+                                                    +62 123-8392-2198
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-3 border p-3 rounded-2xl items-center justify-center">
+                                            <div className="border rounded-2xl text-center p-3 flex-1">
+                                                <h3 className="text-2xl">
+                                                    Total Score
+                                                </h3>
+                                                <motion.p className="text-2xl">
+                                                    {pointResult}
+                                                </motion.p>
+                                            </div>
+
+                                            <div className="border rounded-2xl text-center p-3 flex-1">
+                                                <h3 className="text-2xl">
+                                                    Quiz Taken
+                                                </h3>
+                                                <motion.p className="text-2xl">
+                                                    {quizResult}
+                                                </motion.p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="mb-4">
-                                <Label className="block text-xs tracking-wider mb-1">
-                                    NEW EMAIL
-                                </Label>
-                                <Input
-                                    type="text"
-                                    className="w-full bg-black border border-gray-400 text-green-400 px-2 py-1 text-sm font-mono focus:outline-none focus:ring-0 rounded-none shadow-[2px_2px_0_rgba(0,0,0,1)]"
-                                />
-                            </div>
+                        </CardTitle>
+                        <CardAction>
+                            <Button variant="outline" size="sm">
+                                Edit Profile
+                            </Button>
+                        </CardAction>
+                    </CardHeader>
+                    <CardContent>
+                        <div>
+                            <h1 className="text-4xl text-justify w-full">
+                                History
+                            </h1>
+                            <HistoryCard />
                         </div>
-                        <DialogFooter className="mt-3">
-                            <div className="flex w-full space-x-3 pr-1">
-                                <DialogClose asChild>
-                                    <Button
-                                        variant="outline"
-                                        className="w-1/2 bg-black text-white border-2 border-white shadow-[3px_3px_0_rgba(0,0,0,1)] hover:bg-gray-700 hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
-                                    >
-                                        Cancel
-                                    </Button>
-                                </DialogClose>
-                                <DialogClose asChild>
-                                    <Button className="w-1/2 bg-white text-black font-bold border-2 border-black shadow-[3px_3px_0_rgba(0,0,0,1)] hover:bg-gray-300 hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
-                                        Save
-                                    </Button>
-                                </DialogClose>
-                            </div>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
-            </Card>
+                    </CardContent>
 
-            <Footer />
-        </div>
+                    <CardFooter>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button className="">Edit Profile</Button>
+                            </DialogTrigger>
+                            <DialogContent className="bg-gradient-to-b from-[#1a1a2e] to-[#16213e] border-4 border-indigo-500 shadow-[6px_6px_0_rgba(0,0,0,1)] rounded-md text-white font-pixel max-w-md">
+                                <DialogHeader>
+                                    <DialogTitle className="flex justify-center">
+                                        ⚙️ Edit Profile
+                                    </DialogTitle>
+                                    <hr className="border-gray-500 my-4" />
+                                </DialogHeader>
+                                <div className="">
+                                    <div className="mb-4">
+                                        <Label className="block text-xs tracking-wider mb-1">
+                                            NEW USERNAME
+                                        </Label>
+                                        <Input
+                                            type="text"
+                                            className="w-full bg-black border border-gray-400 text-green-400 px-2 py-1 text-sm font-mono focus:outline-none focus:ring-0 rounded-none shadow-[2px_2px_0_rgba(0,0,0,1)]"
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <Label className="block text-xs tracking-wider mb-1">
+                                            NEW EMAIL
+                                        </Label>
+                                        <Input
+                                            type="text"
+                                            className="w-full bg-black border border-gray-400 text-green-400 px-2 py-1 text-sm font-mono focus:outline-none focus:ring-0 rounded-none shadow-[2px_2px_0_rgba(0,0,0,1)]"
+                                        />
+                                    </div>
+                                </div>
+                                <DialogFooter className="mt-3">
+                                    <div className="flex w-full space-x-3 pr-1">
+                                        <DialogClose asChild>
+                                            <Button
+                                                variant="outline"
+                                                className="w-1/2 bg-black text-white border-2 border-white shadow-[3px_3px_0_rgba(0,0,0,1)] hover:bg-gray-700 hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
+                                            >
+                                                Cancel
+                                            </Button>
+                                        </DialogClose>
+                                        <DialogClose asChild>
+                                            <Button className="w-1/2 bg-white text-black font-bold border-2 border-black shadow-[3px_3px_0_rgba(0,0,0,1)] hover:bg-gray-300 hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
+                                                Save
+                                            </Button>
+                                        </DialogClose>
+                                    </div>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                    </CardFooter>
+                </Card>
+
+                <Footer />
+            </div>
+            {!isAuthenticated && <LoginOverlay />}
+        </>
     );
 };
 
