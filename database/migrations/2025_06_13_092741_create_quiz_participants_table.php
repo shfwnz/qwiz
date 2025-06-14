@@ -33,10 +33,8 @@ return new class extends Migration {
             $table->timestamp('ready_at')->nullable();
             $table->timestamp('started_at')->nullable();
             $table->timestamp('last_activity_at')->nullable();
-            $table->json('metadata')->nullable(); // Browser info, etc.
+            $table->json('metadata')->nullable();
             $table->timestamps();
-
-            // Prevent duplicate participation
             $table->unique(['quiz_session_id', 'user_id']);
         });
     }

@@ -4,8 +4,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use Inertia\Inertia;
 
-Route::get('/login', fn() => Inertia::render('login'));
-Route::get('/register', [Controllers\AuthController::class, 'create']);
+Route::get('/login', [Controllers\AuthController::class, 'showLogin'])->name(
+    'login',
+);
+Route::post('/login', [Controllers\AuthController::class, 'login'])->name(
+    'login',
+);
+
+Route::get('/register', [
+    Controllers\AuthController::class,
+    'showRegister',
+])->name('register');
 
 Route::get('/', fn() => Inertia::render('home'));
 
@@ -25,6 +34,4 @@ Route::get('/premium', fn() => Inertia::render('premium'));
 Route::get('/dashboard', fn() => Inertia::render('dashboard'))->name(
     'dashboard',
 );
-Route::get('/profile', fn() => Inertia::render('profile'))->name(
-    'profile',
-);
+Route::get('/profile', fn() => Inertia::render('profile'))->name('profile');
