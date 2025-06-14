@@ -15,6 +15,9 @@ Route::get('/register', [
     Controllers\AuthController::class,
     'showRegister',
 ])->name('register');
+Route::post('/register', [Controllers\AuthController::class, 'register'])->name(
+    'register',
+);
 
 Route::get('/', fn() => Inertia::render('home'));
 
