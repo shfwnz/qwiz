@@ -3,6 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Quiz;
+use App\Models\QuestionOption;
 
 class Question extends Model
 {
@@ -12,4 +16,14 @@ class Question extends Model
         'question_type',
         'points',
     ];
+
+    public function quiz(): BelongsTo 
+    {
+        return $this->belongsTo(Quiz::class);
+    }
+
+    public function options(): HasMany
+    {
+        return $this->hasMany(QuestionOption::class);
+    }
 }

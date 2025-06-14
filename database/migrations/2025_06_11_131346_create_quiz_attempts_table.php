@@ -17,17 +17,17 @@ return new class extends Migration {
                 ->constrained('quizzes')
                 ->onDelete('cascade');
             $table->timestamp('started_at');
-            $table->timestamp('ended_at');
+            $table->timestamp('ended_at')->nullable();
             $table->enum('status', [
                 'in_progress',
                 'completed',
                 'timed_out',
                 'failed',
             ]);
-            $table->decimal('total_score', 10, 2);
-            $table->decimal('max_score', 10, 2);
-            $table->decimal('percentage', 10, 2);
-            $table->integer('time_spent_minutes');
+            $table->decimal('total_score', 10, 2)->nullable();
+            $table->decimal('max_score', 10, 2)->nullable();
+            $table->decimal('percentage', 10, 2)->nullable();
+            $table->integer('time_spent_minutes')->nullable();
             $table->timestamps();
         });
     }

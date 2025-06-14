@@ -31,7 +31,10 @@ Route::match(['get', 'post'], '/quiz/{slug}', [
     Controllers\QuizController::class,
     'show',
 ])->name('quiz.show');
-Route::get('/quiz/start/{id}', [Controllers\QuizController::class, 'start']);
+Route::get('/quiz/start/{slug}', [Controllers\QuizController::class, 'start'])->name(
+    'quiz.start',
+);
+Route::post('/submit/quiz', [Controllers\QuizController::class, 'submit']); 
 
 Route::get('/leaderboard', [
     Controllers\LeaderboardController::class,
