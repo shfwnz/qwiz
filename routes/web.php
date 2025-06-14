@@ -7,13 +7,10 @@ use Inertia\Inertia;
 Route::get('/login', [Controllers\AuthController::class, 'showLogin'])->name(
     'login',
 );
-<<<<<<< HEAD
-=======
 Route::post('/login', [Controllers\AuthController::class, 'login'])->name(
     'login',
 );
 
->>>>>>> 4814008 (feat: auth)
 Route::get('/register', [
     Controllers\AuthController::class,
     'showRegister',
