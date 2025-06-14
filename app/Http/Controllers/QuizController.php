@@ -79,7 +79,9 @@ class QuizController extends Controller
         // Ambil slug nya setelah di beri uuid
         $pureSlug = Str::beforeLast($credentials, '-uuid-');
 
-        $quiz = Quiz::with('questions', 'questions.options', 'attempt')->where('slug', $pureSlug)->first();
+        $quiz = Quiz::with('questions', 'questions.options', 'attempt')
+            ->where('slug', $pureSlug)
+            ->first();
         $quiz_id = Quiz::with('questions')->find($credentials);
 
         if ($quiz_id) {
@@ -87,7 +89,7 @@ class QuizController extends Controller
             $uuid = Str::uuid()->toString();
 
             // simpan di sesi agar tidak bisa asal buat lewat url
-            session()->put('quiz_token'. $uuid, $quiz_id);
+            session()->put('quiz_token' . $uuid, $quiz_id);
 
             DB::beginTransaction();
             try {
@@ -110,7 +112,7 @@ class QuizController extends Controller
             }
 
             return redirect()->route('quiz.start', [
-                'slug' => $quiz_id->slug. '-uuid-'.$uuid,
+                'slug' => $quiz_id->slug . '-uuid-' . $uuid,
             ]);
         } elseif (!$quiz_id && !$quiz) {
             return redirect()
@@ -120,11 +122,11 @@ class QuizController extends Controller
 
         return Inertia::render('quiz-attempt', [
             'dataQuestions' => $quiz,
-            'attempt' => $quiz->attempt->id
+            'attempt' => $quiz->attempt->id,
         ]);
     }
 
-    public function submit(Request $req) 
+    public function submit(Request $req)
     {
         $data = $req->validate([
             'answers' => 'required|array|min:1',
@@ -155,7 +157,9 @@ class QuizController extends Controller
 
             $attempt = QuizAttempt::find($answer['attemptId']);
             $currentDate = Carbon::now();
-            $minutes = Carbon::parse($attempt->started_at)->diffInMinutes($currentDate);
+            $minutes = Carbon::parse($attempt->started_at)->diffInMinutes(
+                $currentDate,
+            );
 
             $percentage = ($totalScore / $attempt->max_score) * 100;
             $attempt->update([
@@ -172,7 +176,9 @@ class QuizController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
-            return back()->withErrors(['message' => 'Gagal menyimpan jawaban.']);
+            return back()->withErrors([
+                'message' => 'Gagal menyimpan jawaban.',
+            ]);
         }
     }
 }

@@ -17,7 +17,7 @@ class Question extends Model
         'points',
     ];
 
-    public function quiz(): BelongsTo 
+    public function quiz(): BelongsTo
     {
         return $this->belongsTo(Quiz::class);
     }

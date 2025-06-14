@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import Footer from '@/components/layouts/footer.jsx';
 import ParticlesBackground from '@/components/particle-background';
 
-import point from "../../../public/images/point.png";
-import heart from "../../../public/images/heart.png";
-import { motion, useMotionValue, useTransform, animate} from 'framer-motion';
+import point from '../../../public/images/point.png';
+import heart from '../../../public/images/heart.png';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 
 const home = () => {
     const pointCounting = useMotionValue(0);
@@ -14,7 +14,6 @@ const home = () => {
         const animation = animate(pointCounting, 12000, {
             duration: 2,
         });
-
     }, []);
 
     return (
