@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('answer_text');
             $table->boolean('is_correct');
             $table->decimal('score', 5, 2);
-            $table->timestamp('answer_at');
+            $table->timestamp('answer_at')->nullable();
             $table->timestamps();
         });
     }

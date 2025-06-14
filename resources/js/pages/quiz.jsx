@@ -19,8 +19,6 @@ export default function Quizzes() {
         }
     }, [flash]);
 
-    console.log(flash);
-
     return (
         <div className="container mx-auto max-w-7xl">
             <ParticlesBackground />

@@ -5,7 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\User;
+use App\Models\Question;
+use App\Models\QuizAttempt;
 
 class Quiz extends Model
 {
@@ -43,5 +47,15 @@ class Quiz extends Model
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function questions(): HasMany
+    {
+        return $this->hasMany(Question::class);
+    }
+
+    public function attempt(): HasOne
+    {
+        return $this->hasOne(QuizAttempt::class);
     }
 }

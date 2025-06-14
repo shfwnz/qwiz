@@ -50,7 +50,7 @@ export default function showQuiz() {
         <div className="container mx-auto max-w-7xl">
             <ParticleBackground />
 
-            <div className="grid grid-cols-2 w-full h-full space-x-5 pt-10 mx-5">
+            <div className="grid grid-cols-2 w-full h-full space-x-5 pb-36 pt-10 mx-5">
                 <div className="space-y-4">
                     <div className="relative w-full">
                         <img
