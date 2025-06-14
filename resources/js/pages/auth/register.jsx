@@ -12,7 +12,7 @@ import ParticleBackground from '@/components/particle-background';
 import { usePage, Head, router } from '@inertiajs/react';
 
 const Register = () => {
-    const { errors } = usePage().props;
+    const { errors, role } = usePage().props;
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -23,7 +23,7 @@ const Register = () => {
         event.preventDefault();
         setLoading(true);
 
-        router.post('/register', { name, email, password });
+        router.post(`/register/${role}`, { name, email, password });
     };
     return (
         <>
@@ -56,6 +56,7 @@ const Register = () => {
                                 <p className="text-red-500">{errors.email}</p>
                             )}
                             <Input
+                                type="password"
                                 placeholder="Password"
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}

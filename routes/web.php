@@ -7,21 +7,22 @@ use Inertia\Inertia;
 Route::get('/login', [Controllers\AuthController::class, 'showLogin'])->name(
     'login',
 );
+
 Route::post('/login', [Controllers\AuthController::class, 'login'])->name(
     'login',
 );
 
-Route::get('/register', [
+Route::get('/register/{role}', [
     Controllers\AuthController::class,
     'showRegister',
-])->name('register');
-Route::post('/register', [Controllers\AuthController::class, 'register'])->name(
+])->name('register.role');
+
+Route::post('/register/{role}', [
+    Controllers\AuthController::class,
     'register',
-);
+])->name('register');
 
 Route::get('/', fn() => Inertia::render('home'));
-
-// Pages Quiz
 
 Route::get('/quiz', [Controllers\QuizController::class, 'index'])->name(
     'quiz.list',
