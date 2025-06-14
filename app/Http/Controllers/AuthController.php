@@ -16,9 +16,12 @@ class AuthController extends Controller
         return Inertia::render('login');
     }
 
-    public function showRegister()
+    public function showRegister($role)
     {
-        return Inertia::render('register');
+        if (!in_array($role, ['teacher', 'student'])) {
+            abort(404);
+        }
+        return Inertia::render('register', ['role' => $role]);
     }
 
     public function login(Request $request)
@@ -49,12 +52,16 @@ class AuthController extends Controller
             ->withErrors(['email' => 'Invalid credentials']);
     }
 
-    public function register(Request $request)
+    public function register(Request $request, $role)
     {
+        if (!in_array($role, ['teacher', 'student'])) {
+            abort(404);
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:8',
         ]);
 
         if ($validator->fails()) {
@@ -65,11 +72,12 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $role,
         ]);
 
         Auth::login($user);
 
-        return redirect()->route('/');
+        return redirect()->route('profile');
     }
 
     public function logout(Request $request)
