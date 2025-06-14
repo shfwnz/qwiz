@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/table';
 import ParticlesBackground from '@/components/particle-background';
 import Footer from '@/components/layouts/footer.jsx';
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 
 const topPlayers = [
     { rank: 1, name: 'John Doe', score: 100, winrate: '90%' },
@@ -71,7 +71,10 @@ const LoginOverlay = () => {
 };
 
 const leaderboard = () => {
-    const token = localStorage.getItem('token');
+    const { props } = usePage();
+    const { auth } = props;
+
+    const isAuthenticated = auth && auth.user;
 
     return (
         <div className="container mx-auto max-w-7xl py-8 space-y-16">
@@ -126,7 +129,7 @@ const leaderboard = () => {
                 </Card>
                 <Footer />
             </div>
-            {!token && <LoginOverlay />}
+            {!isAuthenticated && <LoginOverlay />}
         </div>
     );
 };
