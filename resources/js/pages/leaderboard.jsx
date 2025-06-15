@@ -2,6 +2,7 @@ import React from 'react';
 import TopPlayerCard from '@/components/top-player-card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
     Table,
     TableBody,
@@ -12,7 +13,7 @@ import {
 } from '@/components/ui/table';
 import ParticlesBackground from '@/components/particle-background';
 import Footer from '@/components/layouts/footer.jsx';
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 
 const topPlayers = [
     { rank: 1, name: 'John Doe', score: 100, winrate: '90%' },
@@ -33,7 +34,7 @@ const allPlayers = [
 
 const UnderConstructionOverlay = () => {
     return (
-        <div className="fixed inset-0 w-full h-full bg-slate-900/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center text-center text-white p-4">
+        <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center text-center p-4">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="96"
@@ -52,12 +53,22 @@ const UnderConstructionOverlay = () => {
                 <path d="M10 5a2 2 0 0 1-2-2 2 2 0 0 1-2 2 2 2 0 0 1 2 2 2 2 0 0 1 2-2z" />
                 <path d="M21 12a9 9 0 1 1-9-9" />
             </svg>
-            <h1 className="font-bold text-4xl md:text-5xl uppercase mb-3">
-                Under Construction
-            </h1>
-            <p className="text-lg text-slate-300">
-                Im sorry, the Leaderboard page is currently under construction.
-            </p>
+            <div className="flex flex-col gap-4">
+                <h1 className="font-bold text-4xl md:text-5xl uppercase mb-3">
+                    Under Construction
+                </h1>
+                <p className="text-lg text-slate-300">
+                    Im sorry, the Leaderboard page is currently under
+                    construction.
+                </p>
+                <Button
+                    variant="ghost"
+                    onClick={() => router.visit('/')}
+                    className="mt-3 text-3xl p-12"
+                >
+                    Back
+                </Button>
+            </div>
         </div>
     );
 };
