@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\QuizSession;
-use App\Models\User;
 
 class QuizParticipant extends Model
 {
@@ -22,7 +20,12 @@ class QuizParticipant extends Model
         return $this->belongsTo(QuizSession::class);
     }
 
-    public function student(): BelongsTo
+    public function quiz(): BelongsTo
+    {
+        return $this->belongsTo(Quiz::class);
+    }
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

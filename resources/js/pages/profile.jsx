@@ -37,42 +37,58 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useMotionValue, useTransform, animate, motion } from 'framer-motion';
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 
-function ProfileForm({ className, onSave }) {
-    const [formData, setFormData] = useState({
-        name: 'Thomas Alva Edison',
-        email: 'email@gmail.com',
-        phone: '123-456-7890',
+function ProfileForm({ className, onSave, initialData }) {
+    const { data, setData, put, processing, errors } = useForm({
+        name: initialData?.name || '',
+        email: initialData?.email || '',
+        phone: initialData?.phone || '',
     });
 
-    const handleSave = () => {
-        console.log('Saving profile:', formData);
-        if (onSave) onSave(formData);
-    };
-
-    const handleChange = (field, value) => {
-        setFormData(prev => ({ ...prev, [field]: value }));
+    const handleSubmit = e => {
+        e.preventDefault();
+        put(route('profile.update'), {
+            onSuccess: () => {
+                console.log('Profile updated successfully');
+                if (onSave) onSave();
+            },
+            onError: errors => {
+                console.error('Update failed:', errors);
+            },
+        });
     };
 
     return (
-        <div className={cn('grid items-start gap-4', className)}>
+        <form
+            onSubmit={handleSubmit}
+            className={cn('grid items-start gap-4', className)}
+        >
             <div className="grid gap-2">
                 <Label htmlFor="name">Name</Label>
                 <Input
                     id="name"
-                    value={formData.name}
-                    onChange={e => handleChange('name', e.target.value)}
+                    value={data.name}
+                    onChange={e => setData('name', e.target.value)}
+                    className={errors.name ? 'border-red-500' : ''}
                 />
+                {errors.name && (
+                    <span className="text-red-500 text-sm">{errors.name}</span>
+                )}
             </div>
+
             <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                     type="email"
                     id="email"
-                    value={formData.email}
-                    onChange={e => handleChange('email', e.target.value)}
+                    value={data.email}
+                    onChange={e => setData('email', e.target.value)}
+                    className={errors.email ? 'border-red-500' : ''}
                 />
+                {errors.email && (
+                    <span className="text-red-500 text-sm">{errors.email}</span>
+                )}
             </div>
 
             <div className="grid gap-2">
@@ -80,18 +96,35 @@ function ProfileForm({ className, onSave }) {
                 <Input
                     type="tel"
                     id="phone"
-                    value={formData.phone}
-                    onChange={e => handleChange('phone', e.target.value)}
+                    value={data.phone}
+                    onChange={e => setData('phone', e.target.value)}
+                    className={errors.phone ? 'border-red-500' : ''}
                 />
+                {errors.phone && (
+                    <span className="text-red-500 text-sm">{errors.phone}</span>
+                )}
             </div>
-        </div>
+
+            <Button type="submit" disabled={processing} className="hidden">
+                {processing ? 'Saving...' : 'Save'}
+            </Button>
+        </form>
     );
 }
 
 // Desktop Dialog Component
-function DesktopEditProfile({ open, setOpen }) {
-    const handleSave = data => {
-        console.log('Desktop save:', data);
+function DesktopEditProfile({ open, setOpen, user }) {
+    const [formRef, setFormRef] = useState(null);
+
+    const handleSave = () => {
+        if (formRef) {
+            formRef.dispatchEvent(
+                new Event('submit', { bubbles: true, cancelable: true })
+            );
+        }
+    };
+
+    const handleFormSave = () => {
         setOpen(false);
     };
 
@@ -113,7 +146,9 @@ function DesktopEditProfile({ open, setOpen }) {
                     </DialogDescription>
                 </DialogHeader>
 
-                <ProfileForm onSave={handleSave} />
+                <div ref={setFormRef}>
+                    <ProfileForm onSave={handleFormSave} initialData={user} />
+                </div>
 
                 <DialogFooter className="mt-3">
                     <div className="flex w-full justify-end space-x-3 pr-1">
@@ -129,9 +164,18 @@ function DesktopEditProfile({ open, setOpen }) {
 }
 
 // Mobile Drawer Component
-function MobileEditProfile({ open, setOpen }) {
-    const handleSave = data => {
-        console.log('Mobile save:', data);
+function MobileEditProfile({ open, setOpen, user }) {
+    const [formRef, setFormRef] = useState(null);
+
+    const handleSave = () => {
+        if (formRef) {
+            formRef.dispatchEvent(
+                new Event('submit', { bubbles: true, cancelable: true })
+            );
+        }
+    };
+
+    const handleFormSave = () => {
         setOpen(false);
     };
 
@@ -153,8 +197,8 @@ function MobileEditProfile({ open, setOpen }) {
                     </DrawerDescription>
                 </DrawerHeader>
 
-                <div className="px-4 pb-4">
-                    <ProfileForm onSave={handleSave} />
+                <div className="px-4 pb-4" ref={setFormRef}>
+                    <ProfileForm onSave={handleFormSave} initialData={user} />
                 </div>
 
                 <DrawerFooter className="pt-2">
@@ -168,7 +212,7 @@ function MobileEditProfile({ open, setOpen }) {
     );
 }
 
-const profile = () => {
+const Profile = ({ user, quizHistory }) => {
     const pointCounting = useMotionValue(0);
     const quizCounting = useMotionValue(0);
     const pointResult = useTransform(pointCounting, Math.round);
@@ -178,19 +222,23 @@ const profile = () => {
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
     useEffect(() => {
-        const pointAnimation = animate(pointCounting, 12000, {
+        const pointAnimation = animate(pointCounting, user.total_points || 0, {
             duration: 2,
         });
 
-        const quizAnimation = animate(quizCounting, 100, {
-            duration: 2.5,
-        });
+        const quizAnimation = animate(
+            quizCounting,
+            user.quizzes_completed || 0,
+            {
+                duration: 2.5,
+            }
+        );
 
         return () => {
             pointAnimation.stop();
             quizAnimation.stop();
         };
-    }, []);
+    }, [user.total_points, user.quizzes_completed]);
 
     return (
         <>
@@ -209,30 +257,28 @@ const profile = () => {
                                     />
                                 </div>
 
-                                <div className=" text-center items-center lg:text-left space-y-6 flex-1 min-w-0">
+                                <div className="text-center items-center lg:text-left space-y-6 flex-1 min-w-0">
                                     <div className="flex flex-col md:flex-row md:items-end gap-3">
-                                        <h1 className="text-4xl font-bold text-white">
-                                            Thomas Alva Edison
+                                        <h1 className="text-4xl font-bold text-white capitalize">
+                                            {user.name}
                                         </h1>
-                                        <p className="text-lg text-gray-400">
-                                            Student
+                                        <p className="text-lg text-gray-400 capitalize">
+                                            {user.role}
                                         </p>
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                                        <div className="px-4 py-2 rounded-2xl border ">
-                                            <p className="text-sm text-gray-400">
-                                                Email
-                                            </p>
+                                        <div className="px-4 py-2 rounded-2xl border">
+                                            <p className="text-sm">Email</p>
                                             <p className="text-white font-medium">
-                                                email@gmail.com
+                                                {user.email}
                                             </p>
                                         </div>
 
-                                        <div className="px-4 py-2 rounded-2xl border ">
+                                        <div className="px-4 py-2 rounded-2xl border">
                                             <p className="text-sm">Phone</p>
                                             <p className="text-white font-medium">
-                                                +62 123-8392-2198
+                                                {user.phone || 'Not provided'}
                                             </p>
                                         </div>
 
@@ -266,11 +312,13 @@ const profile = () => {
                                     <DesktopEditProfile
                                         open={open}
                                         setOpen={setOpen}
+                                        user={user}
                                     />
                                 ) : (
                                     <MobileEditProfile
                                         open={open}
                                         setOpen={setOpen}
+                                        user={user}
                                     />
                                 )}
                             </div>
@@ -281,7 +329,7 @@ const profile = () => {
                             <h1 className="text-4xl text-justify w-full">
                                 History
                             </h1>
-                            <HistoryCard />
+                            <HistoryCard historyData={quizHistory} />
                         </div>
                     </CardContent>
 
@@ -294,4 +342,4 @@ const profile = () => {
     );
 };
 
-export default profile;
+export default Profile;
