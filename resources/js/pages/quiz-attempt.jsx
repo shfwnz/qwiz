@@ -119,7 +119,7 @@ export default function quizAttempt() {
                             <Progress 
                                 value={dataQuestions.attempt.percentage}
                                 className="h-3 bg-white/20" />
-                            <p className="text-xl font-bold">{dataQuestions.attempt.percentage}</p>
+                            <p className="text-xl font-bold">{dataQuestions.attempt.percentage}%</p>
                         </div>
 
                         <div className="flex justify-center gap-4 pt-4">

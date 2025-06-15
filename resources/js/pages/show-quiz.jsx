@@ -30,8 +30,8 @@ export default function showQuiz() {
         if (data.visibility === 'public') {
             return 'START QUIZ';
         } else {
-            // const isOwner = auth?.user?.id === data.user_id;
-            return 'JOIN WAITING ROOM';
+            const isOwner = auth?.id === data.teacher_id;
+            return isOwner ? 'Manage Quiz' : 'Join Waiting Room';
         }
     };
 
@@ -46,7 +46,6 @@ export default function showQuiz() {
         }
     };
 
-    console.log(data);
 
     return (
         <div className="container mx-auto max-w-7xl">

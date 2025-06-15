@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
     ])->name('quiz.start');
     Route::post('/submit/quiz', [Controllers\QuizController::class, 'submit']);
 
-    Route::get('/quiz/waiting-room/{id}', fn() => Inertia::render('waiting-room'));
+    Route::get('/quiz/waiting-room/{id}', [Controllers\QuizController::class, 'waitingRoom']);
 
     Route::get('/leaderboard', [
         Controllers\LeaderboardController::class,

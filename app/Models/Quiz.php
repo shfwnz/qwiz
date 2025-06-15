@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\User;
 use App\Models\Question;
 use App\Models\QuizAttempt;
+use App\Models\QuizSession;
 
 class Quiz extends Model
 {
@@ -57,5 +58,10 @@ class Quiz extends Model
     public function attempt(): HasOne
     {
         return $this->hasOne(QuizAttempt::class);
+    }
+
+    public function session(): HasOne
+    {
+        return $this->hasOne(QuizSession::class);
     }
 }

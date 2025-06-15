@@ -3,25 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\QuizSession;
+use App\Models\User;
 
 class QuizParticipant extends Model
 {
     protected $fillable = [
+        'quiz_session_id',
         'user_id',
-        'quiz_id',
-        'started_at',
-        'ended_at',
-        'max_score',
-        'total_score',
-        'percentage',
+        'status',
+        'joined_at',
+        'ready_at',
     ];
 
-    public function quiz()
+    public function session(): BelongsTo
     {
-        return $this->belongsTo(Quiz::class);
+        return $this->belongsTo(QuizSession::class);
     }
 
-    public function user()
+    public function student(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

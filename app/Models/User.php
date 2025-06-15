@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\QuizAttempt;
+use App\Models\QuizParticipant;
 
 class User extends Authenticatable
 {
@@ -63,12 +64,22 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the subscriptions for the user.
+     * Get the attempts for the user.
      *
      * @return HasMany
      */
     public function attempts(): HasMany
     {
         return $this->hasMany(QuizAttempt::class);
+    }
+
+    /**
+     * Get the participants for the user.
+     *
+     * @return HasMany
+     */
+    public function participant(): HasMany
+    {
+        return $this->hasMany(QuizParticipant::class);
     }
 }
