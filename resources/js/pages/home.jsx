@@ -189,7 +189,7 @@ const home = () => {
                         className="space-y-4"
                     >
                         <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
-                            Welcome to QuizMaster
+                            Welcome to Qwiz
                         </h1>
                         <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
                             Test your knowledge, compete with friends, and climb
