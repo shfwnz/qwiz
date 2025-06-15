@@ -6,7 +6,7 @@ import point from '../../../public/images/suprised-car.png';
 import { Badge } from '@/components/ui/badge';
 
 export default function showQuiz() {
-    const { data } = usePage().props;
+    const { auth, data } = usePage().props;
     const [isJoining, setIsJoining] = useState(false);
 
     const joinWaitingRoom = id => {
@@ -30,8 +30,8 @@ export default function showQuiz() {
         if (data.visibility === 'public') {
             return 'START QUIZ';
         } else {
-            const isOwner = auth?.user?.id === data.user_id;
-            return isOwner ? 'MANAGE QUIZ' : 'JOIN WAITING ROOM';
+            // const isOwner = auth?.user?.id === data.user_id;
+            return 'JOIN WAITING ROOM';
         }
     };
 
@@ -45,6 +45,8 @@ export default function showQuiz() {
             return `${baseClass} bg-blue-500 hover:bg-blue-600`;
         }
     };
+
+    console.log(data);
 
     return (
         <div className="container mx-auto max-w-7xl">
