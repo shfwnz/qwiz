@@ -31,9 +31,41 @@ const allPlayers = [
     { rank: 11, name: 'Hannah', score: 30, winrate: '2%' },
 ];
 
+const UnderConstructionOverlay = () => {
+    return (
+        <div className="fixed inset-0 w-full h-full bg-slate-900/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center text-center text-white p-4">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="96"
+                height="96"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-amber-400 mb-4 animate-bounce"
+            >
+                <path d="M14 9a2 2 0 0 1-2-2 2 2 0 0 1-2 2 2 2 0 0 1 2 2 2 2 0 0 1 2-2z" />
+                <path d="M18 13a2 2 0 0 1-2-2 2 2 0 0 1-2 2 2 2 0 0 1 2 2 2 2 0 0 1 2-2z" />
+                <path d="M6 13a2 2 0 0 1-2-2 2 2 0 0 1-2 2 2 2 0 0 1 2 2 2 2 0 0 1 2-2z" />
+                <path d="M10 5a2 2 0 0 1-2-2 2 2 0 0 1-2 2 2 2 0 0 1 2 2 2 2 0 0 1 2-2z" />
+                <path d="M21 12a9 9 0 1 1-9-9" />
+            </svg>
+            <h1 className="font-bold text-4xl md:text-5xl uppercase mb-3">
+                Under Construction
+            </h1>
+            <p className="text-lg text-slate-300">
+                Im sorry, the Leaderboard page is currently under construction.
+            </p>
+        </div>
+    );
+};
+
 const leaderboard = () => {
     return (
         <>
+            <UnderConstructionOverlay />
             <Head title="Global Leaderboard" />
             <div className="container mx-auto max-w-7xl py-8 space-y-16">
                 <ParticlesBackground />
