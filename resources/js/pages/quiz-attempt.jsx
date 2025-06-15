@@ -12,9 +12,8 @@ import { Progress } from "@/components/ui/progress";
 export default function quizAttempt() {
     const savedAnswers = JSON.parse(sessionStorage.getItem('quiz_answers') || '[]');
     const savedShort = sessionStorage.getItem('quiz_short_answer') || '';
-
     
-    const { dataQuestions, attempt } = usePage().props;
+    const { dataQuestions } = usePage().props;
     const attempts = dataQuestions.attempt.student_answer;
     const questions = dataQuestions.questions.map(item => {
         return {
@@ -51,7 +50,7 @@ export default function quizAttempt() {
 
         const newAnswer = {
             questionId: currentQuestion.id,
-            attemptId: attempt,
+            attemptId: dataQuestions.attempt.id,
             selected,
             correct: selected === currentQuestion.answer ? 1 : 0,
             score: correct

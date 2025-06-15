@@ -41,10 +41,12 @@ class QuizController extends Controller
 
     public function show(Request $req, string $credentials)
     {
-        $quiz = Quiz::with('teacher')->where('slug', $credentials)->first();
+        $quiz = Quiz::with('teacher', 'questions')->where('slug', $credentials)->first();
         $quiz_code = Quiz::with('teacher')
             ->where('access_code', $credentials)
             ->first();
+
+        $user = auth()->user();
 
         if ($quiz_code) {
             $req->validate(['token' => 'required']);
@@ -67,11 +69,18 @@ class QuizController extends Controller
             'updated_at' => $quiz->updated_at->format('d/m/Y'),
             'teacher_id' => $quiz->teacher->id,
             'teacher' => $quiz->teacher->name,
+            'questions_count' => $quiz->questions->count(),
         ];
 
         return Inertia::render('show-quiz', [
             'data' => $data,
+            'auth' => $user
         ]);
+    }
+
+    public function waitingRoom(Request $req, string $id) 
+    {
+        $data = Quiz::find($id)->with('')->get();
     }
 
     public function start(Request $req, string $credentials)
@@ -122,7 +131,6 @@ class QuizController extends Controller
 
         return Inertia::render('quiz-attempt', [
             'dataQuestions' => $quiz,
-            'attempt' => $quiz->attempt->id,
         ]);
     }
 
@@ -136,8 +144,6 @@ class QuizController extends Controller
             'answers.*.correct' => 'required|boolean',
             'answers.*.score' => 'required|numeric',
         ]);
-
-        Log::info($req);
 
         DB::beginTransaction();
         try {
