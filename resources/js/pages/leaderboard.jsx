@@ -1,7 +1,5 @@
 import React from 'react';
 import TopPlayerCard from '@/components/top-player-card';
-import Reminder from '../../../public/images/reminder.png';
-import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -14,7 +12,7 @@ import {
 } from '@/components/ui/table';
 import ParticlesBackground from '@/components/particle-background';
 import Footer from '@/components/layouts/footer.jsx';
-import { router, usePage } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 
 const topPlayers = [
     { rank: 1, name: 'John Doe', score: 100, winrate: '90%' },
@@ -33,104 +31,64 @@ const allPlayers = [
     { rank: 11, name: 'Hannah', score: 30, winrate: '2%' },
 ];
 
-const LoginOverlay = () => {
-    const handleBack = () => {
-        router.visit('/');
-    };
-
-    const handleLogin = () => {
-        router.visit('/login');
-    };
-
-    return (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center z-50">
-            <h1 className="text-xl font-medium lowercase">
-                "Oops, you need to login to view the leaderboard!"
-            </h1>
-            <div className="max-w-2xs w-full">
-                <img src={Reminder} alt="Reminder" />
-            </div>
-            <div className="flex gap-3">
-                <Button
-                    variant="ghost"
-                    className="min-w-16 p-8 hover:font-bold text-lg"
-                    onClick={handleBack}
-                >
-                    Back
-                </Button>
-                <Button
-                    variant="ghost"
-                    className="min-w-16 p-8 hover:font-bold text-lg"
-                    onClick={handleLogin}
-                >
-                    Login
-                </Button>
-            </div>
-        </div>
-    );
-};
-
 const leaderboard = () => {
-    const { props } = usePage();
-    const { auth } = props;
-
-    const isAuthenticated = auth && auth.user;
-
     return (
-        <div className="container mx-auto max-w-7xl py-8 space-y-16">
-            <ParticlesBackground />
+        <>
+            <Head title="Global Leaderboard" />
+            <div className="container mx-auto max-w-7xl py-8 space-y-16">
+                <ParticlesBackground />
 
-            <div className="w-full flex items-center justify-center">
-                <h1 className="font-bold text-4xl uppercase">
-                    Global Leaderboard
-                </h1>
-            </div>
-            <div className="flex flex-col items-center justify-center border rounded-3xl p-8 gap-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full ">
-                    {topPlayers.map(player => (
-                        <TopPlayerCard key={player.rank} player={player} />
-                    ))}
+                <div className="w-full flex items-center justify-center">
+                    <h1 className="font-bold text-4xl uppercase">
+                        Global Leaderboard
+                    </h1>
                 </div>
-                <Card className="border rounded-2xl w-full p-6">
-                    <CardContent>
-                        <ScrollArea className="h-[240px] p-3">
-                            <Table>
-                                <TableHeader>
-                                    <TableRow className="text-xl font-medium">
-                                        <TableHead>Rank</TableHead>
-                                        <TableHead>Name</TableHead>
-                                        <TableHead>Score</TableHead>
-                                        <TableHead className="text-right">
-                                            Winrate
-                                        </TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {allPlayers.map(player => (
-                                        <TableRow key={player.rank}>
-                                            <TableCell className="font-medium text-xl">
-                                                {player.rank}
-                                            </TableCell>
-                                            <TableCell className="text-xl">
-                                                {player.name}
-                                            </TableCell>
-                                            <TableCell className="text-xl">
-                                                {player.score}
-                                            </TableCell>
-                                            <TableCell className="text-right text-xl">
-                                                {player.winrate}
-                                            </TableCell>
+                <div className="flex flex-col items-center justify-center border rounded-3xl p-8 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full ">
+                        {topPlayers.map(player => (
+                            <TopPlayerCard key={player.rank} player={player} />
+                        ))}
+                    </div>
+                    <Card className="border rounded-2xl w-full p-6">
+                        <CardContent>
+                            <ScrollArea className="h-[240px] p-3">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow className="text-xl font-medium">
+                                            <TableHead>Rank</TableHead>
+                                            <TableHead>Name</TableHead>
+                                            <TableHead>Score</TableHead>
+                                            <TableHead className="text-right">
+                                                Winrate
+                                            </TableHead>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </ScrollArea>
-                    </CardContent>
-                </Card>
-                <Footer />
+                                    </TableHeader>
+                                    <TableBody>
+                                        {allPlayers.map(player => (
+                                            <TableRow key={player.rank}>
+                                                <TableCell className="font-medium text-xl">
+                                                    {player.rank}
+                                                </TableCell>
+                                                <TableCell className="text-xl">
+                                                    {player.name}
+                                                </TableCell>
+                                                <TableCell className="text-xl">
+                                                    {player.score}
+                                                </TableCell>
+                                                <TableCell className="text-right text-xl">
+                                                    {player.winrate}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </ScrollArea>
+                        </CardContent>
+                    </Card>
+                    <Footer />
+                </div>
             </div>
-            {!isAuthenticated && <LoginOverlay />}
-        </div>
+        </>
     );
 };
 
