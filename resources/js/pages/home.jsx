@@ -206,6 +206,7 @@ const home = () => {
                         <Button
                             size="lg"
                             className="text-lg px-8 py-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                            onClick={toQuiz}
                         >
                             <Play className="w-5 h-5 mr-2" />
                             Start Playing
@@ -214,6 +215,12 @@ const home = () => {
                             variant="outline"
                             size="lg"
                             className="text-lg px-8 py-6"
+                            onClick={() => {
+                                window.open(
+                                    'https://github.com/szuryuu/qwiz',
+                                    '_blank'
+                                );
+                            }}
                         >
                             <UserPlus className="w-5 h-5 mr-2" />
                             Join Community
@@ -272,7 +279,7 @@ const home = () => {
                 >
                     <div className="text-center">
                         <h2 className="text-4xl font-bold mb-4">
-                            Why Choose QuizMaster?
+                            Why Choose Qwiz?
                         </h2>
                         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                             Discover what makes our platform the perfect place
