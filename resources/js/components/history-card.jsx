@@ -4,37 +4,7 @@ import { Card } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 
 const HistoryCard = ({ historyData = [] }) => {
-    const sampleHistory = [
-        {
-            id: 1,
-            title: 'Basic JavaScript Quiz',
-            score: 85,
-            maxScore: 100,
-            completedAt: '2024-06-10',
-            teacher: 'John Doe',
-            category: 'Programming',
-        },
-        {
-            id: 2,
-            title: 'React Fundamentals',
-            score: 92,
-            maxScore: 100,
-            completedAt: '2024-06-08',
-            teacher: 'Jane Smith',
-            category: 'Web Development',
-        },
-        {
-            id: 3,
-            title: 'Database Management',
-            score: 78,
-            maxScore: 100,
-            completedAt: '2024-06-05',
-            teacher: 'Mike Johnson',
-            category: 'Database',
-        },
-    ];
-
-    const displayData = historyData.length > 0 ? historyData : sampleHistory;
+    const displayData = historyData.length > 0 ? historyData : [];
 
     const getScoreColor = (score, maxScore) => {
         const percentage = (score / maxScore) * 100;

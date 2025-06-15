@@ -16,6 +16,7 @@ return new class extends Migration {
                 ->foreignId('teacher_id')
                 ->constrained('users')
                 ->onDelete('cascade');
+
             $table->string('slug')->unique();
             $table->string('title');
             $table->string('description');
@@ -25,7 +26,7 @@ return new class extends Migration {
             $table
                 ->enum('visibility', ['public', 'private'])
                 ->default('private');
-
+            $table->string('category')->nullable();
             $table->string('access_code', 6)->nullable();
             $table->boolean('require_code')->default(false);
             $table->datetime('start_time')->nullable();

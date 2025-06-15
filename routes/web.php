@@ -39,7 +39,10 @@ Route::middleware(['auth'])->group(function () {
     ])->name('quiz.start');
     Route::post('/submit/quiz', [Controllers\QuizController::class, 'submit']);
 
-    Route::get('/quiz/waiting-room/{id}', [Controllers\QuizController::class, 'waitingRoom']);
+    Route::get('/quiz/waiting-room/{id}', [
+        Controllers\QuizController::class,
+        'waitingRoom',
+    ]);
 
     Route::get('/leaderboard', [
         Controllers\LeaderboardController::class,
@@ -49,6 +52,10 @@ Route::middleware(['auth'])->group(function () {
         Controllers\ProfileController::class,
         'index',
     ])->name('profile');
+    Route::put('/profile', [
+        Controllers\ProfileController::class,
+        'update',
+    ])->name('profile.update');
 });
 
 Route::get('/premium', fn() => Inertia::render('premium'));
