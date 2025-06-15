@@ -4,9 +4,13 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import ParticleBackground from '@/components/particle-background';
 import { toast } from 'sonner';
+import complete from "../../../public/images/complete.png";
+import clock from "../../../public/images/clock.png";
+import gaming from "../../../public/images/gaming.png";
 
 export default function WaitingRoom() {
     const { data, auth, participants } = usePage().props;
+    const status = data.status === 'waiting';
     const [isStarting, setIsStarting] = useState(false);
     const [countdown, setCountdown] = useState(null);
 
@@ -14,34 +18,40 @@ export default function WaitingRoom() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            router.reload({ only: ['participants'] });
+            router.reload({ only: ['participants', 'data'] });
         }, 3000);
 
         return () => clearInterval(interval);
     }, []);
 
-    // Countdown timer
     useEffect(() => {
         if (countdown > 0) {
             const timer = setTimeout(() => {
                 setCountdown(countdown - 1);
             }, 1000);
             return () => clearTimeout(timer);
-        } else if (countdown === 0) {
-            // Mulai quiz
-            router.visit(`/quiz/start/${data.id}`);
-        }
-    }, [countdown, data.id]);
+        } 
+    }, [countdown]);
 
     const startQuiz = () => {
         setIsStarting(true);
         setCountdown(5); // 5 detik countdown
         toast.success('Quiz akan dimulai dalam 5 detik!');
+        
+        setTimeout(() => {
+            router.post(`/quiz/private/${data.session_id}`);
+        }, 5000);
     };
 
     const leaveWaitingRoom = () => {
         router.visit(`/quiz/${data.slug}`);
     };
+
+    useEffect(() => {
+        if (!isOwner && data.status !== 'waiting') {
+            router.visit(`/quiz/start/${data.id}`);
+        }
+    }, [data?.status]);
 
     return (
         <div className="container mx-auto max-w-4xl min-h-screen">
@@ -115,13 +125,32 @@ export default function WaitingRoom() {
                                     className="flex items-center space-x-3 bg-white/5 rounded-lg p-3"
                                 >
                                     <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-sm font-bold">
-                                        {participant.name
+                                        {participant.student.name
                                             ?.charAt(0)
                                             .toUpperCase() || '?'}
                                     </div>
+                                    <div className='absolute left-[350px]'>
+                                        { participant.status === 'ready' && (
+                                            <img src={clock} alt="waiting" 
+                                                className='w-1/2 h-1/2'
+                                            />
+                                        )}
+                                        { participant.status === 'in_progress' && (
+                                            <img src={gaming} alt="in progress" 
+                                                className='w-1/2 h-1/2'
+                                            />
+                                        )}
+                                        { participant.status === 'completed' && (
+                                            <div className=''>
+                                                <img src={complete} alt="complete" 
+                                                    className='w-1/2 h-1/2'
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
                                     <div>
                                         <div className="font-medium">
-                                            {participant.name}
+                                            {participant.student.name}
                                         </div>
                                         <div className="text-xs text-white/60">
                                             Bergabung: {participant.joined_at}
@@ -149,6 +178,7 @@ export default function WaitingRoom() {
                             onClick={startQuiz}
                             disabled={
                                 isStarting ||
+                                !status ||
                                 countdown !== null ||
                                 !participants?.length
                             }
