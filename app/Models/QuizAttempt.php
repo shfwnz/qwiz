@@ -5,7 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Quiz;
+use App\Models\Users;
+use App\Models\StudentAnswer;
 
 class QuizAttempt extends Model
 {
@@ -13,6 +16,7 @@ class QuizAttempt extends Model
 
     protected $fillable = [
         'quiz_id',
+        'user_id',
         'started_at',
         'ended_at',
         'submited_at',
@@ -26,5 +30,15 @@ class QuizAttempt extends Model
     public function quiz(): BelongsTo
     {
         return $this->belongsTo(Quiz::class);
+    }
+
+    public function student(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function studentAnswer(): HasMany
+    {
+        return $this->hasMany(StudentAnswer::class);
     }
 }

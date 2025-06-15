@@ -16,6 +16,11 @@ return new class extends Migration {
                 ->foreignId('quiz_id')
                 ->constrained('quizzes')
                 ->onDelete('cascade');
+            $table
+                ->foreignId('user_id')
+                ->nullable()
+                ->constrained('users')
+                ->onDelete('cascade');
             $table->timestamp('started_at');
             $table->timestamp('ended_at')->nullable();
             $table->enum('status', [

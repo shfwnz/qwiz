@@ -79,7 +79,7 @@ class QuizController extends Controller
         // Ambil slug nya setelah di beri uuid
         $pureSlug = Str::beforeLast($credentials, '-uuid-');
 
-        $quiz = Quiz::with('questions', 'questions.options', 'attempt')
+        $quiz = Quiz::with('questions', 'questions.options', 'attempt', 'attempt.studentAnswer')
             ->where('slug', $pureSlug)
             ->first();
         $quiz_id = Quiz::with('questions')->find($credentials);
@@ -137,6 +137,8 @@ class QuizController extends Controller
             'answers.*.score' => 'required|numeric',
         ]);
 
+        Log::info($req);
+
         DB::beginTransaction();
         try {
             $totalScore = 0;
@@ -160,6 +162,7 @@ class QuizController extends Controller
             $minutes = Carbon::parse($attempt->started_at)->diffInMinutes(
                 $currentDate,
             );
+            $user = auth()->id();
 
             $percentage = ($totalScore / $attempt->max_score) * 100;
             $attempt->update([
@@ -170,11 +173,18 @@ class QuizController extends Controller
                 'ended_at' => $currentDate,
             ]);
 
+            if ($user) {
+                $attempt->update([
+                    'user_id' => $user,
+                ]);
+            }
+
             DB::commit();
 
             return back();
         } catch (\Exception $e) {
             DB::rollback();
+            Log::error('Transaksi gagal: ' . $e->getMessage());
 
             return back()->withErrors([
                 'message' => 'Gagal menyimpan jawaban.',
