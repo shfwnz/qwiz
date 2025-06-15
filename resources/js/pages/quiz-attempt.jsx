@@ -5,14 +5,16 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
 
 export default function quizAttempt() {
-    const savedAnswers = JSON.parse(sessionStorage.getItem('quiz_answers') || '[]');
+    const savedAnswers = JSON.parse(
+        sessionStorage.getItem('quiz_answers') || '[]'
+    );
     const savedShort = sessionStorage.getItem('quiz_short_answer') || '';
-    
+
     const { dataQuestions } = usePage().props;
     const attempts = dataQuestions.attempt.student_answer;
     const questions = dataQuestions.questions.map(item => {
@@ -28,9 +30,9 @@ export default function quizAttempt() {
         };
     });
     const isDone = !!dataQuestions.attempt?.user_id;
-    
-    const savedIndex = isDone 
-        ? parseInt(sessionStorage.getItem('quiz_current_index') || '0') 
+
+    const savedIndex = isDone
+        ? parseInt(sessionStorage.getItem('quiz_current_index') || '0')
         : 0;
 
     const [shortAnswer, setShortAnswer] = useState(savedShort);
@@ -38,7 +40,7 @@ export default function quizAttempt() {
     const [showResult, setShowResult] = useState(false);
 
     const { data, setData, post, processing } = useForm({
-        answers: savedAnswers
+        answers: savedAnswers,
     });
 
     const currentQuestion = questions[currentIndex];
@@ -71,21 +73,20 @@ export default function quizAttempt() {
     useEffect(() => {
         if (data.answers.length == questions.length) {
             post('/submit/quiz', {
-                    onSuccess: () => {
-                        toast.success('Jawaban Terkirim!');
-                        sessionStorage.removeItem('quiz_answers')
-                        sessionStorage.removeItem('quiz_short_answer')
-                    },
-                    onError: errors => {
-                        toast.error('Error', 'Gagal Menyimpan Jawaban');
-                    },
-                });
+                onSuccess: () => {
+                    toast.success('Jawaban Terkirim!');
+                    sessionStorage.removeItem('quiz_answers');
+                    sessionStorage.removeItem('quiz_short_answer');
+                },
+                onError: errors => {
+                    toast.error('Error', 'Gagal Menyimpan Jawaban');
+                },
+            });
         }
-    }, [data])
+    }, [data]);
 
     useEffect(() => {
         sessionStorage.setItem('quiz_current_index', currentIndex);
-
     }, [currentIndex]);
 
     useEffect(() => {
@@ -105,36 +106,58 @@ export default function quizAttempt() {
                 <div className="flex items-center justify-center rounded-lg bg-[#0d1117] p-10 w-1/2">
                     <Card className="w-full max-w-lg text-center bg-white/10 backdrop-blur-md border-white/10 text-white">
                         <CardHeader>
-                        <CardTitle className="text-2xl">Quiz Result</CardTitle>
+                            <CardTitle className="text-2xl">
+                                Quiz Result
+                            </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                        <div className="text-lg">
-                            <p>✅ Correct Answer: <span className="font-semibold text-green-400">{correct}</span></p>
-                            <p>❌ Wrong Answer: <span className="font-semibold text-red-400">{wrong}</span></p>
-                            <p>🎯 Score: <span className="font-semibold text-yellow-300">{dataQuestions.attempt.total_score}</span></p>
-                        </div>
+                            <div className="text-lg">
+                                <p>
+                                    ✅ Correct Answer:{' '}
+                                    <span className="font-semibold text-green-400">
+                                        {correct}
+                                    </span>
+                                </p>
+                                <p>
+                                    ❌ Wrong Answer:{' '}
+                                    <span className="font-semibold text-red-400">
+                                        {wrong}
+                                    </span>
+                                </p>
+                                <p>
+                                    🎯 Score:{' '}
+                                    <span className="font-semibold text-yellow-300">
+                                        {dataQuestions.attempt.total_score}
+                                    </span>
+                                </p>
+                            </div>
 
-                        <div className="space-y-2">
-                            <p className="text-sm uppercase text-white/70">Percentage</p>
-                            <Progress 
-                                value={dataQuestions.attempt.percentage}
-                                className="h-3 bg-white/20" />
-                            <p className="text-xl font-bold">{dataQuestions.attempt.percentage}%</p>
-                        </div>
+                            <div className="space-y-2">
+                                <p className="text-sm uppercase text-white/70">
+                                    Percentage
+                                </p>
+                                <Progress
+                                    value={dataQuestions.attempt.percentage}
+                                    className="h-3 bg-white/20"
+                                />
+                                <p className="text-xl font-bold">
+                                    {dataQuestions.attempt.percentage}%
+                                </p>
+                            </div>
 
-                        <div className="flex justify-center gap-4 pt-4">
-                            {/* <Button variant="secondary" 
+                            <div className="flex justify-center gap-4 pt-4">
+                                {/* <Button variant="secondary"
                                 // onClick={onDetailClick}
                             >
                             📄 Detail Answer
                             </Button> */}
-                            <Link 
-                                href="/"
-                                className="absolue p-2 bg-white rounded-lg text-black bottom-3"
-                            >
-                            🔙 Return to Dashboard
-                            </Link>
-                        </div>
+                                <Link
+                                    href="/"
+                                    className="absolue p-2 bg-white rounded-lg text-black bottom-3"
+                                >
+                                    🔙 Return to Dashboard
+                                </Link>
+                            </div>
                         </CardContent>
                     </Card>
                 </div>
