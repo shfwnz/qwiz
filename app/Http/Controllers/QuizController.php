@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Models\Quiz;
 use App\Models\QuizAttempt;
+use App\Models\QuizParticipant;
+use App\Models\QuizSession;
 use Inertia\Inertia;
 use Carbon\Carbon;
 
@@ -48,6 +50,22 @@ class QuizController extends Controller
 
         $user = auth()->user();
 
+        $user_participant = QuizParticipant::where('user_id', $user->id)->first();
+
+        if ($user_participant) {
+            DB::beginTransaction();
+
+            try {
+                $user_participant->delete();
+
+                DB::commit();
+            } catch(\Exception $e) {
+                Log::error('Transaksi gagal: ' . $e->getMessage());
+
+                DB::rollback();
+            }
+        }
+
         if ($quiz_code) {
             $req->validate(['token' => 'required']);
 
@@ -80,7 +98,51 @@ class QuizController extends Controller
 
     public function waitingRoom(Request $req, string $id) 
     {
-        $data = Quiz::find($id)->with('')->get();
+        $quiz= Quiz::with('questions', 'session', 'teacher')->find($id);
+        $auth = auth()->user();
+
+        $data = [
+            'id' => $quiz->id,
+            'title' => $quiz->title,
+            'description' => $quiz->description,
+            'visibility' => $quiz->visibility,
+            'max_participants' => $quiz->max_participants,
+            'max_attempts' => $quiz->max_attempts,
+            'time_limit_minutes' => $quiz->time_limit_minutes,
+            'updated_at' => $quiz->updated_at->format('d/m/Y'),
+            'teacher_id' => $quiz->teacher->id,
+            'teacher' => $quiz->teacher->name,
+            'questions_count' => $quiz->questions->count(),
+        ];
+
+        if ($data['teacher_id'] !== $auth->id) {
+            DB::beginTransaction();
+
+            $currentDate = Carbon::now();
+
+            try {
+                QuizParticipant::create([
+                    'quiz_session_id' => $quiz->session->id,
+                    'user_id' => $auth->id,
+                    'status' => 'ready',
+                    'joined_at' => $currentDate,
+                ]);
+
+                DB::commit();
+            } catch (\Exception $e) {
+                Log::error('Transaksi gagal: ' . $e->getMessage());
+
+                DB::rollback();
+            }
+        }
+
+        $participant = QuizSession::where('quiz_id', $id)->get();
+
+        return Inertia::render('waiting-room', [
+            'data' => $data,
+            'auth' => $auth,
+            'participants' => $participant,
+        ]);
     }
 
     public function start(Request $req, string $credentials)

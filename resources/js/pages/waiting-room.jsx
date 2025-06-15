@@ -10,7 +10,7 @@ export default function WaitingRoom() {
     const [isStarting, setIsStarting] = useState(false);
     const [countdown, setCountdown] = useState(null);
 
-    const isOwner = auth?.user?.id === data.user_id;
+    const isOwner = auth?.id === data.teacher_id;
 
     useEffect(() => {
         const interval = setInterval(() => {
