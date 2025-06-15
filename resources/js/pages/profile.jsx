@@ -43,6 +43,7 @@ function ProfileForm({ className, onSave }) {
     const [formData, setFormData] = useState({
         name: 'Thomas Alva Edison',
         email: 'email@gmail.com',
+        phone: '123-456-7890',
     });
 
     const handleSave = () => {
@@ -71,6 +72,16 @@ function ProfileForm({ className, onSave }) {
                     id="email"
                     value={formData.email}
                     onChange={e => handleChange('email', e.target.value)}
+                />
+            </div>
+
+            <div className="grid gap-2">
+                <Label htmlFor="phone">Phone</Label>
+                <Input
+                    type="tel"
+                    id="phone"
+                    value={formData.phone}
+                    onChange={e => handleChange('phone', e.target.value)}
                 />
             </div>
         </div>
@@ -208,8 +219,8 @@ const profile = () => {
                                         </p>
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-2">
-                                        <div className="px-4 py-2 bg-gray-800/50 rounded-lg border border-gray-700 col-span-2 md:col-span-1">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                        <div className="px-4 py-2 rounded-2xl border ">
                                             <p className="text-sm text-gray-400">
                                                 Email
                                             </p>
@@ -218,10 +229,8 @@ const profile = () => {
                                             </p>
                                         </div>
 
-                                        <div className="px-4 py-2 bg-gray-800/50 rounded-lg border border-gray-700 col-span-2 md:col-span-1">
-                                            <p className="text-sm text-gray-400">
-                                                Phone
-                                            </p>
+                                        <div className="px-4 py-2 rounded-2xl border ">
+                                            <p className="text-sm">Phone</p>
                                             <p className="text-white font-medium">
                                                 +62 123-8392-2198
                                             </p>
