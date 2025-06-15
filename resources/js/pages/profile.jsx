@@ -48,7 +48,12 @@ function ProfileForm({ className, onSave, initialData }) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        put(route('profile.update'), {
+        put('/profile', {
+            data: {
+                name: data.name,
+                email: data.email,
+                phone: data.phone,
+            },
             onSuccess: () => {
                 console.log('Profile updated successfully');
                 if (onSave) onSave();
@@ -61,8 +66,9 @@ function ProfileForm({ className, onSave, initialData }) {
 
     return (
         <form
+            id="profile-form"
             onSubmit={handleSubmit}
-            className={cn('grid items-start gap-4', className)}
+            className={cn('grid items-start gap-4 px-4', className)}
         >
             <div className="grid gap-2">
                 <Label htmlFor="name">Name</Label>
@@ -114,16 +120,6 @@ function ProfileForm({ className, onSave, initialData }) {
 
 // Desktop Dialog Component
 function DesktopEditProfile({ open, setOpen, user }) {
-    const [formRef, setFormRef] = useState(null);
-
-    const handleSave = () => {
-        if (formRef) {
-            formRef.dispatchEvent(
-                new Event('submit', { bubbles: true, cancelable: true })
-            );
-        }
-    };
-
     const handleFormSave = () => {
         setOpen(false);
     };
@@ -146,16 +142,16 @@ function DesktopEditProfile({ open, setOpen, user }) {
                     </DialogDescription>
                 </DialogHeader>
 
-                <div ref={setFormRef}>
-                    <ProfileForm onSave={handleFormSave} initialData={user} />
-                </div>
+                <ProfileForm onSave={handleFormSave} initialData={user} />
 
                 <DialogFooter className="mt-3">
                     <div className="flex w-full justify-end space-x-3 pr-1">
                         <DialogClose asChild>
                             <Button variant="outline">Cancel</Button>
                         </DialogClose>
-                        <Button onClick={handleSave}>Save</Button>
+                        <Button type="submit" form="profile-form">
+                            Save
+                        </Button>
                     </div>
                 </DialogFooter>
             </DialogContent>
@@ -165,16 +161,6 @@ function DesktopEditProfile({ open, setOpen, user }) {
 
 // Mobile Drawer Component
 function MobileEditProfile({ open, setOpen, user }) {
-    const [formRef, setFormRef] = useState(null);
-
-    const handleSave = () => {
-        if (formRef) {
-            formRef.dispatchEvent(
-                new Event('submit', { bubbles: true, cancelable: true })
-            );
-        }
-    };
-
     const handleFormSave = () => {
         setOpen(false);
     };
@@ -197,12 +183,12 @@ function MobileEditProfile({ open, setOpen, user }) {
                     </DrawerDescription>
                 </DrawerHeader>
 
-                <div className="px-4 pb-4" ref={setFormRef}>
-                    <ProfileForm onSave={handleFormSave} initialData={user} />
-                </div>
+                <ProfileForm onSave={handleFormSave} initialData={user} />
 
                 <DrawerFooter className="pt-2">
-                    <Button onClick={handleSave}>Save Changes</Button>
+                    <Button type="submit" form="profile-form">
+                        Save Changes
+                    </Button>
                     <DrawerClose asChild>
                         <Button variant="outline">Cancel</Button>
                     </DrawerClose>
@@ -247,7 +233,7 @@ const Profile = ({ user, quizHistory }) => {
                 <ParticlesBackground />
                 <Card className="px-4 py-8 lg:px-6 lg:py-10">
                     <CardHeader className="flex flex-col md:flex-row justify-between">
-                        <CardTitle>
+                        <CardTitle className="w-full">
                             <div className="flex flex-col md:flex-row items-center md:items-end gap-6">
                                 <div className="border rounded-2xl p-4 flex-shrink-0">
                                     <img
