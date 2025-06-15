@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import Footer from '@/components/layouts/footer.jsx';
 import ParticlesBackground from '@/components/particle-background';
 import HistoryCard from '@/components/history-card';
-import Reminder from '../../../public/images/reminder.png';
 import character from '../../../public/images/profile.png';
 import { Button } from '@/components/ui/button';
 import {
@@ -25,55 +24,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useMotionValue, useTransform, animate, motion } from 'framer-motion';
-import { usePage, Head, router } from '@inertiajs/react';
-
-const LoginOverlay = () => {
-    const handleBack = () => {
-        router.visit('/');
-    };
-
-    const handleLogin = () => {
-        router.visit('/login');
-    };
-
-    return (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center z-50">
-            <h1 className="text-xl font-medium lowercase">
-                "Oops, you need to login to view profile!"
-            </h1>
-            <div className="max-w-2xs w-full">
-                <img src={Reminder} alt="Reminder" />
-            </div>
-            <div className="flex gap-3">
-                <Button
-                    variant="ghost"
-                    className="min-w-16 p-8 hover:font-bold text-lg"
-                    onClick={handleBack}
-                >
-                    Back
-                </Button>
-                <Button
-                    variant="ghost"
-                    className="min-w-16 p-8 hover:font-bold text-lg"
-                    onClick={handleLogin}
-                >
-                    Login
-                </Button>
-            </div>
-        </div>
-    );
-};
+import { Head } from '@inertiajs/react';
 
 const profile = () => {
     const pointCounting = useMotionValue(0);
     const quizCounting = useMotionValue(0);
     const pointResult = useTransform(pointCounting, Math.round);
     const quizResult = useTransform(quizCounting, Math.round);
-
-    const { props } = usePage();
-    const { auth } = props;
-
-    const isAuthenticated = auth && auth.user;
 
     useEffect(() => {
         const pointAnimation = animate(pointCounting, 12000, {
@@ -221,7 +178,6 @@ const profile = () => {
 
                 <Footer />
             </div>
-            {!isAuthenticated && <LoginOverlay />}
         </>
     );
 };
