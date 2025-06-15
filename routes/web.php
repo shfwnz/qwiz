@@ -37,6 +37,10 @@ Route::middleware(['auth'])->group(function () {
         Controllers\QuizController::class,
         'start',
     ])->name('quiz.start');
+    Route::post('/quiz/private/{status}', [
+        Controllers\QuizController::class,
+        'private',
+    ])->name('quiz.private');
     Route::post('/submit/quiz', [Controllers\QuizController::class, 'submit']);
 
     Route::get('/quiz/waiting-room/{id}', [

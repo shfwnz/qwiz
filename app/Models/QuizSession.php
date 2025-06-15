@@ -27,6 +27,6 @@ class QuizSession extends Model
 
     public function participants(): HasMany
     {
-        return $this->hasMany(Quiz::class);
+        return $this->hasMany(QuizParticipant::class);
     }
 }

@@ -86,7 +86,7 @@ class User extends Authenticatable
      *
      * @return HasMany
      */
-    public function participant(): HasMany
+    public function participants(): HasMany
     {
         return $this->hasMany(QuizParticipant::class);
     }
