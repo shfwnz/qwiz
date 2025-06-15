@@ -178,11 +178,11 @@ const profile = ({ user }) => {
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
     useEffect(() => {
-        const pointAnimation = animate(pointCounting, 12000, {
+        const pointAnimation = animate(pointCounting, user.total_points, {
             duration: 2,
         });
 
-        const quizAnimation = animate(quizCounting, 100, {
+        const quizAnimation = animate(quizCounting, user.quizzes_completed, {
             duration: 2.5,
         });
 

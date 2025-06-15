@@ -24,6 +24,7 @@ class QuizAttempt extends Model
         'total_score',
         'max_score',
         'percentage',
+        'points_earned',
         'time_spent_minutes',
     ];
 

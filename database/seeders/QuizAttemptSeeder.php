@@ -56,6 +56,7 @@ class QuizAttemptSeeder extends Seeder
                     'total_score' => $totalScore,
                     'max_score' => $maxScore,
                     'percentage' => round($percentage, 2),
+                    'points_earned' => $totalScore,
                     'is_completed' => true,
                 ]);
             }

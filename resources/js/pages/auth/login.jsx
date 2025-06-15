@@ -41,6 +41,7 @@ const Login = () => {
                         >
                             <Input
                                 placeholder="Email"
+                                type="email"
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
                                 required
@@ -50,6 +51,7 @@ const Login = () => {
                             )}
                             <Input
                                 placeholder="Password"
+                                type="password"
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}
                                 required

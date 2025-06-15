@@ -32,6 +32,7 @@ return new class extends Migration {
             $table->decimal('total_score', 10, 2)->nullable();
             $table->decimal('max_score', 10, 2)->nullable();
             $table->decimal('percentage', 10, 2)->nullable();
+            $table->integer('points_earned')->default(0);
             $table->integer('time_spent_minutes')->nullable();
             $table->timestamps();
         });

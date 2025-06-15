@@ -38,6 +38,8 @@ class StudentUserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'role' => 'student',
                 'phone' => '0812345678' . rand(10, 99),
+                'total_points' => 100,
+                'quizzes_completed' => 1,
                 'email_verified_at' => now(),
             ])->assignRole('student');
         }
