@@ -10,6 +10,7 @@ use App\Models\Quiz;
 use App\Models\QuizAttempt;
 use App\Models\QuizParticipant;
 use App\Models\QuizSession;
+use App\Models\StudentAnswer;
 use Inertia\Inertia;
 use Carbon\Carbon;
 
@@ -100,7 +101,7 @@ class QuizController extends Controller
 
     public function waitingRoom(Request $req, string $id) 
     {
-        $quiz = Quiz::with('questions', 'session', 'teacher', 'attempt')->find($id);
+        $quiz = Quiz::with('questions', 'session', 'teacher', 'attempts')->find($id);
         $auth = auth()->user();
 
         $data = [
@@ -188,9 +189,8 @@ class QuizController extends Controller
         // Ambil slug nya setelah di beri uuid
         $pureSlug = Str::beforeLast($credentials, '-uuid-');
         $user = auth()->id();
-        $attempt = QuizAttempt::where('user_id', $user)->with('quiz', 'studentAnswer')->first();
 
-        $quiz = Quiz::with('questions', 'questions.options')
+        $quiz = Quiz::with('questions', 'questions.options', 'attempts')
             ->where('slug', $pureSlug)
             ->first();
         $quiz_id = Quiz::with('questions')->find($credentials);
@@ -233,9 +233,23 @@ class QuizController extends Controller
                 ->with('error', 'Quiz Not Found');
         }
 
+        $attempt = QuizAttempt::where('user_id', $user)
+                    ->where('quiz_id', $quiz->id)
+                    ->with('quiz', 'studentAnswer')
+                    ->latest()
+                    ->first();
+
+        $attempts = QuizAttempt::where('user_id', $user)
+                    ->where('quiz_id', $quiz->id)
+                    ->with('quiz', 'studentAnswer')
+                    ->get();
+
+        $isMaxAttempt = $attempts->count() >=  $quiz->max_attempts;
+
         return Inertia::render('quiz-attempt', [
             'dataQuestions' => $quiz,
-            'attempt' => $attempt
+            'attempts' => $attempt,
+            'isMaxAttempt' => $isMaxAttempt
         ]);
     }
 
@@ -243,6 +257,7 @@ class QuizController extends Controller
     {
         $data = $req->validate([
             'answers' => 'required|array|min:1',
+            'answers.*.quizId' => 'required|exists:quizzes,id',
             'answers.*.questionId' => 'required|exists:questions,id',
             'answers.*.attemptId' => 'required|exists:quiz_attempts,id',
             'answers.*.selected' => 'required|string',
@@ -250,37 +265,56 @@ class QuizController extends Controller
             'answers.*.score' => 'required|numeric',
         ]);
 
+        $user = auth()->user();
+
         DB::beginTransaction();
         try {
             $totalScore = 0;
 
-            foreach ($data['answers'] as $answer) {
-                $existingAnswer = DB::table('student_answers')
-                    ->where('quiz_attempt_id', $answer['attemptId'])
-                    ->where('question_id', $answer['questionId'])
-                    ->first();
+            // Ambil quiz_id dari jawaban pertama
+            $quizId = $data['answers'][0]['quizId'];
 
-                if (!$existingAnswer) {
-                    DB::table('student_answers')->insert([
-                        'quiz_attempt_id' => $answer['attemptId'],
-                        'question_id' => $answer['questionId'],
-                        'answer_text' => $answer['selected'],
-                        'is_correct' => $answer['correct'],
-                        'score' => $answer['score'],
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
+            // Cek dan hapus attempt lama
+            $existingAttempt = QuizAttempt::where('quiz_id', $quizId)
+                ->where('user_id', $user->id)
+                ->first();
 
-                    $totalScore += $answer['score'];
-                }
+            if ($existingAttempt) {
+                $user->decrement('total_points', $existingAttempt->max_score);
             }
 
-            $attempt = QuizAttempt::find($answer['attemptId']);
             $currentDate = Carbon::now();
+
+            $quiz = Quiz::with('questions')
+                ->where('id', $quizId)
+                ->first();
+
+            $newAttempt = QuizAttempt::create([
+                'quiz_id' => $quizId,
+                'user_id' => $user->id,
+                'started_at' => $currentDate,
+                'status' => 'in_progress',
+                'max_score' => $quiz->questions->sum('points'),
+            ]);
+
+            foreach ($data['answers'] as $answer) {
+                DB::table('student_answers')->insert([
+                    'quiz_attempt_id' => $newAttempt->id, // ✅ pakai ID baru
+                    'question_id' => $answer['questionId'],
+                    'answer_text' => $answer['selected'],
+                    'is_correct' => $answer['correct'],
+                    'score' => $answer['score'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                $totalScore += $answer['score'];
+            }
+
+            $attempt = $newAttempt;
             $minutes = Carbon::parse($attempt->started_at)->diffInMinutes(
                 $currentDate,
             );
-            $user = auth()->user();
 
             $percentage = ($totalScore / $attempt->max_score) * 100;
             $attempt->update([
