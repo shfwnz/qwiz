@@ -17,8 +17,9 @@ class QuestionOptionSeeder extends Seeder
                 $this->createMultipleChoiceOptions($question);
             } elseif ($question->question_type === 'true_false') {
                 $this->createTrueFalseOptions($question);
+            } elseif ($question->question_type === 'short_answer') {
+                $this->createShortAnswerKeywords($question);
             }
-            // short_answer doesn't need predefined options
         }
     }
 
@@ -56,18 +57,30 @@ class QuestionOptionSeeder extends Seeder
     private function getKeywordsForShortAnswer($questionText): array
     {
         $keywordSets = [
-            'What is the capital of France?' => ['Paris'],
-            'Name a primary color.' => ['Red', 'Blue', 'Yellow'],
-            'What is the powerhouse of the cell?' => ['Mitochondria'],
-            'What programming language is used in Laravel?' => ['PHP', 'Php'],
-
-            'What is the square root of 64?' => ['8'],
+            'What is the square root of 64?' => ['8', 'eight'],
             'Solve: 3x + 5 = 20' => ['5'],
-            'Name the three states of matter' => ['Solid', 'Liquid', 'Gas'],
-            'What is photosynthesis?' => ['Process of making food', 'Chlorophyll', 'Sunlight', 'Carbon dioxide'],
+            'Name the three states of matter' => ['solid', 'liquid', 'gas'],
+            'What is photosynthesis?' => ['process of making food', 'making food with sunlight', 'convert light to energy'],
+            'What is the capital of France?' => ['Paris', 'paris'],
+            'Name a primary color.' => ['red', 'blue', 'yellow'],
+            'What is the powerhouse of the cell?' => ['mitochondria'],
+            'What programming language is used in Laravel?' => ['PHP', 'php'],
         ];
 
-        return $keywordSets[$questionText] ?? ['DefaultKeyword'];
+        return $keywordSets[$questionText] ?? ['default answer'];
+    }
+
+    private function createShortAnswerKeywords($question): void
+    {
+        $keywords = $this->getKeywordsForShortAnswer($question->question_text);
+
+        foreach ($keywords as $keyword) {
+            QuestionOption::create([
+                'question_id' => $question->id,
+                'option_text' => $keyword,
+                'is_correct' => true, // Semua keyword dianggap valid
+            ]);
+        }
     }
 
     private function getOptionsForQuestion($questionText): array
