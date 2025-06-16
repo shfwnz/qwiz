@@ -196,32 +196,42 @@ class QuizController extends Controller
         $quiz_id = Quiz::with('questions')->find($credentials);
 
         if ($quiz_id) {
+            $attempts = QuizAttempt::where('user_id', $user)
+                    ->where('quiz_id', $quiz_id->id)
+                    ->with('quiz', 'studentAnswer')
+                    ->get();
+
+            $isMaxAttempt = $attempts->count() >=  $quiz_id->max_attempts;
+
             // uuid untuk security
             $uuid = Str::uuid()->toString();
 
             // simpan di sesi agar tidak bisa asal buat lewat url
             session()->put('quiz_token' . $uuid, $quiz_id);
 
-            DB::beginTransaction();
-            try {
-                $currentDate = Carbon::now();
+            if (!$isMaxAttempt) {
+                DB::beginTransaction();
+                try 
+                {
+                    $currentDate = Carbon::now();
 
-                $quiz_attempt = QuizAttempt::create([
-                    'quiz_id' => $quiz_id->id,
-                    'user_id' => $user, // Set user_id from the start
-                    'started_at' => $currentDate,
-                    'max_score' => $quiz_id->questions->sum('points'),
-                    'status' => 'in_progress',
-                ]);
+                    $quiz_attempt = QuizAttempt::create([
+                        'quiz_id' => $quiz_id->id,
+                        'user_id' => $user, // Set user_id from the start
+                        'started_at' => $currentDate,
+                        'max_score' => $quiz_id->questions->sum('points'),
+                        'status' => 'in_progress',
+                    ]);
 
-                DB::commit();
-            } catch (\Exception $e) {
-                DB::rollback();
-                Log::error('Quiz submission failed: ' . $e->getMessage());
+                    DB::commit();
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    Log::error('Quiz submission failed: ' . $e->getMessage());
 
-                return redirect()
-                    ->route('quiz.list')
-                    ->with('error', 'Failed to start quiz');
+                    return redirect()
+                        ->route('quiz.list')
+                        ->with('error', 'Failed to start quiz');
+                }
             }
 
             return redirect()->route('quiz.start', [

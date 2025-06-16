@@ -64,8 +64,14 @@ class QuestionSeeder extends Seeder
                     'Oxygen is the most abundant gas in Earth\'s atmosphere',
                 ],
                 'short_answer' => [
+                    'What is the square root of 64?',
+                    'Solve: 3x + 5 = 20',
                     'Name the three states of matter',
                     'What is photosynthesis?',
+                    'What is the capital of France?',
+                    'Name a primary color.',
+                    'What is the powerhouse of the cell?',
+                    'What programming language is used in Laravel?',
                 ],
             ],
             // Add more quiz-specific questions as needed

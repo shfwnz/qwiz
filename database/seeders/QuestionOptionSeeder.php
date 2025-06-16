@@ -53,6 +53,23 @@ class QuestionOptionSeeder extends Seeder
         ]);
     }
 
+    private function getKeywordsForShortAnswer($questionText): array
+    {
+        $keywordSets = [
+            'What is the capital of France?' => ['Paris'],
+            'Name a primary color.' => ['Red', 'Blue', 'Yellow'],
+            'What is the powerhouse of the cell?' => ['Mitochondria'],
+            'What programming language is used in Laravel?' => ['PHP', 'Php'],
+
+            'What is the square root of 64?' => ['8'],
+            'Solve: 3x + 5 = 20' => ['5'],
+            'Name the three states of matter' => ['Solid', 'Liquid', 'Gas'],
+            'What is photosynthesis?' => ['Process of making food', 'Chlorophyll', 'Sunlight', 'Carbon dioxide'],
+        ];
+
+        return $keywordSets[$questionText] ?? ['DefaultKeyword'];
+    }
+
     private function getOptionsForQuestion($questionText): array
     {
         // Sample options based on question text
