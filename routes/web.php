@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
         Controllers\QuizController::class,
         'start',
     ])->name('quiz.start');
-    Route::post('/quiz/private/{status}', [
+    Route::match(['get', 'post'], '/quiz/private/{status}', [
         Controllers\QuizController::class,
         'private',
     ])->name('quiz.private');
@@ -46,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/quiz/waiting-room/{id}', [
         Controllers\QuizController::class,
         'waitingRoom',
-    ]);
+    ])->name('quiz.waiting');
 
     Route::get('/leaderboard', [
         Controllers\LeaderboardController::class,

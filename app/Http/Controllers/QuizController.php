@@ -53,25 +53,6 @@ class QuizController extends Controller
 
         $user = auth()->user();
 
-        $user_participant = QuizParticipant::where(
-            'user_id',
-            $user->id,
-        )->first();
-
-        if ($user_participant) {
-            DB::beginTransaction();
-
-            try {
-                $user_participant->delete();
-
-                DB::commit();
-            } catch (\Exception $e) {
-                Log::error('Transaksi gagal: ' . $e->getMessage());
-
-                DB::rollback();
-            }
-        }
-
         if ($quiz_code) {
             $req->validate(['token' => 'required']);
 
@@ -168,9 +149,7 @@ class QuizController extends Controller
         }
 
         $session = QuizSession::where('quiz_id', $id)->first();
-        $participant = QuizParticipant::where('quiz_session_id', $session->id)
-            ->with('student')
-            ->get();
+        $participant = QuizParticipant::where('quiz_session_id', $session->id)->with('student', 'student.attempts')->get();
 
         return Inertia::render('waiting-room', [
             'data' => $data,
@@ -181,22 +160,76 @@ class QuizController extends Controller
 
     public function private(Request $req, string $id)
     {
-        $session = QuizSession::find($id);
 
-        DB::beginTransaction();
-        try {
-            $session->update([
-                'status' => 'in_progress',
-            ]);
+        if ($req->isMethod('get')) {
+            $user = auth()->id();
+
+            $user_participant = QuizParticipant::where('user_id', $user)->first();
+            Log::info($user);
+
+            if ($user_participant) {
+                DB::beginTransaction();
+
+                try {
+                    $user_participant->delete();
+
+                    DB::commit();
+
+                    return redirect()
+                           ->route('quiz.list')
+                           ->with('message', 'Berhasil Keluar Dari Quiz');
+                } catch(\Exception $e) {
+                    Log::error('Transaksi gagal: ' . $e->getMessage());
+
+                    DB::rollback();
+                }
+            }
+        }
+
+    
+        if ($req->isMethod('post')) {
+            $session = QuizSession::find($id);
+
+            Log::info($session);
+
+            if ($session->status === 'in_progress') {
+
+                DB::beginTransaction();
+                try {
+                    
+                    Log::info('Sebelum update: ' . $session->status);
+                    $session->update([
+                        'status' => 'completed',
+                    ]);
+                    Log::info('Setelah update: ' . $session->fresh()->status);
+
+                    QuizParticipant::where('quiz_session_id', $id)
+                        ->update(['status' => 'completed']);
+
+                    DB::commit();
+                } catch(\Exception $e) {
+                    Log::error('Transaksi gagal: ' . $e->getMessage());
+                    DB::rollback();
+                }
+            }
+
+            if ($session->status === 'waiting') {
+                DB::beginTransaction();
+                try {
+                    $session->update([
+                        'status' => 'in_progress',
+                    ]);
 
             QuizParticipant::where('quiz_session_id', $id)->update([
                 'status' => 'in_progress',
             ]);
 
-            DB::commit();
-        } catch (\Exception $e) {
-            Log::error('Transaksi gagal: ' . $e->getMessage());
-            DB::rollback();
+                    DB::commit();
+                } catch(\Exception $e) {
+                    Log::error('Transaksi gagal: ' . $e->getMessage());
+                    DB::rollback();
+                }
+            }
         }
     }
 
@@ -206,7 +239,7 @@ class QuizController extends Controller
         $pureSlug = Str::beforeLast($credentials, '-uuid-');
         $user = auth()->id();
 
-        $quiz = Quiz::with('questions', 'questions.options', 'attempts')
+        $quiz = Quiz::with('questions', 'questions.options', 'attempts', 'session')
             ->where('slug', $pureSlug)
             ->first();
         $quiz_id = Quiz::with('questions')->find($credentials);

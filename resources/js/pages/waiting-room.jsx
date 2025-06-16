@@ -10,11 +10,12 @@ import gaming from '../../../public/images/gaming.png';
 
 export default function WaitingRoom() {
     const { data, auth, participants } = usePage().props;
-    const status = data.status === 'waiting';
     const [isStarting, setIsStarting] = useState(false);
     const [countdown, setCountdown] = useState(null);
 
     const isOwner = auth?.id === data.teacher_id;
+    const isWaiting = data?.status === 'waiting';
+    const isComplete = data?.status === 'completed';
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -43,8 +44,39 @@ export default function WaitingRoom() {
         }, 5000);
     };
 
+    const stopQuiz = () => {
+        toast.success('Quiz akan berhenti dalam 3 detik!');
+        
+        setTimeout(() => {
+            router.post(`/quiz/private/${data.session_id}`);
+        }, 3000);
+    };
+
+    const getButtonLabel = () => {
+        if (isComplete) return 'Sudah Selesai';
+        if (isWaiting) return isStarting ? '🚀 Memulai Quiz...' : '▶️ Mulai Quiz';
+        return '⏹️ Berhenti';
+    };
+
+    const isButtonDisabled = () => {
+        if (isComplete) return true;
+        return countdown !== null || !participants?.length;
+    };
+
+    const handleClick = () => {
+        if (isWaiting) {
+            startQuiz();
+        } else {
+            stopQuiz();
+        }
+    };
+
     const leaveWaitingRoom = () => {
-        router.visit(`/quiz/${data.slug}`);
+        router.visit(`/quiz/private/${data.id}`);
+
+        if (isOwner) {
+            router.visit('/quiz');
+        }
     };
 
     useEffect(() => {
@@ -154,6 +186,11 @@ export default function WaitingRoom() {
                                                 />
                                             </div>
                                         )}
+                                        {participant?.student?.attempts?.length > 0 && (
+                                            <div className="text-xs pt-1 text-white/60">
+                                                {participant.student.attempts[participant.student.attempts.length - 1].percentage} %
+                                            </div>
+                                        )}
                                     </div>
                                     <div>
                                         <div className="font-medium">
@@ -182,18 +219,14 @@ export default function WaitingRoom() {
                 <div className="flex flex-col md:flex-row gap-4 justify-center">
                     {isOwner ? (
                         <Button
-                            onClick={startQuiz}
-                            disabled={
-                                isStarting ||
-                                !status ||
-                                countdown !== null ||
-                                !participants?.length
-                            }
-                            className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 text-lg font-semibold"
+                            onClick={handleClick}
+                            disabled={isButtonDisabled()}
+                            className={`
+                                ${isWaiting ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'}
+                                text-white px-8 py-3 text-lg font-semibold
+                            `}
                         >
-                            {isStarting
-                                ? '🚀 Memulai Quiz...'
-                                : '▶️ Mulai Quiz'}
+                        {getButtonLabel()}
                         </Button>
                     ) : (
                         <div className="text-center">

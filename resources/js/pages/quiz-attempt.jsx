@@ -39,17 +39,14 @@ export default function quizAttempt() {
     const [currentIndex, setCurrentIndex] = useState(savedIndex);
     const [showResult, setShowResult] = useState(false);
 
-    const { data, setData, post, processing } = useForm({
-        answers: savedAnswers,
+    const { data, setData, post } = useForm({
+        answers: savedAnswers
     });
 
     const currentQuestion = questions[currentIndex];
-    const correct = attempts?.student_answer?.filter(
-        a => a.is_correct === 1
-    ).length;
-    const wrong = attempts?.student_answer?.filter(
-        a => a.is_correct === 0
-    ).length;
+    // const isFinished = ;
+    const correct = attempts?.student_answer?.filter(a => a.is_correct === 1).length;
+    const wrong = attempts?.student_answer?.filter(a => a.is_correct === 0).length;
 
     const handleQuestion = selected => {
         const correct = selected === currentQuestion.answer;
@@ -87,16 +84,17 @@ export default function quizAttempt() {
         if (data.answers.length == questions.length) {
             post('/submit/quiz', {
                 onSuccess: () => {
-                    toast.success('Jawaban Terkirim!');
+                    toast.success('Quiz Completed!');
                     sessionStorage.removeItem('quiz_answers');
                     sessionStorage.removeItem('quiz_short_answer');
+                    sessionStorage.removeItem('quiz_current_index');
                 },
                 onError: errors => {
-                    toast.error('Error', 'Gagal Menyimpan Jawaban');
+                    toast.error('Error', 'Internal Error: Failed To Save Record Attempt');
                 },
             });
         }
-    }, [data]);
+    }, [data.answers.length]);
 
     useEffect(() => {
         sessionStorage.setItem('quiz_current_index', currentIndex);
@@ -120,7 +118,7 @@ export default function quizAttempt() {
                     <Card className="w-full max-w-lg text-center bg-white/10 backdrop-blur-md border-white/10 text-white">
                         <CardHeader>
                             <CardTitle className="text-2xl">
-                                Quiz Result
+                                Your Latest Quiz Result
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
@@ -159,13 +157,12 @@ export default function quizAttempt() {
                             </div>
 
                             <div className="flex justify-center gap-4 pt-4">
-                                <Button
-                                    variant="secondary"
-                                    onClick={tryAgain}
-                                    disabled={isMaxAttempt === true}
-                                >
-                                    📄 Try Again
-                                </Button>
+                            <Button variant="secondary"
+                                onClick={tryAgain}
+                                disabled={isMaxAttempt === true}
+                            >
+                            {isMaxAttempt ? 'Max Attempt Reached' : 'Try Again'}
+                            </Button>
                                 <Link
                                     href="/"
                                     className="absolue p-2 bg-white rounded-lg text-black bottom-3"
