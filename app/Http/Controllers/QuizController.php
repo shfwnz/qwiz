@@ -290,7 +290,8 @@ class QuizController extends Controller
                 ->first();
 
             if ($existingAttempt) {
-                // $user->decrement('total_points', $existingAttempt->max_score);
+                $resetPoints = max(0, $user->total_points - $existingAttempt->max_score);
+                $user->update(['total_points' => $resetPoints]);
             }
 
             $currentDate = Carbon::now();
@@ -298,14 +299,6 @@ class QuizController extends Controller
             $quiz = Quiz::with('questions')
                 ->where('id', $quizId)
                 ->first();
-
-            // $newAttempt = QuizAttempt::create([
-            //     'quiz_id' => $quizId,
-            //     'user_id' => $user->id,
-            //     'started_at' => $currentDate,
-            //     'status' => 'in_progress',
-            //     'max_score' => $quiz->questions->sum('points'),
-            // ]);
 
             foreach ($data['answers'] as $answer) {
                 DB::table('student_answers')->insert([
