@@ -29,9 +29,9 @@ return new class extends Migration {
                 'timed_out',
                 'failed',
             ]);
-            $table->decimal('total_score', 10, 2)->nullable();
+            $table->decimal('total_score', 10, 2)->nullable()->default(0);
             $table->decimal('max_score', 10, 2)->nullable();
-            $table->decimal('percentage', 10, 2)->nullable();
+            $table->decimal('percentage', 10, 2)->nullable()->default(0);
             $table->integer('points_earned')->default(0);
             $table->integer('time_spent_minutes')->nullable();
             $table->timestamps();

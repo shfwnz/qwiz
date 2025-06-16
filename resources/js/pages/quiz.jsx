@@ -18,10 +18,12 @@ export default function Quizzes() {
         if (flash?.error) {
             toast.error(flash.error);
         }
-        if (flash?.success) {
-            toast.success(flash.success);
+        if (flash?.message) {
+            toast.success(flash.message);
         }
     }, [flash]);
+
+    console.log(flash)
 
     return (
         <div className="container mx-auto max-w-7xl">
