@@ -5,14 +5,16 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
 
 export default function quizAttempt() {
-    const savedAnswers = JSON.parse(sessionStorage.getItem('quiz_answers') || '[]');
+    const savedAnswers = JSON.parse(
+        sessionStorage.getItem('quiz_answers') || '[]'
+    );
     const savedShort = sessionStorage.getItem('quiz_short_answer') || '';
-    
+
     const { dataQuestions, attempts, isMaxAttempt } = usePage().props;
     const questions = dataQuestions.questions.map(item => {
         return {
@@ -28,9 +30,9 @@ export default function quizAttempt() {
     });
 
     const isDone = attempts?.status === 'completed';
-    
-    const savedIndex = isDone 
-        ? parseInt(sessionStorage.getItem('quiz_current_index') || '0') 
+
+    const savedIndex = isDone
+        ? parseInt(sessionStorage.getItem('quiz_current_index') || '0')
         : 0;
 
     const [shortAnswer, setShortAnswer] = useState(savedShort);
@@ -38,18 +40,22 @@ export default function quizAttempt() {
     const [showResult, setShowResult] = useState(false);
 
     const { data, setData, post, processing } = useForm({
-        answers: savedAnswers
+        answers: savedAnswers,
     });
 
     const currentQuestion = questions[currentIndex];
-    const correct = attempts?.student_answer?.filter(a => a.is_correct === 1).length;
-    const wrong = attempts?.student_answer?.filter(a => a.is_correct === 0).length;
+    const correct = attempts?.student_answer?.filter(
+        a => a.is_correct === 1
+    ).length;
+    const wrong = attempts?.student_answer?.filter(
+        a => a.is_correct === 0
+    ).length;
 
     const handleQuestion = selected => {
         const correct = selected === currentQuestion.answer;
 
         const newAnswer = {
-            quizId : dataQuestions.id,
+            quizId: dataQuestions.id,
             questionId: currentQuestion.id,
             attemptId: attempts.id,
             selected,
@@ -70,31 +76,30 @@ export default function quizAttempt() {
     };
 
     const tryAgain = () => {
-        sessionStorage.removeItem('quiz_answers')
-        sessionStorage.removeItem('quiz_short_answer')
-        sessionStorage.removeItem('quiz_current_index')
+        sessionStorage.removeItem('quiz_answers');
+        sessionStorage.removeItem('quiz_short_answer');
+        sessionStorage.removeItem('quiz_current_index');
         setShowResult(false);
         router.visit(`/quiz/start/${dataQuestions.id}`);
-    }
+    };
 
     useEffect(() => {
         if (data.answers.length == questions.length) {
             post('/submit/quiz', {
-                    onSuccess: () => {
-                        toast.success('Jawaban Terkirim!');
-                        sessionStorage.removeItem('quiz_answers')
-                        sessionStorage.removeItem('quiz_short_answer')
-                    },
-                    onError: errors => {
-                        toast.error('Error', 'Gagal Menyimpan Jawaban');
-                    },
-                });
+                onSuccess: () => {
+                    toast.success('Jawaban Terkirim!');
+                    sessionStorage.removeItem('quiz_answers');
+                    sessionStorage.removeItem('quiz_short_answer');
+                },
+                onError: errors => {
+                    toast.error('Error', 'Gagal Menyimpan Jawaban');
+                },
+            });
         }
-    }, [data])
+    }, [data]);
 
     useEffect(() => {
         sessionStorage.setItem('quiz_current_index', currentIndex);
-
     }, [currentIndex]);
 
     useEffect(() => {
@@ -154,12 +159,13 @@ export default function quizAttempt() {
                             </div>
 
                             <div className="flex justify-center gap-4 pt-4">
-                            <Button variant="secondary"
-                                onClick={tryAgain}
-                                disabled={isMaxAttempt === true}
-                            >
-                            📄 Try Again
-                            </Button>
+                                <Button
+                                    variant="secondary"
+                                    onClick={tryAgain}
+                                    disabled={isMaxAttempt === true}
+                                >
+                                    📄 Try Again
+                                </Button>
                                 <Link
                                     href="/"
                                     className="absolue p-2 bg-white rounded-lg text-black bottom-3"
@@ -175,7 +181,8 @@ export default function quizAttempt() {
                     <Card className="w-full max-w-4xl bg-[#1a1d29] border border-[#2f3549] text-white p-8 rounded-xl shadow-lg space-y-6">
                         <CardHeader className="flex flex-col items-start gap-2">
                             <Badge className="bg-indigo-700 text-white px-4 py-1 text-base rounded-md">
-                                Question {currentIndex + 1} of {questions.length}
+                                Question {currentIndex + 1} of{' '}
+                                {questions.length}
                             </Badge>
                             <CardTitle className="text-3xl font-semibold text-white/90">
                                 {currentQuestion.question}
@@ -189,25 +196,34 @@ export default function quizAttempt() {
                                     placeholder="Type your answer..."
                                     className="w-full bg-[#2b3044] border border-[#47526b] text-white placeholder-white/40 text-lg p-4 rounded-md focus:ring-2 focus:ring-indigo-500"
                                     value={shortAnswer}
-                                    onChange={e => setShortAnswer(e.target.value)}
+                                    onChange={e =>
+                                        setShortAnswer(e.target.value)
+                                    }
                                     onKeyDown={e => {
-                                        if (e.key === 'Enter' && shortAnswer.trim() !== '') {
+                                        if (
+                                            e.key === 'Enter' &&
+                                            shortAnswer.trim() !== ''
+                                        ) {
                                             handleQuestion(shortAnswer);
                                         }
                                     }}
                                 />
                             ) : (
                                 <div className="grid grid-cols-2 gap-4 pt-4">
-                                    {currentQuestion.options.map((option, index) => (
-                                        <Button
-                                            key={index}
-                                            onClick={() => handleQuestion(option)}
-                                            variant="ghost"
-                                            className="bg-indigo-600 hover:bg-indigo-700 transition-all hover:scale-105 active:scale-95 text-white text-lg py-6 rounded-lg border border-indigo-400 shadow-md"
-                                        >
-                                            {option}
-                                        </Button>
-                                    ))}
+                                    {currentQuestion.options.map(
+                                        (option, index) => (
+                                            <Button
+                                                key={index}
+                                                onClick={() =>
+                                                    handleQuestion(option)
+                                                }
+                                                variant="ghost"
+                                                className="bg-indigo-600 hover:bg-indigo-700 transition-all hover:scale-105 active:scale-95 text-white text-lg py-6 rounded-lg border border-indigo-400 shadow-md"
+                                            >
+                                                {option}
+                                            </Button>
+                                        )
+                                    )}
                                 </div>
                             )}
                         </CardContent>

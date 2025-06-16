@@ -53,7 +53,10 @@ class QuizController extends Controller
 
         $user = auth()->user();
 
-        $user_participant = QuizParticipant::where('user_id', $user->id)->first();
+        $user_participant = QuizParticipant::where(
+            'user_id',
+            $user->id,
+        )->first();
 
         if ($user_participant) {
             DB::beginTransaction();
@@ -62,7 +65,7 @@ class QuizController extends Controller
                 $user_participant->delete();
 
                 DB::commit();
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 Log::error('Transaksi gagal: ' . $e->getMessage());
 
                 DB::rollback();
@@ -95,13 +98,15 @@ class QuizController extends Controller
 
         return Inertia::render('show-quiz', [
             'data' => $data,
-            'auth' => $user
+            'auth' => $user,
         ]);
     }
 
-    public function waitingRoom(Request $req, string $id) 
+    public function waitingRoom(Request $req, string $id)
     {
-        $quiz = Quiz::with('questions', 'session', 'teacher', 'attempts')->find($id);
+        $quiz = Quiz::with('questions', 'session', 'teacher', 'attempts')->find(
+            $id,
+        );
         $auth = auth()->user();
 
         $data = [
@@ -121,11 +126,19 @@ class QuizController extends Controller
         ];
 
         if ($data['teacher_id'] !== $auth->id) {
-            $existing = QuizParticipant::where('quiz_session_id', $quiz->session->id)
+            $existing = QuizParticipant::where(
+                'quiz_session_id',
+                $quiz->session->id,
+            )
                 ->where('user_id', $auth->id)
                 ->first();
-            $currentParticipants =QuizParticipant::where('quiz_session_id', $quiz->session->id)->get();
-            $isMax = $currentParticipants->count() >= $quiz->session->max_participants;
+            $currentParticipants = QuizParticipant::where(
+                'quiz_session_id',
+                $quiz->session->id,
+            )->get();
+            $isMax =
+                $currentParticipants->count() >=
+                $quiz->session->max_participants;
 
             if (!$existing && !$isMax) {
                 DB::beginTransaction();
@@ -155,7 +168,9 @@ class QuizController extends Controller
         }
 
         $session = QuizSession::where('quiz_id', $id)->first();
-        $participant = QuizParticipant::where('quiz_session_id', $session->id)->with('student')->get();
+        $participant = QuizParticipant::where('quiz_session_id', $session->id)
+            ->with('student')
+            ->get();
 
         return Inertia::render('waiting-room', [
             'data' => $data,
@@ -164,7 +179,7 @@ class QuizController extends Controller
         ]);
     }
 
-    public function private(Request $req, String $id)
+    public function private(Request $req, string $id)
     {
         $session = QuizSession::find($id);
 
@@ -174,11 +189,12 @@ class QuizController extends Controller
                 'status' => 'in_progress',
             ]);
 
-            QuizParticipant::where('quiz_session_id', $id)
-                ->update(['status' => 'in_progress']);
+            QuizParticipant::where('quiz_session_id', $id)->update([
+                'status' => 'in_progress',
+            ]);
 
             DB::commit();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             Log::error('Transaksi gagal: ' . $e->getMessage());
             DB::rollback();
         }
@@ -197,11 +213,11 @@ class QuizController extends Controller
 
         if ($quiz_id) {
             $attempts = QuizAttempt::where('user_id', $user)
-                    ->where('quiz_id', $quiz_id->id)
-                    ->with('quiz', 'studentAnswer')
-                    ->get();
+                ->where('quiz_id', $quiz_id->id)
+                ->with('quiz', 'studentAnswer')
+                ->get();
 
-            $isMaxAttempt = $attempts->count() >=  $quiz_id->max_attempts;
+            $isMaxAttempt = $attempts->count() >= $quiz_id->max_attempts;
 
             // uuid untuk security
             $uuid = Str::uuid()->toString();
@@ -211,8 +227,7 @@ class QuizController extends Controller
 
             if (!$isMaxAttempt) {
                 DB::beginTransaction();
-                try 
-                {
+                try {
                     $currentDate = Carbon::now();
 
                     $quiz_attempt = QuizAttempt::create([
@@ -244,22 +259,22 @@ class QuizController extends Controller
         }
 
         $attempt = QuizAttempt::where('user_id', $user)
-                    ->where('quiz_id', $quiz->id)
-                    ->with('quiz', 'studentAnswer')
-                    ->latest()
-                    ->first();
+            ->where('quiz_id', $quiz->id)
+            ->with('quiz', 'studentAnswer')
+            ->latest()
+            ->first();
 
         $attempts = QuizAttempt::where('user_id', $user)
-                    ->where('quiz_id', $quiz->id)
-                    ->with('quiz', 'studentAnswer')
-                    ->get();
+            ->where('quiz_id', $quiz->id)
+            ->with('quiz', 'studentAnswer')
+            ->get();
 
-        $isMaxAttempt = $attempts->count() >=  $quiz->max_attempts;
+        $isMaxAttempt = $attempts->count() >= $quiz->max_attempts;
 
         return Inertia::render('quiz-attempt', [
             'dataQuestions' => $quiz,
             'attempts' => $attempt,
-            'isMaxAttempt' => $isMaxAttempt
+            'isMaxAttempt' => $isMaxAttempt,
         ]);
     }
 
@@ -290,15 +305,16 @@ class QuizController extends Controller
                 ->first();
 
             if ($existingAttempt) {
-                $resetPoints = max(0, $user->total_points - $existingAttempt->max_score);
+                $resetPoints = max(
+                    0,
+                    $user->total_points - $existingAttempt->max_score,
+                );
                 $user->update(['total_points' => $resetPoints]);
             }
 
             $currentDate = Carbon::now();
 
-            $quiz = Quiz::with('questions')
-                ->where('id', $quizId)
-                ->first();
+            $quiz = Quiz::with('questions')->where('id', $quizId)->first();
 
             foreach ($data['answers'] as $answer) {
                 DB::table('student_answers')->insert([
@@ -330,14 +346,15 @@ class QuizController extends Controller
             ]);
 
             session()->forget('quiz_token');
-            
+
             Log::info($totalScore);
             $user->increment('total_points', $totalScore);
             $user->increment('quizzes_completed', 1);
-            $participant = QuizParticipant::where('user_id', $user->id)
-                ->update([
-                    'status' => 'completed'
-                ]);
+            $participant = QuizParticipant::where('user_id', $user->id)->update(
+                [
+                    'status' => 'completed',
+                ],
+            );
 
             DB::commit();
 

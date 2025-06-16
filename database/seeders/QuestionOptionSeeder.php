@@ -60,7 +60,11 @@ class QuestionOptionSeeder extends Seeder
             'What is the square root of 64?' => ['8', 'eight'],
             'Solve: 3x + 5 = 20' => ['5'],
             'Name the three states of matter' => ['solid', 'liquid', 'gas'],
-            'What is photosynthesis?' => ['process of making food', 'making food with sunlight', 'convert light to energy'],
+            'What is photosynthesis?' => [
+                'process of making food',
+                'making food with sunlight',
+                'convert light to energy',
+            ],
             'What is the capital of France?' => ['Paris', 'paris'],
             'Name a primary color.' => ['red', 'blue', 'yellow'],
             'What is the powerhouse of the cell?' => ['mitochondria'],

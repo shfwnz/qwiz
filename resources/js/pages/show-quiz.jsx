@@ -46,7 +46,6 @@ export default function showQuiz() {
         }
     };
 
-
     return (
         <div className="container mx-auto max-w-7xl">
             <ParticleBackground />
