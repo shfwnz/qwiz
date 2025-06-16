@@ -53,25 +53,6 @@ class QuizController extends Controller
 
         $user = auth()->user();
 
-        $user_participant = QuizParticipant::where(
-            'user_id',
-            $user->id,
-        )->first();
-
-        if ($user_participant) {
-            DB::beginTransaction();
-
-            try {
-                $user_participant->delete();
-
-                DB::commit();
-            } catch (\Exception $e) {
-                Log::error('Transaksi gagal: ' . $e->getMessage());
-
-                DB::rollback();
-            }
-        }
-
         if ($quiz_code) {
             $req->validate(['token' => 'required']);
 

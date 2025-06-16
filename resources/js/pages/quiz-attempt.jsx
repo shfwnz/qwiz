@@ -87,6 +87,7 @@ export default function quizAttempt() {
                     toast.success('Quiz Completed!');
                     sessionStorage.removeItem('quiz_answers');
                     sessionStorage.removeItem('quiz_short_answer');
+                    sessionStorage.removeItem('quiz_current_index');
                 },
                 onError: errors => {
                     toast.error('Error', 'Internal Error: Failed To Save Record Attempt');
