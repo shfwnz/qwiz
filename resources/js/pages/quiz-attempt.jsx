@@ -105,24 +105,6 @@ export default function quizAttempt() {
         sessionStorage.setItem('quiz_short_answer', shortAnswer);
     }, [shortAnswer]);
 
-    useEffect(() => {
-        const handleBeforeUnload = (e) => {
-        if (showResult) {
-            e.preventDefault();
-            e.returnValue = ''; // wajib di-set di browser modern
-            return '';
-        }
-        };
-
-        window.addEventListener('beforeunload', handleBeforeUnload);
-        
-        return () => {
-        window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-    }, [showResult]);
-
-    console.log(isMaxAttempt);
-
     return (
         <div className="flex items-center justify-center h-screen w-screen">
             <ParticleBackground />
