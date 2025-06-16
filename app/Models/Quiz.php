@@ -60,7 +60,7 @@ class Quiz extends Model
         return $this->hasMany(QuizParticipant::class);
     }
 
-    public function attempt(): HasMany
+    public function attempts(): HasMany
     {
         return $this->hasMany(QuizAttempt::class);
     }

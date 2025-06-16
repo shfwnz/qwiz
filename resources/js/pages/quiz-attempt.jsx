@@ -1,6 +1,6 @@
 import ParticleBackground from '@/components/particle-background';
 import { useState, useEffect } from 'react';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { Link, useForm, usePage, router } from '@inertiajs/react';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
@@ -13,8 +13,7 @@ export default function quizAttempt() {
     const savedAnswers = JSON.parse(sessionStorage.getItem('quiz_answers') || '[]');
     const savedShort = sessionStorage.getItem('quiz_short_answer') || '';
     
-    const { dataQuestions, attempt } = usePage().props;
-    const attempts = attempt.student_answer;
+    const { dataQuestions, attempts, isMaxAttempt } = usePage().props;
     const questions = dataQuestions.questions.map(item => {
         return {
             id: item.id,
@@ -27,7 +26,8 @@ export default function quizAttempt() {
             score: item.points,
         };
     });
-    const isDone = attempt?.status === 'completed';
+
+    const isDone = attempts?.status === 'completed';
     
     const savedIndex = isDone 
         ? parseInt(sessionStorage.getItem('quiz_current_index') || '0') 
@@ -42,15 +42,16 @@ export default function quizAttempt() {
     });
 
     const currentQuestion = questions[currentIndex];
-    const correct = attempts?.filter(a => a.is_correct === 1).length;
-    const wrong = attempts?.filter(a => a.is_correct === 0).length;
+    const correct = attempts?.student_answer?.filter(a => a.is_correct === 1).length;
+    const wrong = attempts?.student_answer?.filter(a => a.is_correct === 0).length;
 
     const handleQuestion = selected => {
         const correct = selected === currentQuestion.answer;
 
         const newAnswer = {
+            quizId : dataQuestions.id,
             questionId: currentQuestion.id,
-            attemptId: attempt.id,
+            attemptId: attempts.id,
             selected,
             correct: selected === currentQuestion.answer ? 1 : 0,
             score: correct
@@ -67,6 +68,14 @@ export default function quizAttempt() {
             setCurrentIndex(currentIndex + 1);
         }
     };
+
+    const tryAgain = () => {
+        sessionStorage.removeItem('quiz_answers')
+        sessionStorage.removeItem('quiz_short_answer')
+        sessionStorage.removeItem('quiz_current_index')
+        setShowResult(false);
+        router.visit(`/quiz/start/${dataQuestions.id}`);
+    }
 
     useEffect(() => {
         if (data.answers.length == questions.length) {
@@ -96,7 +105,23 @@ export default function quizAttempt() {
         sessionStorage.setItem('quiz_short_answer', shortAnswer);
     }, [shortAnswer]);
 
-    console.log(attempt);
+    useEffect(() => {
+        const handleBeforeUnload = (e) => {
+        if (showResult) {
+            e.preventDefault();
+            e.returnValue = ''; // wajib di-set di browser modern
+            return '';
+        }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        
+        return () => {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [showResult]);
+
+    console.log(isMaxAttempt);
 
     return (
         <div className="flex items-center justify-center h-screen w-screen">
@@ -107,36 +132,59 @@ export default function quizAttempt() {
                 <div className="flex items-center justify-center rounded-lg bg-[#0d1117] p-10 w-1/2">
                     <Card className="w-full max-w-lg text-center bg-white/10 backdrop-blur-md border-white/10 text-white">
                         <CardHeader>
-                        <CardTitle className="text-2xl">Quiz Result</CardTitle>
+                            <CardTitle className="text-2xl">
+                                Quiz Result
+                            </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                        <div className="text-lg">
-                            <p>✅ Correct Answer: <span className="font-semibold text-green-400">{correct}</span></p>
-                            <p>❌ Wrong Answer: <span className="font-semibold text-red-400">{wrong}</span></p>
-                            <p>🎯 Score: <span className="font-semibold text-yellow-300">{attempt.total_score}</span></p>
-                        </div>
+                            <div className="text-lg">
+                                <p>
+                                    ✅ Correct Answer:{' '}
+                                    <span className="font-semibold text-green-400">
+                                        {correct}
+                                    </span>
+                                </p>
+                                <p>
+                                    ❌ Wrong Answer:{' '}
+                                    <span className="font-semibold text-red-400">
+                                        {wrong}
+                                    </span>
+                                </p>
+                                <p>
+                                    🎯 Score:{' '}
+                                    <span className="font-semibold text-yellow-300">
+                                        {attempts.total_score}
+                                    </span>
+                                </p>
+                            </div>
 
-                        <div className="space-y-2">
-                            <p className="text-sm uppercase text-white/70">Percentage</p>
-                            <Progress 
-                                value={attempt.percentage}
-                                className="h-3 bg-white/20" />
-                            <p className="text-xl font-bold">{attempt.percentage}%</p>
-                        </div>
+                            <div className="space-y-2">
+                                <p className="text-sm uppercase text-white/70">
+                                    Percentage
+                                </p>
+                                <Progress
+                                    value={attempts.percentage}
+                                    className="h-3 bg-white/20"
+                                />
+                                <p className="text-xl font-bold">
+                                    {attempts.percentage}%
+                                </p>
+                            </div>
 
-                        <div className="flex justify-center gap-4 pt-4">
-                            <Button variant="secondary" 
-                                // onClick={onDetailClick}
+                            <div className="flex justify-center gap-4 pt-4">
+                            <Button variant="secondary"
+                                onClick={tryAgain}
+                                disabled={isMaxAttempt === true}
                             >
-                            📄 Coba Lagi
+                            📄 Try Again
                             </Button>
-                            <Link 
-                                href="/"
-                                className="absolue p-2 bg-white rounded-lg text-black bottom-3"
-                            >
-                            🔙 Return to Dashboard
-                            </Link>
-                        </div>
+                                <Link
+                                    href="/"
+                                    className="absolue p-2 bg-white rounded-lg text-black bottom-3"
+                                >
+                                    🔙 Return to Dashboard
+                                </Link>
+                            </div>
                         </CardContent>
                     </Card>
                 </div>
