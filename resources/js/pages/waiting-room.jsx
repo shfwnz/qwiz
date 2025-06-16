@@ -4,9 +4,9 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import ParticleBackground from '@/components/particle-background';
 import { toast } from 'sonner';
-import complete from "../../../public/images/complete.png";
-import clock from "../../../public/images/clock.png";
-import gaming from "../../../public/images/gaming.png";
+import complete from '../../../public/images/complete.png';
+import clock from '../../../public/images/clock.png';
+import gaming from '../../../public/images/gaming.png';
 
 export default function WaitingRoom() {
     const { data, auth, participants } = usePage().props;
@@ -30,14 +30,14 @@ export default function WaitingRoom() {
                 setCountdown(countdown - 1);
             }, 1000);
             return () => clearTimeout(timer);
-        } 
+        }
     }, [countdown]);
 
     const startQuiz = () => {
         setIsStarting(true);
         setCountdown(5); // 5 detik countdown
         toast.success('Quiz akan dimulai dalam 5 detik!');
-        
+
         setTimeout(() => {
             router.post(`/quiz/private/${data.session_id}`);
         }, 5000);
@@ -129,21 +129,28 @@ export default function WaitingRoom() {
                                             ?.charAt(0)
                                             .toUpperCase() || '?'}
                                     </div>
-                                    <div className='absolute left-[350px]'>
-                                        { participant.status === 'ready' && (
-                                            <img src={clock} alt="waiting" 
-                                                className='w-1/2 h-1/2'
+                                    <div className="absolute left-[350px]">
+                                        {participant.status === 'ready' && (
+                                            <img
+                                                src={clock}
+                                                alt="waiting"
+                                                className="w-1/2 h-1/2"
                                             />
                                         )}
-                                        { participant.status === 'in_progress' && (
-                                            <img src={gaming} alt="in progress" 
-                                                className='w-1/2 h-1/2'
+                                        {participant.status ===
+                                            'in_progress' && (
+                                            <img
+                                                src={gaming}
+                                                alt="in progress"
+                                                className="w-1/2 h-1/2"
                                             />
                                         )}
-                                        { participant.status === 'completed' && (
-                                            <div className=''>
-                                                <img src={complete} alt="complete" 
-                                                    className='w-1/2 h-1/2'
+                                        {participant.status === 'completed' && (
+                                            <div className="">
+                                                <img
+                                                    src={complete}
+                                                    alt="complete"
+                                                    className="w-1/2 h-1/2"
                                                 />
                                             </div>
                                         )}
