@@ -171,44 +171,47 @@ export default function quizAttempt() {
                     </Card>
                 </div>
             ) : (
-                <div className="bg-white/20 rounded-lg w-full h-2/3 px-10 mx-10">
-                    <Badge className="text-xl font-bold mb-4 mt-10">
-                        Question {currentIndex + 1} from {questions.length}
-                    </Badge>
-                    <p className="text-[30px] pt-20">
-                        {currentQuestion.question}
-                    </p>
-                    {currentQuestion.is_shortAnswer ? (
-                        <div className="w-full pt-3">
-                            <Input
-                                type="text"
-                                placeholder="Ketik jawaban anda..."
-                                className="w-full p-10 border rounded-md"
-                                value={shortAnswer}
-                                onChange={e => setShortAnswer(e.target.value)}
-                                onKeyDown={e => {
-                                    if (
-                                        e.key === 'Enter' &&
-                                        shortAnswer.trim() !== ''
-                                    ) {
-                                        handleQuestion(shortAnswer);
-                                    }
-                                }}
-                            />
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-2 gap-2 items-center justify-center pt-3">
-                            {currentQuestion.options.map((option, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => handleQuestion(option)}
-                                    className="bg-blue-500 text-white p-2 py-10 rounded-md hover:bg-blue-600"
-                                >
-                                    {option}
-                                </button>
-                            ))}
-                        </div>
-                    )}
+                <div className="w-full flex justify-center">
+                    <Card className="w-full max-w-4xl bg-[#1a1d29] border border-[#2f3549] text-white p-8 rounded-xl shadow-lg space-y-6">
+                        <CardHeader className="flex flex-col items-start gap-2">
+                            <Badge className="bg-indigo-700 text-white px-4 py-1 text-base rounded-md">
+                                Question {currentIndex + 1} of {questions.length}
+                            </Badge>
+                            <CardTitle className="text-3xl font-semibold text-white/90">
+                                {currentQuestion.question}
+                            </CardTitle>
+                        </CardHeader>
+
+                        <CardContent>
+                            {currentQuestion.is_shortAnswer ? (
+                                <Input
+                                    type="text"
+                                    placeholder="Type your answer..."
+                                    className="w-full bg-[#2b3044] border border-[#47526b] text-white placeholder-white/40 text-lg p-4 rounded-md focus:ring-2 focus:ring-indigo-500"
+                                    value={shortAnswer}
+                                    onChange={e => setShortAnswer(e.target.value)}
+                                    onKeyDown={e => {
+                                        if (e.key === 'Enter' && shortAnswer.trim() !== '') {
+                                            handleQuestion(shortAnswer);
+                                        }
+                                    }}
+                                />
+                            ) : (
+                                <div className="grid grid-cols-2 gap-4 pt-4">
+                                    {currentQuestion.options.map((option, index) => (
+                                        <Button
+                                            key={index}
+                                            onClick={() => handleQuestion(option)}
+                                            variant="ghost"
+                                            className="bg-indigo-600 hover:bg-indigo-700 transition-all hover:scale-105 active:scale-95 text-white text-lg py-6 rounded-lg border border-indigo-400 shadow-md"
+                                        >
+                                            {option}
+                                        </Button>
+                                    ))}
+                                </div>
+                            )}
+                        </CardContent>
+                    </Card>
                 </div>
             )}
         </div>
