@@ -290,7 +290,7 @@ class QuizController extends Controller
                 ->first();
 
             if ($existingAttempt) {
-                $user->decrement('total_points', $existingAttempt->max_score);
+                // $user->decrement('total_points', $existingAttempt->max_score);
             }
 
             $currentDate = Carbon::now();
@@ -299,17 +299,17 @@ class QuizController extends Controller
                 ->where('id', $quizId)
                 ->first();
 
-            $newAttempt = QuizAttempt::create([
-                'quiz_id' => $quizId,
-                'user_id' => $user->id,
-                'started_at' => $currentDate,
-                'status' => 'in_progress',
-                'max_score' => $quiz->questions->sum('points'),
-            ]);
+            // $newAttempt = QuizAttempt::create([
+            //     'quiz_id' => $quizId,
+            //     'user_id' => $user->id,
+            //     'started_at' => $currentDate,
+            //     'status' => 'in_progress',
+            //     'max_score' => $quiz->questions->sum('points'),
+            // ]);
 
             foreach ($data['answers'] as $answer) {
                 DB::table('student_answers')->insert([
-                    'quiz_attempt_id' => $newAttempt->id, // ✅ pakai ID baru
+                    'quiz_attempt_id' => $answer['attemptId'],
                     'question_id' => $answer['questionId'],
                     'answer_text' => $answer['selected'],
                     'is_correct' => $answer['correct'],
@@ -321,7 +321,7 @@ class QuizController extends Controller
                 $totalScore += $answer['score'];
             }
 
-            $attempt = $newAttempt;
+            $attempt = QuizAttempt::find($answer['attemptId']);
             $minutes = Carbon::parse($attempt->started_at)->diffInMinutes(
                 $currentDate,
             );
@@ -338,7 +338,9 @@ class QuizController extends Controller
 
             session()->forget('quiz_token');
             
+            Log::info($totalScore);
             $user->increment('total_points', $totalScore);
+            $user->increment('quizzes_completed', 1);
             $participant = QuizParticipant::where('user_id', $user->id)
                 ->update([
                     'status' => 'completed'
